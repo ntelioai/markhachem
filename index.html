@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Hachem Gallery — Kinetic Art · Arab Modernism · Contemporary Art</title>
+<meta name="description" content="Mark Hachem Gallery — a platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996. Locations in Paris and Beirut.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #FAFAF8;
+  --black: #0A0A0A;
+  --text: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --gold: #B89D4F;
+  --gold-light: #D4BA6A;
+  --gold-dark: #9A8340;
+  --grey-light: #F0EEEB;
+  --grey-mid: #E0DDD8;
+  --border: #E0DDD8;
+  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-sans: 'Outfit', 'Helvetica Neue', sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body { font-family: var(--font-sans); font-weight: 300; color: var(--text); background: var(--white); line-height: 1.7; overflow-x: hidden; }
+
+::selection { background: var(--gold); color: var(--white); }
+
+img { max-width: 100%; display: block; object-fit: cover; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── UTILITY ─── */
+.section-label {
+  font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+}
+.section-label::before { content: ''; width: 2rem; height: 1px; background: var(--gold); }
+
+.section-heading {
+  font-family: var(--font-serif); font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--text);
+}
+.section-heading em { font-style: italic; color: var(--gold-dark); }
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ═══ NAVIGATION ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.5rem 3rem; display: flex; justify-content: space-between;
+  align-items: center; transition: all 0.5s var(--ease-out);
+}
+.nav::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(250,250,248,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); opacity: 0; transition: opacity 0.5s var(--ease-out);
+}
+.nav.scrolled::before { opacity: 1; }
+.nav.scrolled { padding: 1rem 3rem; }
+
+.nav-logo {
+  position: relative; z-index: 1; display: flex; align-items: center;
+}
+
+.nav-logo-white, .nav-logo-dark {
+  height: 28px; width: auto; transition: opacity 0.5s var(--ease-out);
+}
+.nav-logo-white { opacity: 1; }
+.nav-logo-dark { opacity: 0; position: absolute; left: 0; }
+.nav.scrolled .nav-logo-white { opacity: 0; pointer-events: none; }
+.nav.scrolled .nav-logo-dark { opacity: 1; }
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; position: relative; z-index: 1; }
+.nav-links a {
+  font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em;
+  text-transform: uppercase; color: #fff; transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+  height: 1px; background: var(--gold); transition: width 0.4s var(--ease-out);
+}
+.nav-links a:hover::after { width: 100%; }
+.nav.scrolled .nav-links a { color: var(--text); }
+
+.nav-cta {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 0.6rem 1.5rem;
+  transition: all 0.4s var(--ease-out); position: relative; z-index: 1;
+}
+.nav.scrolled .nav-cta { border-color: var(--text); color: var(--text); }
+.nav-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff !important; }
+
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; position: relative; }
+.nav-toggle span { width: 24px; height: 1.5px; background: #fff; transition: all 0.3s; }
+.nav.scrolled .nav-toggle span { background: var(--text); }
+
+/* ═══ HERO ═══ */
+.hero {
+  position: relative; height: 100vh; min-height: 700px;
+  display: flex; align-items: flex-end; overflow: hidden; background: var(--black);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+}
+.hero-bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.35) contrast(1.1);
+}
+.hero-kinetic {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.hero-kinetic::before, .hero-kinetic::after {
+  content: ''; position: absolute; inset: -50%;
+}
+.hero-kinetic::before {
+  background: repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(184,157,79,0.06) 18px, rgba(184,157,79,0.06) 19px);
+  animation: kineticDrift 25s linear infinite;
+}
+.hero-kinetic::after {
+  background: repeating-linear-gradient(60deg, transparent, transparent 22px, rgba(255,255,255,0.03) 22px, rgba(255,255,255,0.03) 23px);
+  animation: kineticDrift2 30s linear infinite reverse;
+}
+@keyframes kineticDrift { 0% { transform: rotate(0deg) scale(1.5); } 100% { transform: rotate(360deg) scale(1.5); } }
+@keyframes kineticDrift2 { 0% { transform: rotate(0deg) scale(1.8); } 100% { transform: rotate(-360deg) scale(1.8); } }
+
+.hero-gradient {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(184,157,79,0.1) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.6) 100%);
+}
+.hero-content { position: relative; z-index: 2; padding: 0 3rem 5rem; max-width: 900px; }
+.hero-est {
+  font-family: var(--font-sans); font-size: 0.65rem; font-weight: 400;
+  letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px);
+  animation: heroReveal 1s var(--ease-out) 0.3s forwards;
+}
+.hero-title {
+  font-family: var(--font-serif); font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 300; line-height: 0.95; color: #fff; letter-spacing: -0.02em;
+  margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px);
+  animation: heroReveal 1.2s var(--ease-out) 0.5s forwards;
+}
+.hero-title strong { font-weight: 500; }
+.hero-tagline {
+  font-family: var(--font-sans); font-size: 0.8rem; font-weight: 300;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6);
+  opacity: 0; transform: translateY(20px);
+  animation: heroReveal 1s var(--ease-out) 0.8s forwards;
+}
+.hero-tagline .dot { display: inline-block; margin: 0 0.8rem; color: var(--gold); }
+@keyframes heroReveal { to { opacity: 1; transform: translateY(0); } }
+
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; right: 3rem; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  opacity: 0; animation: heroReveal 1s var(--ease-out) 1.2s forwards;
+}
+.hero-scroll span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); writing-mode: vertical-rl; }
+.hero-scroll-line { width: 1px; height: 60px; background: linear-gradient(180deg, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.4; transform: scaleY(0.6); } }
+
+/* ═══ CURRENT EXHIBITION ═══ */
+.exhibition-current { padding: 8rem 3rem; }
+.exhibition-current-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+.exhibition-image {
+  position: relative; overflow: hidden; background: var(--grey-light);
+}
+.exhibition-image img { width: 100%; height: auto; display: block; }
+.exhibition-image-label {
+  position: absolute; bottom: 1.5rem; left: 1.5rem;
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-secondary); background: rgba(250,250,248,0.9);
+  padding: 0.4rem 0.8rem; backdrop-filter: blur(10px);
+}
+
+.exhibition-details { padding: 2rem 0; }
+.exhibition-dates { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 1.5rem; }
+.exhibition-title { font-family: var(--font-serif); font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 300; line-height: 1.15; margin-bottom: 0.5rem; }
+.exhibition-artist { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; font-style: italic; color: var(--gold-dark); margin-bottom: 2rem; }
+.exhibition-desc { font-size: 0.95rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 480px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.8rem;
+  font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem 2rem;
+  border: 1px solid var(--text); color: var(--text);
+  transition: all 0.4s var(--ease-out); cursor: pointer; background: none;
+}
+.btn:hover { background: var(--text); color: var(--white); }
+.btn-gold { border-color: var(--gold); color: var(--gold-dark); }
+.btn-gold:hover { background: var(--gold); color: #fff; }
+.btn svg { width: 14px; height: 14px; transition: transform 0.3s var(--ease-out); }
+.btn:hover svg { transform: translateX(4px); }
+
+/* ═══ GALLERY IMAGES STRIP ═══ */
+.gallery-strip {
+  padding: 4rem 0; overflow: hidden; background: var(--black);
+}
+.gallery-strip-inner {
+  display: flex; gap: 1rem; animation: scrollStrip 40s linear infinite;
+  width: max-content;
+}
+.gallery-strip-inner img {
+  height: 320px; width: auto; object-fit: cover;
+  filter: brightness(0.9); transition: filter 0.4s;
+}
+.gallery-strip-inner img:hover { filter: brightness(1.05); }
+@keyframes scrollStrip {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══ ARTISTS ═══ */
+.artists { padding: 8rem 3rem; background: var(--grey-light); }
+.artists-inner { max-width: 1400px; margin: 0 auto; }
+.artists-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+
+.artist-category { margin-bottom: 4rem; }
+.artist-category:last-child { margin-bottom: 0; }
+.artist-category-title {
+  font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500;
+  letter-spacing: 0.05em; color: var(--gold-dark); margin-bottom: 2rem;
+  padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
+}
+
+.artist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
+
+.artist-card { position: relative; cursor: pointer; }
+.artist-card-image {
+  aspect-ratio: 3/4; background: var(--grey-mid); position: relative;
+  overflow: hidden; margin-bottom: 0.8rem;
+}
+.artist-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out); }
+.artist-card:hover .artist-card-image img { transform: scale(1.05); }
+
+.artist-card-image::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.4) 100%);
+  opacity: 0; transition: opacity 0.4s; z-index: 1;
+}
+.artist-card:hover .artist-card-image::before { opacity: 1; }
+
+.artist-card-name { font-family: var(--font-serif); font-size: 1rem; font-weight: 500; transition: color 0.3s; }
+.artist-card:hover .artist-card-name { color: var(--gold-dark); }
+.artist-card-role { font-size: 0.72rem; color: var(--text-secondary); letter-spacing: 0.05em; margin-top: 0.15rem; }
+
+.artist-card-arrow {
+  position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px;
+  background: var(--gold); display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(8px); transition: all 0.4s var(--ease-out); z-index: 2;
+}
+.artist-card:hover .artist-card-arrow { opacity: 1; transform: translateY(0); }
+.artist-card-arrow svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2; }
+
+/* Placeholder colors for cards without images */
+.artist-card:nth-child(odd) .artist-card-image { background: linear-gradient(135deg, #D8D2C8, #C5BDAF); }
+.artist-card:nth-child(even) .artist-card-image { background: linear-gradient(135deg, #C9C3B8, #DDD8D0); }
+.artist-card:nth-child(3n) .artist-card-image { background: linear-gradient(135deg, #BDB7AB, #D5CFC5); }
+
+/* ═══ ABOUT ═══ */
+.about { padding: 10rem 3rem; position: relative; overflow: hidden; }
+.about-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+.about-left { position: sticky; top: 8rem; }
+
+.about-portrait {
+  width: 100%; max-width: 420px; margin-bottom: 3rem; position: relative;
+}
+.about-portrait img {
+  width: 100%; height: auto; filter: grayscale(0.15);
+}
+.about-portrait::after {
+  content: ''; position: absolute; inset: 0;
+  border: 1px solid var(--gold); transform: translate(12px, 12px); z-index: -1;
+}
+
+.about-quote {
+  font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 300; font-style: italic; line-height: 1.35; color: var(--text);
+  margin-bottom: 1.5rem; position: relative; padding-left: 2rem;
+}
+.about-quote::before {
+  content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0.5rem;
+  width: 2px; background: linear-gradient(180deg, var(--gold), var(--gold-light));
+}
+.about-attribution { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); padding-left: 2rem; }
+
+.about-right h3 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
+.about-text { font-size: 0.95rem; line-height: 1.9; color: var(--text-secondary); margin-bottom: 2rem; }
+
+.about-milestones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+.milestone-year { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+.milestone-text { font-size: 0.75rem; letter-spacing: 0.05em; color: var(--text-secondary); line-height: 1.5; }
+
+/* ═══ EXHIBITIONS ARCHIVE ═══ */
+.exhibitions { padding: 8rem 3rem; background: var(--black); color: #fff; }
+.exhibitions-inner { max-width: 1400px; margin: 0 auto; }
+.exhibitions .section-label { color: var(--gold); }
+.exhibitions .section-label::before { background: var(--gold); }
+.exhibitions .section-heading { color: #fff; margin-bottom: 4rem; }
+
+.exhibition-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+.exhibition-card { cursor: pointer; overflow: hidden; }
+.exhibition-card-image {
+  aspect-ratio: 4/5; position: relative; overflow: hidden; margin-bottom: 1.2rem; background: #1a1a1a;
+}
+.exhibition-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out), filter 0.4s; }
+.exhibition-card:hover .exhibition-card-image img { transform: scale(1.04); filter: brightness(1.1); }
+
+.exhibition-card-year { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.exhibition-card-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; line-height: 1.3; transition: color 0.3s; }
+.exhibition-card:hover .exhibition-card-title { color: var(--gold-light); }
+.exhibition-card-location { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; }
+
+.exhibitions-cta { text-align: center; margin-top: 4rem; }
+.btn-white { border-color: rgba(255,255,255,0.3); color: #fff; }
+.btn-white:hover { background: #fff; color: var(--black); border-color: #fff; }
+
+/* ═══ COLLECTION ═══ */
+.collection { padding: 8rem 3rem; }
+.collection-inner { max-width: 1400px; margin: 0 auto; }
+.collection-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+
+.collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+.collection-item { cursor: pointer; }
+.collection-item-image {
+  position: relative; overflow: hidden; margin-bottom: 0.8rem;
+  background: var(--grey-mid); transition: transform 0.5s var(--ease-out);
+}
+.collection-item:hover .collection-item-image { transform: translateY(-4px); }
+.collection-item-image img { width: 100%; height: auto; display: block; transition: transform 0.6s var(--ease-out); }
+.collection-item:hover .collection-item-image img { transform: scale(1.03); }
+
+.collection-item-artist { font-family: var(--font-serif); font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+.collection-item:hover .collection-item-artist { color: var(--gold-dark); }
+.collection-item-title { font-size: 0.75rem; color: var(--text-secondary); font-style: italic; margin-top: 0.1rem; }
+.collection-item-medium { font-size: 0.65rem; color: var(--text-secondary); letter-spacing: 0.05em; margin-top: 0.2rem; opacity: 0.7; }
+
+/* ═══ ART FAIRS ═══ */
+.fairs { padding: 8rem 3rem; background: var(--grey-light); }
+.fairs-inner { max-width: 1400px; margin: 0 auto; }
+.fairs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 4rem; }
+
+.fair-card {
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; padding: 2rem;
+  background: var(--white); border: 1px solid var(--border);
+  transition: all 0.4s var(--ease-out); cursor: pointer;
+}
+.fair-card:hover { border-color: var(--gold); box-shadow: 0 8px 40px rgba(184,157,79,0.08); }
+.fair-card-image { aspect-ratio: 4/3; overflow: hidden; background: #1a1a1a; }
+.fair-card-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.fair-card-info { display: flex; flex-direction: column; justify-content: center; }
+.fair-card-name { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem; transition: color 0.3s; }
+.fair-card:hover .fair-card-name { color: var(--gold-dark); }
+.fair-card-location { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.8rem; }
+.fair-card-desc { font-size: 0.8rem; line-height: 1.6; color: var(--text-secondary); }
+.fair-card-year { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-top: auto; padding-top: 1rem; }
+
+/* ═══ CONTACT ═══ */
+.contact { padding: 8rem 3rem; }
+.contact-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.contact-heading-area { grid-column: 1 / -1; margin-bottom: 2rem; }
+
+.contact-location {
+  padding: 3rem; border: 1px solid var(--border); position: relative;
+  transition: border-color 0.4s;
+}
+.contact-location:hover { border-color: var(--gold); }
+.contact-location::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s var(--ease-out);
+}
+.contact-location:hover::before { transform: scaleX(1); }
+
+.contact-city { font-family: var(--font-serif); font-size: 2rem; font-weight: 300; margin-bottom: 1.5rem; }
+.contact-detail { font-size: 0.85rem; line-height: 2; color: var(--text-secondary); }
+.contact-detail strong {
+  font-weight: 500; color: var(--text); font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; display: block;
+  margin-top: 1rem; margin-bottom: 0.2rem;
+}
+.contact-detail strong:first-child { margin-top: 0; }
+.contact-detail a { transition: color 0.3s; }
+.contact-detail a:hover { color: var(--gold-dark); }
+
+.contact-inquiry {
+  grid-column: 1 / -1; background: var(--grey-light); padding: 3rem;
+  display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;
+}
+.contact-inquiry p { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 300; }
+.contact-inquiry p span { color: var(--text-secondary); font-size: 0.85rem; font-family: var(--font-sans); display: block; margin-top: 0.3rem; }
+
+/* ═══ FOOTER ═══ */
+.footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 4rem 3rem; }
+.footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto; gap: 4rem; align-items: start; }
+
+.footer-brand {
+  font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #fff; margin-bottom: 1rem;
+}
+.footer-brand span { font-weight: 600; }
+.footer-tagline { font-size: 0.75rem; line-height: 1.6; max-width: 300px; }
+
+.footer-links h4 { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { font-size: 0.8rem; transition: color 0.3s; }
+.footer-links a:hover { color: #fff; }
+
+.footer-social { display: flex; gap: 1rem; margin-top: 1rem; }
+.footer-social a {
+  width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+}
+.footer-social a:hover { border-color: var(--gold); background: var(--gold); }
+.footer-social svg { width: 14px; height: 14px; fill: rgba(255,255,255,0.6); }
+.footer-social a:hover svg { fill: #fff; }
+
+.footer-bottom {
+  grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 2rem; padding-top: 2rem; display: flex;
+  justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.05em;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1024px) {
+  .exhibition-current-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .about-left { position: static; }
+  .about-milestones { grid-template-columns: repeat(4, 1fr); }
+  .exhibition-grid { grid-template-columns: repeat(2, 1fr); }
+  .collection-grid { grid-template-columns: repeat(3, 1fr); }
+  .fairs-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 1.2rem 1.5rem; }
+  .nav.scrolled { padding: 0.8rem 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .hero { min-height: 600px; }
+  .hero-content { padding: 0 1.5rem 4rem; }
+  .hero-scroll { display: none; }
+  .exhibition-current, .artists, .about, .exhibitions, .collection, .fairs, .contact { padding: 5rem 1.5rem; }
+  .exhibition-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .collection-grid { grid-template-columns: repeat(2, 1fr); }
+  .artist-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .about-milestones { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-inquiry { flex-direction: column; gap: 1.5rem; text-align: center; }
+  .fair-card { grid-template-columns: 1fr; gap: 1rem; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; }
+  .gallery-strip-inner img { height: 220px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2.8rem; }
+  .hero-tagline { font-size: 0.65rem; }
+  .hero-tagline .dot { margin: 0 0.4rem; }
+  .artist-grid { grid-template-columns: 1fr 1fr; }
+  .collection-grid { grid-template-columns: 1fr 1fr; }
+  .about-milestones { grid-template-columns: 1fr 1fr; }
+  .gallery-strip-inner img { height: 160px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SVG filter: turns black to white, preserves red -->
+<svg style="position:absolute;width:0;height:0;">
+  <defs>
+    <filter id="logo-dark-bg" color-interpolation-filters="sRGB">
+      <!-- Extract red channel dominance: red pixels have high R, low G/B -->
+      <!-- Matrix: if R is high and G,B are low → keep original; otherwise invert -->
+      <feColorMatrix type="matrix" values="
+        -1  0  0  0  1
+         0 -1  0  0  1
+         0  0 -1  0  1
+         0  0  0  1  0
+      " in="SourceGraphic" result="inverted"/>
+      <!-- Now red(~230,51,51) inverted = (~25,204,204) = cyan -->
+      <!-- Black(0,0,0) inverted = (255,255,255) = white ✓ -->
+      <!-- We need to turn cyan back to red -->
+      <!-- Use component transfer to map: high G+B with low R → swap to high R -->
+      <feColorMatrix type="matrix" values="
+         0  0.5  0.5  0  0
+         0  0    0    0  0
+         0  0    0    0  0
+         0  0    0    1  0
+      " in="inverted" result="redChannel"/>
+      <!-- Detect if pixel was originally red-ish (high R, low G, low B) -->
+      <feColorMatrix type="matrix" values="
+         1 -1 -1  0  0.2
+         0  0  0  0  0
+         0  0  0  0  0
+         0  0  0  1  0
+      " in="SourceGraphic" result="redMask"/>
+      <!-- Composite: use original red where mask is active, inverted elsewhere -->
+      <!-- Simpler approach: just do the full inversion and re-tint -->
+      <feColorMatrix type="matrix" values="
+        -1  1  1  0  0.5
+         0 -1  0  0  1
+         0  0 -1  0  1
+         0  0  0  1  0
+      " in="SourceGraphic"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <img src="assets/images/mark-hachem-logo-white.png" alt="Mark Hachem Gallery" class="nav-logo-white">
+    <img src="assets/images/mark-hachem-logo.png" alt="Mark Hachem Gallery" class="nav-logo-dark">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#artists">Artists</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#exhibitions">Exhibitions</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#fairs">Fairs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Inquire</a>
+  <div class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="assets/images/hero-main.jpg" alt="Mark Hachem Gallery">
+  </div>
+  <div class="hero-kinetic"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <p class="hero-est">Est. Paris, 1996</p>
+    <h1 class="hero-title"><strong>Mark</strong><br>Hachem</h1>
+    <p class="hero-tagline">
+      Kinetic Art<span class="dot">&middot;</span>Arab Modernism<span class="dot">&middot;</span>Contemporary Art
+    </p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ CURRENT EXHIBITION ═══ -->
+<section class="exhibition-current" id="current">
+  <div class="exhibition-current-inner">
+    <div class="exhibition-image reveal">
+      <img src="assets/images/cruz-diez-chromointerference.png" alt="Chromointerférence — Carlos Cruz-Diez">
+      <span class="exhibition-image-label">Current Exhibition</span>
+    </div>
+    <div class="exhibition-details">
+      <div class="section-label reveal">Now Showing</div>
+      <div class="exhibition-dates reveal reveal-delay-1">On View — Paris Gallery</div>
+      <h2 class="exhibition-title reveal reveal-delay-2">Chromatic<br>Territories</h2>
+      <p class="exhibition-artist reveal reveal-delay-3">Carlos Cruz-Diez, Jesús Rafael Soto &amp; Dario Pérez-Flores</p>
+      <p class="exhibition-desc reveal reveal-delay-4">
+        An exploration of chromatic perception and kinetic form, tracing the dialogue between three masters
+        who redefined how we experience color and movement in space. Featuring Physichromies, Penetrables,
+        and Prochromatiques from the gallery's permanent holdings alongside key loans.
+      </p>
+      <a href="#" class="btn btn-gold reveal reveal-delay-5">
+        View Exhibition
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY IMAGES STRIP ═══ -->
+<section class="gallery-strip">
+  <div class="gallery-strip-inner">
+    <!-- Real gallery images repeated for seamless scroll -->
+    <img src="assets/images/abdalla-standing-woman.jpg" alt="Hamed Abdalla — Standing Woman">
+    <img src="assets/images/soto-vibration.jpg" alt="Kinetic artwork">
+    <img src="assets/images/lam-sans-titre-1973.png" alt="Wifredo Lam — Sans Titre, 1973">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-installation-view-mark-hachem-feature.jpg" alt="Mark Hachem Gallery — Installation View">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-exhibition-view.jpg" alt="Mark Hachem Gallery — Exhibition View">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-installation2.jpg" alt="Mark Hachem Gallery — Installation">
+    <img src="https://images.squarespace-cdn.com/content/v1/5ea05de815fe1b3b2f17f085/41ed6541-7274-4325-9b5d-a1fdd7495acd/YOSHIYUKI+MIURA.jpg" alt="Yoshiyuki Miura — Courtesy Mark Hachem">
+    <!-- Duplicate for seamless loop -->
+    <img src="assets/images/abdalla-standing-woman.jpg" alt="Hamed Abdalla — Standing Woman">
+    <img src="assets/images/soto-vibration.jpg" alt="Kinetic artwork">
+    <img src="assets/images/lam-sans-titre-1973.png" alt="Wifredo Lam — Sans Titre, 1973">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-installation-view-mark-hachem-feature.jpg" alt="Mark Hachem Gallery — Installation View">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-exhibition-view.jpg" alt="Mark Hachem Gallery — Exhibition View">
+    <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-installation2.jpg" alt="Mark Hachem Gallery — Installation">
+    <img src="https://images.squarespace-cdn.com/content/v1/5ea05de815fe1b3b2f17f085/41ed6541-7274-4325-9b5d-a1fdd7495acd/YOSHIYUKI+MIURA.jpg" alt="Yoshiyuki Miura — Courtesy Mark Hachem">
+  </div>
+</section>
+
+<!-- ═══ ARTISTS ═══ -->
+<section class="artists" id="artists">
+  <div class="artists-inner">
+    <div class="artists-header">
+      <div>
+        <div class="section-label reveal">Represented Artists</div>
+        <h2 class="section-heading reveal reveal-delay-1">A Dialogue Across<br><em>Continents &amp; Generations</em></h2>
+      </div>
+      <a href="#" class="btn reveal reveal-delay-2">
+        View All
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Kinetic Art -->
+    <div class="artist-category reveal">
+      <h3 class="artist-category-title">Kinetic Art &amp; Op Art</h3>
+      <div class="artist-grid">
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Jesús Rafael Soto</p>
+          <p class="artist-card-role">Venezuela, 1923–2005</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <img src="assets/images/cruz-diez-chromointerference.png" alt="Carlos Cruz-Diez">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Carlos Cruz-Diez</p>
+          <p class="artist-card-role">Venezuela, 1923–2019</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Dario Pérez-Flores</p>
+          <p class="artist-card-role">Venezuela, 1936–2024</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Victor Vasarely</p>
+          <p class="artist-card-role">Hungary–France, 1906–1997</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Miguel Chevalier</p>
+          <p class="artist-card-role">France, b. 1959</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <img src="https://images.squarespace-cdn.com/content/v1/5ea05de815fe1b3b2f17f085/41ed6541-7274-4325-9b5d-a1fdd7495acd/YOSHIYUKI+MIURA.jpg" alt="Yoshiyuki Miura">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Yoshiyuki Miura</p>
+          <p class="artist-card-role">Japan</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Julio Le Parc</p>
+          <p class="artist-card-role">Argentina, b. 1928</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Antonio Asis</p>
+          <p class="artist-card-role">Argentina, 1932–2019</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Rafael Barrios</p>
+          <p class="artist-card-role">Venezuela</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Jose Margulis</p>
+          <p class="artist-card-role">Venezuela</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Patrick Hughes</p>
+          <p class="artist-card-role">United Kingdom, b. 1939</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Patrick Rubinstein</p>
+          <p class="artist-card-role">France</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arab Modernism -->
+    <div class="artist-category reveal">
+      <h3 class="artist-category-title">Arab Modernism &amp; Modern Masters</h3>
+      <div class="artist-grid">
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Helen Khal</p>
+          <p class="artist-card-role">Lebanon, 1923–2009</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Leila Nseir</p>
+          <p class="artist-card-role">Syria, b. 1941</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Hussein Madi</p>
+          <p class="artist-card-role">Lebanon, b. 1938</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <img src="assets/images/abdalla-standing-woman.jpg" alt="Hamed Abdalla — Standing Woman">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Hamed Abdalla</p>
+          <p class="artist-card-role">Egypt, 1917–1985 · Estate</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Alfred Basbous</p>
+          <p class="artist-card-role">Lebanon, 1924–2006 · Estate</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Ahmad Moualla</p>
+          <p class="artist-card-role">Syria, b. 1958</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <img src="assets/images/lam-sans-titre-1973.png" alt="Wifredo Lam">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Wifredo Lam</p>
+          <p class="artist-card-role">Cuba, 1902–1982</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Philippe Hiquily</p>
+          <p class="artist-card-role">France, 1925–2013</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Roberto Matta</p>
+          <p class="artist-card-role">Chile, 1911–2002</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Salvador Dalí</p>
+          <p class="artist-card-role">Spain, 1904–1989</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contemporary -->
+    <div class="artist-category reveal">
+      <h3 class="artist-category-title">Contemporary</h3>
+      <div class="artist-grid">
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Chaouki Chamoun</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Fatima El Hajj</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Zena Assi</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Leila Shawa</p>
+          <p class="artist-card-role">Palestine</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Nedim Kufi</p>
+          <p class="artist-card-role">Iraq</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Nasreddine Bennacer</p>
+          <p class="artist-card-role">Algeria</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Ghazi Baker</p>
+          <p class="artist-card-role">Jordan</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Wolfgang Stiller</p>
+          <p class="artist-card-role">Germany</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Victor Ekpuk</p>
+          <p class="artist-card-role">Nigeria</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Mathias Schmied</p>
+          <p class="artist-card-role">Chile</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Charbel Samuel Aoun</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Yves Hayat</p>
+          <p class="artist-card-role">France</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Jean-Paul Donadini</p>
+          <p class="artist-card-role">France</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Mauro Corda</p>
+          <p class="artist-card-role">France</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Dominique Polles</p>
+          <p class="artist-card-role">France</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Irene Ghanem</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Stefano Bombardieri</p>
+          <p class="artist-card-role">Italy</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Marwan Chamaa</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Bassam Kyrillos</p>
+          <p class="artist-card-role">Lebanon</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Aysegul Dinckok</p>
+          <p class="artist-card-role">Turkey</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <div class="section-label reveal">Philosophy</div>
+      <div class="about-portrait reveal reveal-delay-1">
+        <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem.jpg" alt="Mark Hachem">
+      </div>
+      <blockquote class="about-quote reveal reveal-delay-2">
+        &ldquo;Sharing my name means being committed to my artists and to my collectors.&rdquo;
+      </blockquote>
+      <p class="about-attribution reveal reveal-delay-3">&mdash; Mark Hachem</p>
+    </div>
+    <div class="about-right">
+      <h3 class="reveal">Three Decades of Vision</h3>
+      <p class="about-text reveal reveal-delay-1">
+        In 1996, Mark Hachem opened his first contemporary art gallery in the heart of Le Marais, Paris.
+        His inaugural exhibition &mdash; a group show featuring Jesús Rafael Soto, Carlos Cruz-Diez,
+        and Dario Pérez-Flores &mdash; established the gallery's foundational commitment to kinetic art,
+        a movement that continues to define its identity three decades later.
+      </p>
+      <p class="about-text reveal reveal-delay-2">
+        With an MBA from the Sorbonne and a deep instinct for cross-cultural dialogue, Hachem built a
+        program that bridges Latin American kinetic masters with Arab modernists and a new generation
+        of contemporary voices. The gallery explores the intersections between these traditions,
+        revealing unexpected connections across continents and generations &mdash; particularly the
+        artistic affinities between Egypt, Syria, Lebanon and Brazil, Argentina, Colombia.
+      </p>
+      <p class="about-text reveal reveal-delay-3">
+        With more than 200 exhibitions to his credit and gallery spaces in Paris, New York, and Beirut,
+        Mark Hachem has acquired a robust international reputation for his dynamism and professionalism.
+        Beyond the gallery, he serves as adviser and curator to private collectors and public institutions,
+        including exhibitions at the Heydar Aliyev Center in Baku, Azerbaijan. The gallery has shown
+        works by Picasso, Arman, César, Christo, Botero, Matta, and Wifredo Lam, alongside its
+        dedicated roster of emerging and mid-career artists.
+      </p>
+      <div class="about-milestones reveal reveal-delay-4">
+        <div class="milestone">
+          <div class="milestone-year">1996</div>
+          <div class="milestone-text">Founded in Paris<br>Le Marais</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">2007</div>
+          <div class="milestone-text">Expansion to<br>New York</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">2010</div>
+          <div class="milestone-text">Beirut gallery<br>opens</div>
+        </div>
+        <div class="milestone">
+          <div class="milestone-year">200+</div>
+          <div class="milestone-text">Exhibitions<br>worldwide</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXHIBITIONS ARCHIVE ═══ -->
+<section class="exhibitions" id="exhibitions">
+  <div class="exhibitions-inner">
+    <div class="section-label reveal">Exhibition Archive</div>
+    <h2 class="section-heading reveal reveal-delay-1">Over 200 Exhibitions<br>Across Three Decades</h2>
+    <div class="exhibition-grid">
+      <div class="exhibition-card reveal reveal-delay-1">
+        <div class="exhibition-card-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/6b96efe8-3a94-4add-8531-84daf2a2e7c7.jpg" alt="Middle Eastern Modern & Contemporary">
+        </div>
+        <div class="exhibition-card-year">2025</div>
+        <div class="exhibition-card-title">Middle Eastern Modern &amp; Contemporary</div>
+        <div class="exhibition-card-location">Paris</div>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-2">
+        <div class="exhibition-card-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/f974ea62-faa6-4d80-b253-71e0a544b9cf.jpg" alt="Prisons Contemporaines">
+        </div>
+        <div class="exhibition-card-year">2024</div>
+        <div class="exhibition-card-title">Prisons Contemporaines</div>
+        <div class="exhibition-card-location">Paris</div>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-3">
+        <div class="exhibition-card-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/874f6949-cfff-467d-a767-b98a62cb533b.jpg" alt="Taking the long way home">
+        </div>
+        <div class="exhibition-card-year">2024</div>
+        <div class="exhibition-card-title">Taking the Long Way Home</div>
+        <div class="exhibition-card-location">Beirut</div>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-4">
+        <div class="exhibition-card-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/65385601-b54e-4aa1-9aa7-fbd621174076.jpg" alt="Conversations">
+        </div>
+        <div class="exhibition-card-year">2023</div>
+        <div class="exhibition-card-title">Conversations</div>
+        <div class="exhibition-card-location">Paris</div>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-5">
+        <div class="exhibition-card-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/b4ce1199-c0d0-4c51-a1d5-db33380594ff.jpg" alt="Les planètes Ambiguës">
+        </div>
+        <div class="exhibition-card-year">2023</div>
+        <div class="exhibition-card-title">Les Planètes Ambiguës</div>
+        <div class="exhibition-card-location">Paris</div>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-6">
+        <div class="exhibition-card-image">
+          <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-installation-view-mark-hachem-feature.jpg" alt="Gallery Installation">
+        </div>
+        <div class="exhibition-card-year">2022</div>
+        <div class="exhibition-card-title">Kinetic Dialogues: Soto, Cruz-Diez, Vasarely</div>
+        <div class="exhibition-card-location">Paris</div>
+      </div>
+    </div>
+    <div class="exhibitions-cta reveal">
+      <a href="#" class="btn btn-white">
+        View Full Archive
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COLLECTION ═══ -->
+<section class="collection" id="collection">
+  <div class="collection-inner">
+    <div class="collection-header">
+      <div>
+        <div class="section-label reveal">Collection</div>
+        <h2 class="section-heading reveal reveal-delay-1">Selected<br><em>Available Works</em></h2>
+      </div>
+      <a href="https://www.artsy.net/partner/mark-hachem-gallery/works" target="_blank" rel="noopener" class="btn reveal reveal-delay-2">
+        View on Artsy
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="collection-grid">
+      <div class="collection-item reveal reveal-delay-1">
+        <div class="collection-item-image">
+          <img src="assets/images/cruz-diez-chromointerference.png" alt="Carlos Cruz-Diez — Chromointerférence">
+        </div>
+        <p class="collection-item-artist">Carlos Cruz-Diez</p>
+        <p class="collection-item-title">Chromointerférence, Paris</p>
+        <p class="collection-item-medium">Chromography on aluminum</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-2">
+        <div class="collection-item-image">
+          <img src="assets/images/soto-vibration.jpg" alt="Kinetic artwork">
+        </div>
+        <p class="collection-item-artist">Jesús Rafael Soto</p>
+        <p class="collection-item-title">Vibración</p>
+        <p class="collection-item-medium">Mixed media on wood</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-3">
+        <div class="collection-item-image">
+          <img src="assets/images/abdalla-standing-woman.jpg" alt="Hamed Abdalla — Standing Woman">
+        </div>
+        <p class="collection-item-artist">Hamed Abdalla</p>
+        <p class="collection-item-title">Standing Woman, 91.5 × 43 cm</p>
+        <p class="collection-item-medium">Mixed media</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-4">
+        <div class="collection-item-image">
+          <img src="assets/images/lam-sans-titre-1973.png" alt="Wifredo Lam — Sans Titre, 1973">
+        </div>
+        <p class="collection-item-artist">Wifredo Lam</p>
+        <p class="collection-item-title">Sans Titre, 1973</p>
+        <p class="collection-item-medium">Pastel et fusain sur papier, 63 × 48 cm</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-1">
+        <div class="collection-item-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/3046560.jpg" alt="Irene Ghanem — Landing">
+        </div>
+        <p class="collection-item-artist">Irene Ghanem</p>
+        <p class="collection-item-title">Landing, 2025</p>
+        <p class="collection-item-medium">Price on request</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-2">
+        <div class="collection-item-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/3046559.jpg" alt="Irene Ghanem — The Pomegranate Tree">
+        </div>
+        <p class="collection-item-artist">Irene Ghanem</p>
+        <p class="collection-item-title">The Pomegranate Tree, 2025</p>
+        <p class="collection-item-medium">Price on request</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-3">
+        <div class="collection-item-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/3046552.jpg" alt="Aïda Halloum — Cactus">
+        </div>
+        <p class="collection-item-artist">Aïda Halloum</p>
+        <p class="collection-item-title">Cactus, 2022</p>
+        <p class="collection-item-medium">Price on request</p>
+      </div>
+      <div class="collection-item reveal reveal-delay-4">
+        <div class="collection-item-image">
+          <img src="https://images.artnet.com/gallery-images/424745506/3046554.jpg" alt="Irene Ghanem — Un Matin au Jardin">
+        </div>
+        <p class="collection-item-artist">Irene Ghanem</p>
+        <p class="collection-item-title">Un Matin au Jardin, 2025</p>
+        <p class="collection-item-medium">Price on request</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ART FAIRS ═══ -->
+<section class="fairs" id="fairs">
+  <div class="fairs-inner">
+    <div class="section-label reveal">Art Fairs</div>
+    <h2 class="section-heading reveal reveal-delay-1">International<br><em>Fair Participation</em></h2>
+    <div class="fairs-grid">
+      <div class="fair-card reveal reveal-delay-1">
+        <div class="fair-card-image">
+          <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-installation2.jpg" alt="Mark Hachem at Art Basel">
+        </div>
+        <div class="fair-card-info">
+          <div class="fair-card-name">Art Basel</div>
+          <div class="fair-card-location">Basel, Switzerland</div>
+          <div class="fair-card-desc">The world's premier modern and contemporary art fair, where Mark Hachem Gallery presents its strongest kinetic and contemporary holdings.</div>
+          <div class="fair-card-year">Recurring Participant</div>
+        </div>
+      </div>
+      <div class="fair-card reveal reveal-delay-2">
+        <div class="fair-card-image">
+          <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-installation-view-mark-hachem-feature.jpg" alt="Mark Hachem at VOLTA">
+        </div>
+        <div class="fair-card-info">
+          <div class="fair-card-name">VOLTA Art Fair</div>
+          <div class="fair-card-location">Basel &amp; New York</div>
+          <div class="fair-card-desc">A curated platform for contemporary positions, featuring solo and dual presentations from the gallery's emerging roster.</div>
+          <div class="fair-card-year">Booth C01</div>
+        </div>
+      </div>
+      <div class="fair-card reveal reveal-delay-3">
+        <div class="fair-card-image">
+          <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-mark-hachem-exhibition-view.jpg" alt="Mark Hachem at ZONAMACO">
+        </div>
+        <div class="fair-card-info">
+          <div class="fair-card-name">ZONAMACO</div>
+          <div class="fair-card-location">Mexico City</div>
+          <div class="fair-card-desc">Latin America's leading art fair, connecting the gallery's kinetic art program with its roots in the Venezuelan and Latin American avant-garde.</div>
+          <div class="fair-card-year">2024 Participant</div>
+        </div>
+      </div>
+      <div class="fair-card reveal reveal-delay-4">
+        <div class="fair-card-image">
+          <img src="https://selectionsarts.com/wp-content/uploads/IMG_1365.jpeg" alt="Mark Hachem at Art Miami">
+        </div>
+        <div class="fair-card-info">
+          <div class="fair-card-name">Art Miami</div>
+          <div class="fair-card-location">Miami, USA</div>
+          <div class="fair-card-desc">Showcasing Dalí, Cruz-Diez, Hiquily, and Miura alongside the gallery's emerging contemporary artists. Booth AM 316.</div>
+          <div class="fair-card-year">Booth AM 316</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-heading-area">
+      <div class="section-label reveal">Visit Us</div>
+      <h2 class="section-heading reveal reveal-delay-1">Three Cities,<br><em>One Vision</em></h2>
+    </div>
+
+    <div class="contact-location reveal reveal-delay-2">
+      <h3 class="contact-city">Paris</h3>
+      <div class="contact-detail">
+        <strong>Address</strong>
+        44 Rue des Tournelles<br>
+        75004 Paris, France
+        <strong>Telephone</strong>
+        <a href="tel:+33142769493">+33 (0)1 42 76 94 93</a>
+        <strong>Email</strong>
+        <a href="mailto:paris@markhachem.com">paris@markhachem.com</a>
+        <strong>Hours</strong>
+        Daily, 10:30 – 20:00
+      </div>
+    </div>
+
+    <div class="contact-location reveal reveal-delay-3">
+      <h3 class="contact-city">Beirut</h3>
+      <div class="contact-detail">
+        <strong>Address</strong>
+        Capital Gardens Building<br>
+        Salloum Street, Minet al-Hosn<br>
+        Beirut, Lebanon
+        <strong>Telephone</strong>
+        <a href="tel:+9611999313">+961 1 999 313</a>
+        <strong>Email</strong>
+        <a href="mailto:beirut@markhachem.com">beirut@markhachem.com</a>
+        <strong>Hours</strong>
+        Monday – Saturday, 10:30 – 19:30
+      </div>
+    </div>
+
+    <div class="contact-inquiry reveal">
+      <p>
+        Interested in a work or exhibition?
+        <span>We welcome inquiries from collectors, institutions, and press.</span>
+      </p>
+      <a href="mailto:paris@markhachem.com" class="btn btn-gold">
+        Send Inquiry
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><img src="assets/images/mark-hachem-logo-white.png" alt="Mark Hachem Gallery" style="height: 22px; width: auto;"></div>
+      <p class="footer-tagline">A platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996. Galleries in Paris, New York, and Beirut.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/markhachemgallery/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.artsy.net/partner/mark-hachem-gallery" target="_blank" rel="noopener" aria-label="Artsy">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </a>
+        <a href="https://www.artnet.com/galleries/galerie-mark-hachem/" target="_blank" rel="noopener" aria-label="Artnet">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/GalerieMarkHachem/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Gallery</h4>
+      <ul>
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#exhibitions">Exhibitions</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#fairs">Art Fairs</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:paris@markhachem.com">Press Inquiries</a></li>
+        <li><a href="#">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Mark Hachem Gallery. All rights reserved.</span>
+      <span>Paris &middot; New York &middot; Beirut</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.pageYOffset > 80);
+}, { passive: true });
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.querySelector('.nav-links');
+const navCta = document.querySelector('.nav-cta');
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.style.display === 'flex';
+  navLinks.style.display = isOpen ? 'none' : 'flex';
+  navLinks.style.flexDirection = isOpen ? '' : 'column';
+  navLinks.style.position = isOpen ? '' : 'absolute';
+  navLinks.style.top = isOpen ? '' : '100%';
+  navLinks.style.left = isOpen ? '' : '0';
+  navLinks.style.right = isOpen ? '' : '0';
+  navLinks.style.background = isOpen ? '' : 'rgba(250,250,248,0.98)';
+  navLinks.style.padding = isOpen ? '' : '2rem';
+  navLinks.style.gap = isOpen ? '' : '1.5rem';
+  navLinks.style.borderBottom = isOpen ? '' : '1px solid #E0DDD8';
+  if (!isOpen) {
+    navLinks.querySelectorAll('a').forEach(a => a.style.color = '#1A1A1A');
+  }
+});
+</script>
+
+</body>
+</html>
