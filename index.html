@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mark Hachem Gallery — Kinetic Art · Arab Modernism · Contemporary Art</title>
-<meta name="description" content="Mark Hachem Gallery — a platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996. Locations in Paris and Beirut.">
+<meta name="description" content="Mark Hachem Gallery — a platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996. Locations in Paris, New York, and Beirut.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -381,7 +381,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ═══ CONTACT ═══ */
 .contact { padding: 8rem 3rem; }
-.contact-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.contact-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
 .contact-heading-area { grid-column: 1 / -1; margin-bottom: 2rem; }
 
 .contact-location {
@@ -454,6 +454,7 @@ a { color: inherit; text-decoration: none; }
   .exhibition-grid { grid-template-columns: repeat(2, 1fr); }
   .collection-grid { grid-template-columns: repeat(3, 1fr); }
   .fairs-grid { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -533,14 +534,14 @@ a { color: inherit; text-decoration: none; }
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-logo">
+  <a href="#top" class="nav-logo">
     <img src="assets/images/mark-hachem-logo-white.png" alt="Mark Hachem Gallery" class="nav-logo-white">
     <img src="assets/images/mark-hachem-logo.png" alt="Mark Hachem Gallery" class="nav-logo-dark">
   </a>
   <ul class="nav-links">
-    <li><a href="#artists">Artists</a></li>
+    <li><a href="artists.html">Artists</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#exhibitions">Exhibitions</a></li>
+    <li><a href="exhibitions.html">Exhibitions</a></li>
     <li><a href="#collection">Collection</a></li>
     <li><a href="#fairs">Fairs</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -552,7 +553,7 @@ a { color: inherit; text-decoration: none; }
 </nav>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-bg">
     <img src="assets/images/hero-main.jpg" alt="Mark Hachem Gallery">
   </div>
@@ -626,26 +627,19 @@ a { color: inherit; text-decoration: none; }
         <div class="section-label reveal">Represented Artists</div>
         <h2 class="section-heading reveal reveal-delay-1">A Dialogue Across<br><em>Continents &amp; Generations</em></h2>
       </div>
-      <a href="#" class="btn reveal reveal-delay-2">
-        View All
+      <a href="artists.html" class="btn reveal reveal-delay-2">
+        View All 53 Artists
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
 
-    <!-- Kinetic Art -->
+    <!-- Modern Masters -->
     <div class="artist-category reveal">
-      <h3 class="artist-category-title">Kinetic Art &amp; Op Art</h3>
+      <h3 class="artist-category-title">Modern Masters</h3>
       <div class="artist-grid">
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Jesús Rafael Soto</p>
-          <p class="artist-card-role">Venezuela, 1923–2005</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <img src="assets/images/cruz-diez-chromointerference.png" alt="Carlos Cruz-Diez">
+            <img src="assets/images/artists/carlos-cruz-diez.jpg" alt="Carlos Cruz Diez">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Carlos Cruz-Diez</p>
@@ -653,49 +647,39 @@ a { color: inherit; text-decoration: none; }
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Dario Pérez-Flores</p>
-          <p class="artist-card-role">Venezuela, 1936–2024</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
+            <img src="assets/images/artists/victor-vasarely.jpg" alt="Victor Vasarely">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Victor Vasarely</p>
-          <p class="artist-card-role">Hungary–France, 1906–1997</p>
+          <p class="artist-card-role">Hungary&ndash;France, 1906&ndash;1997</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/dario-perez-flores.jpg" alt="Dario Perez-Flores">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Miguel Chevalier</p>
-          <p class="artist-card-role">France, b. 1959</p>
+          <p class="artist-card-name">Dario P&eacute;rez-Flores</p>
+          <p class="artist-card-role">Venezuela, 1936&ndash;2024</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
-            <img src="https://images.squarespace-cdn.com/content/v1/5ea05de815fe1b3b2f17f085/41ed6541-7274-4325-9b5d-a1fdd7495acd/YOSHIYUKI+MIURA.jpg" alt="Yoshiyuki Miura">
+            <img src="assets/images/artists/philippe-hiquily.jpg" alt="Philippe Hiquily">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Yoshiyuki Miura</p>
-          <p class="artist-card-role">Japan</p>
+          <p class="artist-card-name">Philippe Hiquily</p>
+          <p class="artist-card-role">France, 1925&ndash;2013</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/roberto-matta.jpg" alt="Roberto Matta">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Julio Le Parc</p>
-          <p class="artist-card-role">Argentina, b. 1928</p>
+          <p class="artist-card-name">Roberto Matta</p>
+          <p class="artist-card-role">Chile, 1911&ndash;2002</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Antonio Asis</p>
-          <p class="artist-card-role">Argentina, 1932–2019</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
+            <img src="assets/images/artists/rafael-barrios.jpg" alt="Rafael Barrios">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Rafael Barrios</p>
@@ -703,103 +687,19 @@ a { color: inherit; text-decoration: none; }
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Jose Margulis</p>
-          <p class="artist-card-role">Venezuela</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Patrick Hughes</p>
-          <p class="artist-card-role">United Kingdom, b. 1939</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Patrick Rubinstein</p>
-          <p class="artist-card-role">France</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Arab Modernism -->
-    <div class="artist-category reveal">
-      <h3 class="artist-category-title">Arab Modernism &amp; Modern Masters</h3>
-      <div class="artist-grid">
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Helen Khal</p>
-          <p class="artist-card-role">Lebanon, 1923–2009</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Leila Nseir</p>
-          <p class="artist-card-role">Syria, b. 1941</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Hussein Madi</p>
-          <p class="artist-card-role">Lebanon, b. 1938</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <img src="assets/images/abdalla-standing-woman.jpg" alt="Hamed Abdalla — Standing Woman">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Hamed Abdalla</p>
-          <p class="artist-card-role">Egypt, 1917–1985 · Estate</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
+            <img src="assets/images/artists/alfred-basbous.jpg" alt="Alfred Basbous">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Alfred Basbous</p>
-          <p class="artist-card-role">Lebanon, 1924–2006 · Estate</p>
+          <p class="artist-card-role">Lebanon, 1924&ndash;2006</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/helen-khal.jpg" alt="Helen Khal">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Ahmad Moualla</p>
-          <p class="artist-card-role">Syria, b. 1958</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <img src="assets/images/lam-sans-titre-1973.png" alt="Wifredo Lam">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Wifredo Lam</p>
-          <p class="artist-card-role">Cuba, 1902–1982</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Philippe Hiquily</p>
-          <p class="artist-card-role">France, 1925–2013</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Roberto Matta</p>
-          <p class="artist-card-role">Chile, 1911–2002</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Salvador Dalí</p>
-          <p class="artist-card-role">Spain, 1904–1989</p>
+          <p class="artist-card-name">Helen Khal</p>
+          <p class="artist-card-role">Lebanon, 1923&ndash;2009</p>
         </div>
       </div>
     </div>
@@ -810,97 +710,23 @@ a { color: inherit; text-decoration: none; }
       <div class="artist-grid">
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Chaouki Chamoun</p>
-          <p class="artist-card-role">Lebanon</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Fatima El Hajj</p>
-          <p class="artist-card-role">Lebanon</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Zena Assi</p>
-          <p class="artist-card-role">Lebanon</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Leila Shawa</p>
-          <p class="artist-card-role">Palestine</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Nedim Kufi</p>
-          <p class="artist-card-role">Iraq</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Nasreddine Bennacer</p>
-          <p class="artist-card-role">Algeria</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
+            <img src="assets/images/artists/ghazi-baker.jpg" alt="Ghazi Baker">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Ghazi Baker</p>
-          <p class="artist-card-role">Jordan</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Wolfgang Stiller</p>
-          <p class="artist-card-role">Germany</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Victor Ekpuk</p>
-          <p class="artist-card-role">Nigeria</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Mathias Schmied</p>
-          <p class="artist-card-role">Chile</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Charbel Samuel Aoun</p>
           <p class="artist-card-role">Lebanon</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/sara-shamma.jpg" alt="Sara Shamma">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Yves Hayat</p>
-          <p class="artist-card-role">France</p>
+          <p class="artist-card-name">Sara Shamma</p>
+          <p class="artist-card-role">Syria</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Jean-Paul Donadini</p>
-          <p class="artist-card-role">France</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
+            <img src="assets/images/artists/mauro-corda.jpg" alt="Mauro Corda">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
           <p class="artist-card-name">Mauro Corda</p>
@@ -908,45 +734,43 @@ a { color: inherit; text-decoration: none; }
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/wolfgang-stiller.jpg" alt="Wolfgang Stiller">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Dominique Polles</p>
+          <p class="artist-card-name">Wolfgang Stiller</p>
+          <p class="artist-card-role">Germany</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-card-image">
+            <img src="assets/images/artists/yves-hayat.jpg" alt="Yves Hayat">
+            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
+          </div>
+          <p class="artist-card-name">Yves Hayat</p>
           <p class="artist-card-role">France</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/chaouki-chamoun.jpg" alt="Chaouki Chamoun">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Irene Ghanem</p>
+          <p class="artist-card-name">Chaouki Chamoun</p>
           <p class="artist-card-role">Lebanon</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/yoshiyuki-miura.jpg" alt="Yoshiyuki Miura">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Stefano Bombardieri</p>
-          <p class="artist-card-role">Italy</p>
+          <p class="artist-card-name">Yoshiyuki Miura</p>
+          <p class="artist-card-role">Japan</p>
         </div>
         <div class="artist-card">
           <div class="artist-card-image">
+            <img src="assets/images/artists/james-chedburn.jpg" alt="James Chedburn">
             <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
           </div>
-          <p class="artist-card-name">Marwan Chamaa</p>
-          <p class="artist-card-role">Lebanon</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Bassam Kyrillos</p>
-          <p class="artist-card-role">Lebanon</p>
-        </div>
-        <div class="artist-card">
-          <div class="artist-card-image">
-            <div class="artist-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>
-          </div>
-          <p class="artist-card-name">Aysegul Dinckok</p>
-          <p class="artist-card-role">Turkey</p>
+          <p class="artist-card-name">James Chedburn</p>
+          <p class="artist-card-role">United Kingdom</p>
         </div>
       </div>
     </div>
@@ -1014,60 +838,60 @@ a { color: inherit; text-decoration: none; }
 <!-- ═══ EXHIBITIONS ARCHIVE ═══ -->
 <section class="exhibitions" id="exhibitions">
   <div class="exhibitions-inner">
-    <div class="section-label reveal">Exhibition Archive</div>
-    <h2 class="section-heading reveal reveal-delay-1">Over 200 Exhibitions<br>Across Three Decades</h2>
+    <div class="section-label reveal">Past Exhibitions</div>
+    <h2 class="section-heading reveal reveal-delay-1">Recent Exhibitions</h2>
     <div class="exhibition-grid">
       <div class="exhibition-card reveal reveal-delay-1">
         <div class="exhibition-card-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/6b96efe8-3a94-4add-8531-84daf2a2e7c7.jpg" alt="Middle Eastern Modern & Contemporary">
+          <img src="assets/images/exhibitions/ceci-nest-pas-une-photo-yves-hayat.jpg" alt="Ceci n'est pas une photo — Yves Hayat">
         </div>
-        <div class="exhibition-card-year">2025</div>
-        <div class="exhibition-card-title">Middle Eastern Modern &amp; Contemporary</div>
+        <div class="exhibition-card-year">November 2025</div>
+        <div class="exhibition-card-title">&ldquo;Ceci n&rsquo;est pas une photo&rdquo; &mdash; Yves Hayat</div>
         <div class="exhibition-card-location">Paris</div>
       </div>
       <div class="exhibition-card reveal reveal-delay-2">
         <div class="exhibition-card-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/f974ea62-faa6-4d80-b253-71e0a544b9cf.jpg" alt="Prisons Contemporaines">
+          <img src="assets/images/exhibitions/entre-terre-et-mer-by-irene-ghanem.jpeg" alt="Entre Terre et Mer — Irene Ghanem">
         </div>
-        <div class="exhibition-card-year">2024</div>
-        <div class="exhibition-card-title">Prisons Contemporaines</div>
-        <div class="exhibition-card-location">Paris</div>
+        <div class="exhibition-card-year">October 2025</div>
+        <div class="exhibition-card-title">&ldquo;Entre Terre et Mer&rdquo; &mdash; Irene Ghanem</div>
+        <div class="exhibition-card-location">Beirut</div>
       </div>
       <div class="exhibition-card reveal reveal-delay-3">
         <div class="exhibition-card-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/874f6949-cfff-467d-a767-b98a62cb533b.jpg" alt="Taking the long way home">
+          <img src="assets/images/exhibitions/sailing-the-sevan-seas.jpg" alt="Sailing the Seven Seas — James Chedburn">
         </div>
-        <div class="exhibition-card-year">2024</div>
-        <div class="exhibition-card-title">Taking the Long Way Home</div>
-        <div class="exhibition-card-location">Beirut</div>
+        <div class="exhibition-card-year">April 2025</div>
+        <div class="exhibition-card-title">Sailing the Seven Seas &mdash; James Chedburn</div>
+        <div class="exhibition-card-location">Paris</div>
       </div>
       <div class="exhibition-card reveal reveal-delay-4">
         <div class="exhibition-card-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/65385601-b54e-4aa1-9aa7-fbd621174076.jpg" alt="Conversations">
+          <img src="assets/images/exhibitions/résonances-cinétiques.jpg" alt="Résonances Cinétiques">
         </div>
-        <div class="exhibition-card-year">2023</div>
-        <div class="exhibition-card-title">Conversations</div>
+        <div class="exhibition-card-year">February 2025</div>
+        <div class="exhibition-card-title">Résonances Cinétiques</div>
         <div class="exhibition-card-location">Paris</div>
       </div>
       <div class="exhibition-card reveal reveal-delay-5">
         <div class="exhibition-card-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/b4ce1199-c0d0-4c51-a1d5-db33380594ff.jpg" alt="Les planètes Ambiguës">
+          <img src="assets/images/exhibitions/behind-the-image-a-solo-show-by-daisy-abi-jaber.jpg" alt="Behind The Image — Daisy Abi Jaber">
         </div>
-        <div class="exhibition-card-year">2023</div>
-        <div class="exhibition-card-title">Les Planètes Ambiguës</div>
-        <div class="exhibition-card-location">Paris</div>
+        <div class="exhibition-card-year">January 2025</div>
+        <div class="exhibition-card-title">Behind The Image &mdash; Daisy Abi Jaber</div>
+        <div class="exhibition-card-location">Beirut</div>
       </div>
       <div class="exhibition-card reveal reveal-delay-6">
         <div class="exhibition-card-image">
-          <img src="https://selectionsarts.com/wp-content/uploads/selections-arts-installation-view-mark-hachem-feature.jpg" alt="Gallery Installation">
+          <img src="assets/images/exhibitions/jean-khalife-the-legacy.jpg" alt="Jean Khalife: The Legacy">
         </div>
-        <div class="exhibition-card-year">2022</div>
-        <div class="exhibition-card-title">Kinetic Dialogues: Soto, Cruz-Diez, Vasarely</div>
-        <div class="exhibition-card-location">Paris</div>
+        <div class="exhibition-card-year">January 2025</div>
+        <div class="exhibition-card-title">Jean Khalife: The Legacy</div>
+        <div class="exhibition-card-location">Beirut</div>
       </div>
     </div>
     <div class="exhibitions-cta reveal">
-      <a href="#" class="btn btn-white">
+      <a href="exhibitions.html" class="btn btn-white">
         View Full Archive
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
@@ -1123,7 +947,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="collection-item reveal reveal-delay-1">
         <div class="collection-item-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/3046560.jpg" alt="Irene Ghanem — Landing">
+          <img src="assets/images/collection/ghanem-landing.jpg" alt="Irene Ghanem — Landing">
         </div>
         <p class="collection-item-artist">Irene Ghanem</p>
         <p class="collection-item-title">Landing, 2025</p>
@@ -1131,7 +955,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="collection-item reveal reveal-delay-2">
         <div class="collection-item-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/3046559.jpg" alt="Irene Ghanem — The Pomegranate Tree">
+          <img src="assets/images/collection/ghanem-pomegranate-tree.jpg" alt="Irene Ghanem — The Pomegranate Tree">
         </div>
         <p class="collection-item-artist">Irene Ghanem</p>
         <p class="collection-item-title">The Pomegranate Tree, 2025</p>
@@ -1139,7 +963,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="collection-item reveal reveal-delay-3">
         <div class="collection-item-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/3046552.jpg" alt="Aïda Halloum — Cactus">
+          <img src="assets/images/collection/halloum-cactus.jpg" alt="Aïda Halloum — Cactus">
         </div>
         <p class="collection-item-artist">Aïda Halloum</p>
         <p class="collection-item-title">Cactus, 2022</p>
@@ -1147,7 +971,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="collection-item reveal reveal-delay-4">
         <div class="collection-item-image">
-          <img src="https://images.artnet.com/gallery-images/424745506/3046554.jpg" alt="Irene Ghanem — Un Matin au Jardin">
+          <img src="assets/images/collection/ghanem-un-matin-au-jardin.jpg" alt="Irene Ghanem — Un Matin au Jardin">
         </div>
         <p class="collection-item-artist">Irene Ghanem</p>
         <p class="collection-item-title">Un Matin au Jardin, 2025</p>
@@ -1250,6 +1074,18 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div>
 
+    <div class="contact-location reveal reveal-delay-4">
+      <h3 class="contact-city">New York</h3>
+      <div class="contact-detail">
+        <strong>Presence</strong>
+        By appointment only
+        <strong>Telephone</strong>
+        <a href="tel:+12125852900">+1 212 585 2900</a>
+        <strong>Email</strong>
+        <a href="mailto:nyc@markhachem.com">nyc@markhachem.com</a>
+      </div>
+    </div>
+
     <div class="contact-inquiry reveal">
       <p>
         Interested in a work or exhibition?
@@ -1287,8 +1123,8 @@ a { color: inherit; text-decoration: none; }
     <div class="footer-links">
       <h4>Gallery</h4>
       <ul>
-        <li><a href="#artists">Artists</a></li>
-        <li><a href="#exhibitions">Exhibitions</a></li>
+        <li><a href="artists.html">Artists</a></li>
+        <li><a href="exhibitions.html">Exhibitions</a></li>
         <li><a href="#collection">Collection</a></li>
         <li><a href="#fairs">Art Fairs</a></li>
       </ul>
@@ -1299,7 +1135,7 @@ a { color: inherit; text-decoration: none; }
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="mailto:paris@markhachem.com">Press Inquiries</a></li>
-        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="mentions-legales.html">Mentions L&eacute;gales</a></li>
       </ul>
     </div>
     <div class="footer-bottom">

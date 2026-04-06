@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Past Exhibitions — Mark Hachem Gallery</title>
+<meta name="description" content="Browse the full archive of past exhibitions at Mark Hachem Gallery. Over 100 exhibitions spanning from 2010 to 2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #FAFAF8;
+  --black: #0A0A0A;
+  --text: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --gold: #B89D4F;
+  --gold-light: #D4BA6A;
+  --gold-dark: #9A8340;
+  --grey-light: #F0EEEB;
+  --grey-mid: #E0DDD8;
+  --border: #E0DDD8;
+  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-sans: 'Outfit', 'Helvetica Neue', sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-sans); font-weight: 300; color: var(--text); background: var(--white); line-height: 1.7; }
+::selection { background: var(--gold); color: var(--white); }
+img { max-width: 100%; display: block; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1rem 3rem; display: flex; justify-content: space-between;
+  align-items: center; background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo img { height: 28px; width: auto; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text); transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+  height: 1px; background: var(--gold); transition: width 0.4s var(--ease-out);
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold-dark); }
+.nav-links a.active::after { width: 100%; }
+.nav-cta {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  border: 1px solid var(--text); color: var(--text); padding: 0.6rem 1.5rem;
+  transition: all 0.4s var(--ease-out);
+}
+.nav-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-toggle span { width: 24px; height: 1.5px; background: var(--text); transition: all 0.3s; }
+
+/* ─── PAGE HEADER ─── */
+.page-header {
+  padding: 10rem 3rem 4rem; background: var(--black); color: #fff; text-align: center;
+}
+.page-header-label {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+}
+.page-header-label::before, .page-header-label::after {
+  content: ''; width: 2rem; height: 1px; background: var(--gold);
+}
+.page-header h1 {
+  font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem;
+}
+.page-header h1 em { font-style: italic; color: var(--gold-light); }
+.page-header-count {
+  font-size: 0.85rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;
+}
+
+/* ─── FILTERS ─── */
+.filters {
+  padding: 2rem 3rem; border-bottom: 1px solid var(--border);
+  position: sticky; top: 60px; background: var(--white); z-index: 100;
+}
+.filters-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+}
+.filters-label {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--text-secondary); margin-right: 0.5rem;
+}
+.filter-btn {
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.1em; padding: 0.4rem 1rem; border: 1px solid var(--border);
+  background: none; color: var(--text-secondary); cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+.filter-btn.active { background: var(--text); color: var(--white); border-color: var(--text); }
+
+.search-box {
+  margin-left: auto; position: relative;
+}
+.search-box input {
+  font-family: var(--font-sans); font-size: 0.8rem; font-weight: 300;
+  padding: 0.5rem 1rem 0.5rem 2.2rem; border: 1px solid var(--border);
+  background: none; color: var(--text); width: 220px;
+  transition: border-color 0.3s;
+}
+.search-box input:focus { outline: none; border-color: var(--gold); }
+.search-box input::placeholder { color: var(--text-secondary); }
+.search-box svg {
+  position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px; stroke: var(--text-secondary); fill: none; stroke-width: 2;
+}
+
+/* ─── EXHIBITIONS GRID ─── */
+.exhibitions-archive { padding: 4rem 3rem; }
+.exhibitions-archive-inner { max-width: 1400px; margin: 0 auto; }
+
+.results-count {
+  font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.05em;
+  margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+}
+
+.exh-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem 2rem;
+}
+
+.exh-card {
+  transition: opacity 0.4s, transform 0.4s var(--ease-out);
+}
+.exh-card.hidden {
+  display: none;
+}
+.exh-card-image {
+  aspect-ratio: 4/3; position: relative; overflow: hidden;
+  margin-bottom: 1rem; background: var(--grey-mid);
+}
+.exh-card-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+.exh-card:hover .exh-card-image img { transform: scale(1.04); }
+.no-image-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, var(--grey-mid), #C5BDAF);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.exh-card-meta {
+  font-size: 0.68rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.4rem;
+}
+.exh-card-title {
+  font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400;
+  line-height: 1.3; margin-bottom: 0.3rem; transition: color 0.3s;
+}
+.exh-card:hover .exh-card-title { color: var(--gold-dark); }
+.exh-card-location {
+  font-size: 0.72rem; color: var(--text-secondary); letter-spacing: 0.05em;
+}
+.exh-card-desc {
+  font-size: 0.78rem; line-height: 1.6; color: var(--text-secondary);
+  margin-top: 0.6rem; display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ─── PAGINATION ─── */
+.pagination {
+  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
+  margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border);
+}
+.page-btn {
+  font-family: var(--font-sans); font-size: 0.8rem; font-weight: 400;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); background: none; color: var(--text);
+  cursor: pointer; transition: all 0.3s var(--ease-out);
+}
+.page-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+.page-btn.active { background: var(--text); color: var(--white); border-color: var(--text); }
+.page-btn:disabled { opacity: 0.3; pointer-events: none; }
+.page-btn.arrow { width: auto; padding: 0 1rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ─── BACK TO TOP ─── */
+.back-to-top {
+  text-align: center; margin-top: 3rem;
+}
+.back-to-top a {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-secondary); transition: color 0.3s;
+}
+.back-to-top a:hover { color: var(--gold-dark); }
+
+/* ─── FOOTER ─── */
+.footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 4rem 3rem; }
+.footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto; gap: 4rem; align-items: start; }
+.footer-brand { margin-bottom: 1rem; }
+.footer-brand img { height: 22px; width: auto; }
+.footer-tagline { font-size: 0.75rem; line-height: 1.6; max-width: 300px; }
+.footer-links h4 { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { font-size: 0.8rem; transition: color 0.3s; }
+.footer-links a:hover { color: #fff; }
+.footer-bottom {
+  grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 2rem; padding-top: 2rem; display: flex;
+  justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.05em;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .exh-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .page-header { padding: 8rem 1.5rem 3rem; }
+  .filters { padding: 1.5rem; top: 52px; }
+  .filters-inner { gap: 0.5rem; }
+  .search-box { margin-left: 0; width: 100%; margin-top: 0.5rem; }
+  .search-box input { width: 100%; }
+  .exhibitions-archive { padding: 3rem 1.5rem; }
+  .exh-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; }
+}
+@media (max-width: 480px) {
+  .filter-btn { font-size: 0.65rem; padding: 0.3rem 0.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/mark-hachem-logo.png" alt="Mark Hachem Gallery">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#artists">Artists</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="exhibitions.html" class="active">Exhibitions</a></li>
+    <li><a href="index.html#collection">Collection</a></li>
+    <li><a href="index.html#fairs">Fairs</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Inquire</a>
+  <div class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<header class="page-header">
+  <div class="page-header-label">Exhibition Archive</div>
+  <h1>Past <em>Exhibitions</em></h1>
+  <p class="page-header-count">106 exhibitions &middot; 2010&ndash;2025</p>
+</header>
+
+<!-- ═══ FILTERS ═══ -->
+<div class="filters">
+  <div class="filters-inner">
+    <span class="filters-label">Filter by Year</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="2025">2025</button>
+          <button class="filter-btn" data-filter="2024">2024</button>
+          <button class="filter-btn" data-filter="2023">2023</button>
+          <button class="filter-btn" data-filter="2022">2022</button>
+          <button class="filter-btn" data-filter="2021">2021</button>
+          <button class="filter-btn" data-filter="2020">2020</button>
+          <button class="filter-btn" data-filter="2019">2019</button>
+          <button class="filter-btn" data-filter="2018">2018</button>
+          <button class="filter-btn" data-filter="2017">2017</button>
+          <button class="filter-btn" data-filter="2016">2016</button>
+          <button class="filter-btn" data-filter="2015">2015</button>
+          <button class="filter-btn" data-filter="2014">2014</button>
+          <button class="filter-btn" data-filter="2013">2013</button>
+          <button class="filter-btn" data-filter="2012">2012</button>
+          <button class="filter-btn" data-filter="2011">2011</button>
+          <button class="filter-btn" data-filter="2010">2010</button>
+
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search exhibitions...">
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EXHIBITIONS GRID ═══ -->
+<section class="exhibitions-archive">
+  <div class="exhibitions-archive-inner">
+    <div class="results-count" id="resultsCount">Showing all 106 exhibitions</div>
+    <div class="exh-grid" id="exhGrid">
+      <div class="exh-card" data-year="2025" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/jean-khalife-the-legacy.jpg" alt="JEAN KHALIFE: THE LEGACY" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">08 - 25 January, 2025</div>
+          <h3 class="exh-card-title">JEAN KHALIFE: THE LEGACY</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ceci-nest-pas-une-photo-yves-hayat.jpg" alt="&quot;Ceci n&#x27;est pas une photo&quot; Yves Hayat" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">PARIS November 13 &gt; 26, 2025</div>
+          <h3 class="exh-card-title">&quot;Ceci n&#x27;est pas une photo&quot; Yves Hayat</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">While PARIS PHOTO 2025 celebrates the art of capturing reality, the Mark Hachem Gallery in Paris is coming to stir up trouble with Yves Hayat’s exhibition, «CECI N’EST PAS UNE PHOTO» (This is not a...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">20 October - 02 November</div>
+          <h3 class="exh-card-title">&quot;Migrants&quot; by Shadi Abousada</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/entre-terre-et-mer-by-irene-ghanem.jpeg" alt="&quot;Entre Terre et Mer&quot; by Irene Ghanem" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">07-20 October, 2025</div>
+          <h3 class="exh-card-title">&quot;Entre Terre et Mer&quot; by Irene Ghanem</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut, lebanon">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Thursday 12 June from 6 PM</div>
+          <h3 class="exh-card-title">&quot;Interference Green&quot; by Sara Shamma</h3>
+          <div class="exh-card-location">Beirut, Lebanon</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">22 May, 2025</div>
+          <h3 class="exh-card-title">&quot;In Entropy&quot; by Ghazi Baker</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/sailing-the-sevan-seas.jpg" alt="SAILING THE SEVAN SEAS" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">du 10 avril au 1er Mai 2025</div>
+          <h3 class="exh-card-title">SAILING THE SEVAN SEAS</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">La Galerie Mark Hachem a le plaisir d&#x27;accueillir une nouvelle escale dans l’univers de James Chedburn, intitulée &quot;Sailing the Seven Seas&quot;, une traversée artistique où l’océan, le voyage et...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="paris">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Vernissage: Mardi 25 Mars 2025 à partir de 18h
+exposition du 18 Mars au 8 Avril 2025</div>
+          <h3 class="exh-card-title">Ondes et Réfractions</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Exposition de Son Seock &amp; Lee JeeEun
+La Galerie Mark Hachem a le plaisir de présenter &quot;Ondes et Réfractions&quot;, une exposition qui tisse un dialogue sensoriel entre Son Seock et Lee JeeEun, deux...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/résonances-cinétiques.jpg" alt="RÉSONANCES CINÉTIQUES" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">february 12-25</div>
+          <h3 class="exh-card-title">RÉSONANCES CINÉTIQUES</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">The exhibition brings together Jesús Rafael Soto, Carlos Cruz-Diez, Dario Perez Flores, Rafael Barrios, Victor Vasarely, Julio Le Parc, Philippe Hiquily, Luis Tomasello, René Ugarte, Gregorio...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2025" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/behind-the-image-a-solo-show-by-daisy-abi-jaber.jpg" alt="Behind The Image, A Solo Show by Daisy Abi Jaber" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Jan 16 – 30, 2025</div>
+          <h3 class="exh-card-title">Behind The Image, A Solo Show by Daisy Abi Jaber</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2024" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/if-these-walls-could-talk-they-would-scream-a-solo-show-by-athier-mousawi.jpeg" alt="If These Walls Could Talk, They Would Scream: A SOLO SHOW BY ATHIER MOUSAWI" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Dec 10 - 20, 2024</div>
+          <h3 class="exh-card-title">If These Walls Could Talk, They Would Scream: A SOLO SHOW BY ATHIER MOUSAWI</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2024" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/let-us-be-the-light-solo-show-by-maysaloun-faraj.jpg" alt="Let us be the Light!, Solo Show by Maysaloun Faraj" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">18-25 Septembre 2024</div>
+          <h3 class="exh-card-title">Let us be the Light!, Solo Show by Maysaloun Faraj</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2024" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/the-kaleidoscopic-soul-jordi-mollàs-eclecticism-in-color.jpg" alt="The Kaleidoscopic Soul: Jordi Mollà&#x27;s Eclecticism in Color" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">25 June - 10 July 2024</div>
+          <h3 class="exh-card-title">The Kaleidoscopic Soul: Jordi Mollà&#x27;s Eclecticism in Color</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">Galerie Mark Hachem is proud to present an exceptional exhibition by renowned actor and painter, Jordi Mollà. The opening will take place on June 25 at 6:00 pm, at 28 Place des Vosges, Paris 75003....</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/les-inattendus-solo-show-de-lartiste-mauro-corda.png" alt="&quot; Les inattendus &quot; Solo Show de l&#x27;artiste Mauro Corda" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">18 Décembre 2023 - 2 Janvier 2024</div>
+          <h3 class="exh-card-title">&quot; Les inattendus &quot; Solo Show de l&#x27;artiste Mauro Corda</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">Dans cette toute nouvelle exposition présentée à la Galerie Mark Hachem, Mauro Corda s&#x27;engage à rendre l&#x27;art accessible à chacun, élargissant ainsi son impact sur un public plus vaste. En tant...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/vibrations-par-warinsko.jpg" alt="&quot;Vibrations&quot; par Warinsko" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Vernissage le 30 Novembre à partir de 18h00. L&#x27;exposition aura lieu du 1er au 14 Décembre.</div>
+          <h3 class="exh-card-title">&quot;Vibrations&quot; par Warinsko</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La galerie Mark Hachem présente l&#x27;exposition &quot;Vibrations&quot;, solo show  de l&#x27;artiste Warinsko. intérprète contemporain du mouvement de l&#x27;art Optique</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/gunter-sachs-photographic-retrospective.jpg" alt="&quot; Gunter Sachs Photographic Retrospective &quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Preview november 09 from 18h30 - Exhibition on view until november 17</div>
+          <h3 class="exh-card-title">&quot; Gunter Sachs Photographic Retrospective &quot;</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">Galerie Mark Hachem Gallery presents an exceptional retrospective of the famous
+photographer Gunter Sachs during Paris Photo Week. Gunter Sachs (November 14, 1932 – May 7, 2011), also known as Gunter...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/sunday-in-the-park-with-tom-marwan-chamaas-solo-show.jpeg" alt="&quot; Sunday in The Park with Tom &quot;, Marwan Chamaa&#x27;s solo show" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">October 10, 6pm - October 26</div>
+          <h3 class="exh-card-title">&quot; Sunday in The Park with Tom &quot;, Marwan Chamaa&#x27;s solo show</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery is proud to present a solo exhibition by the Lebanese artist Marwan Chamaa, from October 12th till the 26th. A pioneer of Lebanese Neo Pop-Art, we can see influences of the likes...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/them-a-solo-exhibition-by-rima-salamoun.jpeg" alt="&quot; Them &quot;, a solo exhibition by Rima Salamoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">21st september</div>
+          <h3 class="exh-card-title">&quot; Them &quot;, a solo exhibition by Rima Salamoun</h3>
+          <div class="exh-card-location"></div>
+          <p class="exh-card-desc">Mark Hachem Gallery is delighted to present the solo exhibition of visionary Syrian artist, Rima Salamoun
+The artist describes herself as a dedicated observer of human evolution and the ever-shifting...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/unveiling-the-elemental.jpg" alt="&quot; Unveiling the Elemental &quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">september 15 - septembre 28  2023</div>
+          <h3 class="exh-card-title">&quot; Unveiling the Elemental &quot;</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">&quot;Unveiling the Elemental: Jean Boghossian&#x27;s Solo Exhibition showcases the artist&#x27;s mastery
+over fire, texture, and form across three distinct series: &#x27;Rhythms,&#x27; &#x27;Broken Burnt Lines,&#x27; and the
+seminal...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beyrouth">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/artful-crimes.jpg" alt="Artful Crimes" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">22 june - 6 july</div>
+          <h3 class="exh-card-title">Artful Crimes</h3>
+          <div class="exh-card-location">Beyrouth</div>
+          <p class="exh-card-desc">die Famous is a collaboration between American painter Morrison Pierce (b.1972) and Lebanese/Finnish painter Yasmina Nysten (b.1988).Yasmina&#x27;s work has been faithful to this asymmetrical experiment...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/prisons-contemporaines.jpg" alt="Prisons Contemporaines" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">20 juin - 9 juillet 2023</div>
+          <h3 class="exh-card-title">Prisons Contemporaines</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La galerie Mark Hachem présente l&#x27;exposition personnelle &quot; Prisons Contemporaines &quot; de l&#x27;artiste Yves Hayat, il nous présente le concept de l’enfermement, mais son propos va au delà de...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/taking-the-long-way-home.jpg" alt="Taking the long way home" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">6 juin - 27 juin 2023</div>
+          <h3 class="exh-card-title">Taking the long way home</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La Galerie Mark Hachem présente &quot;Taking the long way home&quot;, une exposition qui met en scène l&#x27;univers enchanteur de James Chedburn et l&#x27;œil artistique de Jean-François Deroubaix .
+James Chedburn,...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/conversations-by-ghazi-baker.jpg" alt="Conversations by Ghazi Baker" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">April 27- May 20</div>
+          <h3 class="exh-card-title">Conversations by Ghazi Baker</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem presents « Conversations », Lebanese artist Ghazi Baker&#x27;s solo exhibition.</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/monique-gourgaud-les-planètes-ambiguës.jpg" alt="Monique Gourgaud - Les Planètes Ambiguës" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">February 1-18, 2023
+Preview January 31</div>
+          <h3 class="exh-card-title">Monique Gourgaud - Les Planètes Ambiguës</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2023" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ammar-hammoud-labyrinth.jpg" alt="Ammar Hammoud - LABYRINTH" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Exhibition from the 19th of January until the 1st of February.
+
+
+Opening on Thursday January 19, 2023 from 6 Pm.</div>
+          <h3 class="exh-card-title">Ammar Hammoud - LABYRINTH</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/intriguing-natural-symbols-solo-exhibition-by-ihab-ahmad.jpg" alt="&#x27;Intriguing Natural Symbols&#x27; Solo Exhibition by Ihab Ahmad" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">December 20,2022</div>
+          <h3 class="exh-card-title">&#x27;Intriguing Natural Symbols&#x27; Solo Exhibition by Ihab Ahmad</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery is delighted to invite you to an upcoming event on December 20th showcasing the work of our artist Ihab Ahmad.</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/norman-reedus-live-the-life-you-love.jpeg" alt="Norman Reedus « Live the life you love »" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Du 12 au 17 novembre 2022</div>
+          <h3 class="exh-card-title">Norman Reedus « Live the life you love »</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La galerie Mark Hachem et Geraldine Beigbeder ont le plaisir d&#x27;annoncer la représentation de Norman Reedus et de présenter l&#x27;exposition personnelle de l&#x27;artiste à Paris intitulée &quot;Live the life you...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/charles-khoury-headway.jpg" alt="Charles Khoury &quot;Headway&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Exposition from November 8 until November 22</div>
+          <h3 class="exh-card-title">Charles Khoury &quot;Headway&quot;</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">The Mark Hachem Gallery is pleased to present “Headway”, a solo show by the Lebanese artist Charles Khoury that will be on viewing from the 8th of November until the 22nd of November.
+
+Primordial...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/franco-adami-un-lexique-de-constructeur.jpg" alt="FRANCO ADAMI &quot;Un lexique de constructeur&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Exposition du 19 octobre au 2 novembre 2022</div>
+          <h3 class="exh-card-title">FRANCO ADAMI &quot;Un lexique de constructeur&quot;</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ghasem-hajizadeh-timeless-figures.jpg" alt="Ghasem Hajizadeh &quot;Timeless Figures&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">October 6 - October 16</div>
+          <h3 class="exh-card-title">Ghasem Hajizadeh &quot;Timeless Figures&quot;</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">The Mark Hachem Gallery and the Simine Paris platform have come together to offer the TIMELESS FIGURES Exhibition, a retrospective of paintings by Iranian artist Ghasem Hajizadeh which, in view of...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/mathias-schmied-perdus-dans-le-cosmos.gif" alt="MATHIAS SCHMIED &quot;Perdus dans le cosmos&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Exposition du 1er au 17 Juillet 2022</div>
+          <h3 class="exh-card-title">MATHIAS SCHMIED &quot;Perdus dans le cosmos&quot;</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Mark Hachem présente « Perdus dans le cosmos », une exposition personnelle de l’artiste Mathias Schmied. L’exposition mettra en avant des œuvres inédites de l’artiste ainsi que ses dernières séries «...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/home-maysaloun-faraj.png" alt="HOME - MAYSALOUN FARAJ" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">6-9pm 9 June 2022</div>
+          <h3 class="exh-card-title">HOME - MAYSALOUN FARAJ</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Mark Hachem Gallery is delighted to announce the representation of Maysaloun Faraj and present the artist’s first solo exhibition in Paris titled HOME Lockdown 2020-22.  In this latest series of...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/russell-young-heroes-heroines.jpeg" alt="RUSSELL YOUNG - &quot;Heroes + heroines&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">30 MAI AU 8 JUIN 2022</div>
+          <h3 class="exh-card-title">RUSSELL YOUNG - &quot;Heroes + heroines&quot;</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">In Heroes + Heroines, Russell Young looks past the darker side of excess and sets his sights on pure stardom with a cast of characters instantly recognizable for their embodiment of American fame. A...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/michelangelo-bastiani-space-time-glass.jpg" alt="Michelangelo Bastiani - &quot;Space Time Glass&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">12 MAI 2022 - 28 MAI 2022</div>
+          <h3 class="exh-card-title">Michelangelo Bastiani - &quot;Space Time Glass&quot;</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Mark Hachem présente « Space Time Glass », une exposition personnelle de l’artiste florentin Michelangelo Bastiani.
+
+Les hologrammes de Michelangelo Bastiani combinent l&#x27;espace tridimensionnel et...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/george-merheb-trees.jpeg" alt="George Merheb - &quot;Trees&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">10th - 24th May 2022</div>
+          <h3 class="exh-card-title">George Merheb - &quot;Trees&quot;</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">George Merheb is one of those artists who live and breathe, the light, the shining sun, the blue sky, the warmth, faith, destiny, and the infinite stars. Across the old sea, in Spain and Italy, in...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2022" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/beirut-606-pm.png" alt="BEIRUT 6.06 p.m." loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">APRIL 5 - APRIL 12 2022</div>
+          <h3 class="exh-card-title">BEIRUT 6.06 p.m.</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">La galerie Mark Hachem, présente &quot;Beirut 6.06 p.m.&quot;, un travail réalisé par Naïade Delapierre, une artiste franco-libanaise. 
+
+C&#x27;est ici un petit bout d&#x27;elle-même qu&#x27;elle nous livre, une parcelle de...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/fatima-el-hajj-balades-levantines.jpg" alt="FATIMA EL-HAJJ &quot;BALADES LEVANTINES&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta"></div>
+          <h3 class="exh-card-title">FATIMA EL-HAJJ &quot;BALADES LEVANTINES&quot;</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Mark Hachem présente « Balades levantines », une exposition personnelle de l’artiste libanaise Fatima El-Hajj. 
+Élève du peintre libanais et parisien Shafic Abboud, qui fut son professeur admiré et...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2021" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/blooming-skies-by-chaouki-chamoun.jpg" alt="Blooming Skies by Chaouki Chamoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">18 May - 01 June, 2021</div>
+          <h3 class="exh-card-title">Blooming Skies by Chaouki Chamoun</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/fury-data-world-welcome-in-dystopia.jpg" alt="FURY, Data World, Welcome in Dystopia" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">12.02.21 - 13.03.21</div>
+          <h3 class="exh-card-title">FURY, Data World, Welcome in Dystopia</h3>
+          <div class="exh-card-location"></div>
+          <p class="exh-card-desc">Fury, femme artiste underground et incontournable de la scène contemporaine française depuis les années 80, se penche, depuis 2009, sur l’utilisation du WEB. L&#x27;exposition &quot;Data World, Welcome in...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2020" data-city="miami">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/art-miami-2020-on-line.jpg" alt="Art Miami 2020- On line" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">2-20 dec 2020</div>
+          <h3 class="exh-card-title">Art Miami 2020- On line</h3>
+          <div class="exh-card-location">Miami</div>
+          <p class="exh-card-desc">For Art Miami 2020 (online edition), Gallery Mark Hachem  presents a collective exhibition showcasing selected works by Kinetic, Modern and Contemporary Artists.
+Works by kinetic masters  (Jesús...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2020" data-city="">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/thomas-agrinier-une-affaire-dhomme-la-tentation.jpg" alt="Thomas Agrinier - Une Affaire d&#x27;Homme / La Tentation" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">16 septembre au 16 octobre 2020</div>
+          <h3 class="exh-card-title">Thomas Agrinier - Une Affaire d&#x27;Homme / La Tentation</h3>
+          <div class="exh-card-location"></div>
+          <p class="exh-card-desc">La galerie Mark Hachem présente la nouvelle exposition personnelle de Thomas Agrinier en deux parties. Au 28 place des Vosges seront présentées des peintures réalisées entre 2017 et 2019.  Au 44 rue...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2020" data-city="online exhibition on artsy.com">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/bonjour-beirut-the-beirut-art-scene.jpg" alt="Bonjour Beirut- The Beirut Art Scene" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">August 21st to September 4th , 2020</div>
+          <h3 class="exh-card-title">Bonjour Beirut- The Beirut Art Scene</h3>
+          <div class="exh-card-location">online exhibition on Artsy.com</div>
+          <p class="exh-card-desc">Mark Hachem Gallery launches an online collective exhibition on Artsy, a tribute to the Lebanese art scene.
+Lebanon has always been prized... an Eden that collapses under its own beauty, a forest of...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="on line">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/art-paris-online.jpg" alt="ART PARIS online" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">27.05.20 - 20.06.20</div>
+          <h3 class="exh-card-title">ART PARIS online</h3>
+          <div class="exh-card-location">on line</div>
+          <p class="exh-card-desc">Art Paris 2020 online
+May 27th - June 20th
+ 
+With the focus on:
+ 
+20th century Middle Eastern masters
+Hussein Madi, Hamed Abdalla,
+Helen Khal, Alfred Basbous //
+
+Op and Kinetic artists
+Victor...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2019" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/dario-perez-flores.jpg" alt="Dario Perez Flores" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Dynamiques Visuelles15.11.19- 06.12.19
+/ Vernissage le 14 novembre 2019, à partir de 18h30</div>
+          <h3 class="exh-card-title">Dario Perez Flores</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La galerie Mark Hachem présente une exposition d&#x27;oeuvres inédites de l&#x27;artiste Dario Perez Flores.
+Né en 1936, vénézuélien émigré en France, Perez Flores, est l&#x27;un des grands maîtres de l&#x27;art...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2012" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/hussein-madi.jpg" alt="Hussein Madi" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Recent Works (2012 – 2019)/ Vernissage Mardi 15 octobre 2019 , à partir de 18h30 / Oening Tuesday 15st octobrer , from 6.30pm15.10.19</div>
+          <h3 class="exh-card-title">Hussein Madi</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">MADI
+Recent Works (2012 – 2019)
+16.10.19 - 13.11.11
+
+44 rue des Tournelles 75004 &amp; 28 Place des Vosges 75003 Paris
+
+Mark Hachem is delighted and honoured to present a collection of rare paintings and...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/hussein-madi.jpg" alt="Hussein Madi" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">OPENING RECEPTION, MONDAY 16.09 , 6-9 pm16.09 / 14.10</div>
+          <h3 class="exh-card-title">Hussein Madi</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem is delighted to announce the exclusive representation of the libanese modern master Hussein Madi.
+Gallery will exhibit recent works, paintings and sculpture from Monday 16th september in...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/yves-ullens-recent-works.jpg" alt="YVES ULLENS &quot;Recent Works&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">9 - 23 Mai</div>
+          <h3 class="exh-card-title">YVES ULLENS &quot;Recent Works&quot;</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Du 9 au 23 mai, La Galerie mark hachem présente les dernières oeuvres de l&#x27;artiste Yves Ullens à travers l&#x27;exposition &quot;Recent Works&quot;; un travail cinétique sur le mouvement, la lumière et couleur.</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2019" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/horizons-by-chaouki-chamoun.png" alt="HORIZONS BY CHAOUKI CHAMOUN" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">April 23 - May 25, 2019</div>
+          <h3 class="exh-card-title">HORIZONS BY CHAOUKI CHAMOUN</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery Beirut is delighted to present ‘Horizons’, a Solo Exhibition by artist
+Chaouki Chamoun, featuring a selection of his most recent works.</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/art-paris-2019.jpg" alt="ART PARIS 2019" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta"></div>
+          <h3 class="exh-card-title">ART PARIS 2019</h3>
+          <div class="exh-card-location"></div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ghazi-baker.jpg" alt="Ghazi Baker" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Suspension of Disbelief</div>
+          <h3 class="exh-card-title">Ghazi Baker</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">28.03.19 / 20.04.19</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="baku">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/mauro-corda-zoospective-morphospective.jpg" alt="MAURO CORDA - ZOOSPECTIVE, MORPHOSPECTIVE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta"></div>
+          <h3 class="exh-card-title">MAURO CORDA - ZOOSPECTIVE, MORPHOSPECTIVE</h3>
+          <div class="exh-card-location">BAKU</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="new york">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/plan-b-volta-alternative.jpg" alt="PLAN B VOLTA ALTERNATIVE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Wednesday, March 6, noon – 5PM
+Thursday, March 7, 11AM – 6PM
+Friday, March 8, 11AM – 8PM
+Saturday, March 9, 11AM – 6PM
+Free Admission</div>
+          <h3 class="exh-card-title">PLAN B VOLTA ALTERNATIVE</h3>
+          <div class="exh-card-location">NEW YORK</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/bassam-kyrillos-multiverses.jpg" alt="Bassam Kyrillos, Multiverses" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta"></div>
+          <h3 class="exh-card-title">Bassam Kyrillos, Multiverses</h3>
+          <div class="exh-card-location">beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery - Beirut is delighted to present “Multiverses”, a solo exhibition by artist Bassam Kyrillos, featuring a selection of his most recent sculptures.</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/nasser-soumi-entre-ciel-et-terre.jpg" alt="Nasser SOUMI - ENTRE CIEL ET TERRE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Du vendredi 22 février au jeudi 14 mars</div>
+          <h3 class="exh-card-title">Nasser SOUMI - ENTRE CIEL ET TERRE</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2019" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/nedim-kufi-edens.jpg" alt="Nedim Kufi, Edens" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">until february 9th , 2019</div>
+          <h3 class="exh-card-title">Nedim Kufi, Edens</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/retro-per-spective-by-marwan-chamaa.jpg" alt="RETRO-PER-SPECTIVE by MARWAN CHAMAA" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">November 20th - December 8th, 2018</div>
+          <h3 class="exh-card-title">RETRO-PER-SPECTIVE by MARWAN CHAMAA</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery - Beirut is delighted to present “RETRO-PER-SPECTIVE”, a solo exhibition by artist Marwan Chamaa, featuring his various interpretations of pop culture through select pieces past...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/sensible-expression-by-alfred-basbous.jpg" alt="SENSIBLE EXPRESSION  BY ALFRED BASBOUS" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">October 25 - November 20, 2018</div>
+          <h3 class="exh-card-title">SENSIBLE EXPRESSION  BY ALFRED BASBOUS</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery is delighted to present an exhibition of relief and sculpture by artist Alfred Basbous (1924 – 2006). A major pioneer of Modernist sculpture in the Middle East, Basbous drew on...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/hamed-abdalla-le-caire-paris.jpg" alt="Hamed Abdalla, &quot;Le Caire - Paris&quot;" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">16 octobre - 30 novembre 2018</div>
+          <h3 class="exh-card-title">Hamed Abdalla, &quot;Le Caire - Paris&quot;</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">A  partir du 16 octobre, la galerie Mark Hachem présente une exposition rétrospective de Hamed Abdalla (1917-1985) dans ses deux galeries à Paris.
+Depuis quelques années, la redécouverte de ce grand...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/the-warriors-by-antonio-signorini.jpg" alt="The Warriors by Antonio Signorini" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Sept 17 - Oct 3, 2018</div>
+          <h3 class="exh-card-title">The Warriors by Antonio Signorini</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">Mark Hachem Gallery - Beirut is delighted to present “The Warriors, The Guardians of the Heritage”, a solo exhibition by Italian artist Antonio Signorini, featuring a selection of his most recent...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/journeys-into-the-future-through-the-sea-of-the-past-by-nasr-eddine-bennacer.jpg" alt="Journeys into the Future through the Sea of the Past by Nasr-eddine Bennacer" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta"></div>
+          <h3 class="exh-card-title">Journeys into the Future through the Sea of the Past by Nasr-eddine Bennacer</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">An exhibition curated by Sumesh Sharma and Joud Halawani Al Tamimi, “Journeys into the Future Through the Sea of the Past” is the Algerian artist Nacer’s response to the current global situation....</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/michelangelo-bastiani-reazione-impossibile.jpg" alt="Michelangelo Bastiani - REAZIONE IMPOSSIBILE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">24.05.18 to 07.06.18</div>
+          <h3 class="exh-card-title">Michelangelo Bastiani - REAZIONE IMPOSSIBILE</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/yves-hayat-femmes-au-bord-de-la-crise-de-guerre.jpg" alt="YVES HAYAT - FEMMES AU BORD DE LA CRISE DE GUERRE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">April 27th - May 17th</div>
+          <h3 class="exh-card-title">YVES HAYAT - FEMMES AU BORD DE LA CRISE DE GUERRE</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/in-the-memory-of-the-ones-who-wont-make-it-by-jacques-vartabedian.jpg" alt="In the Memory of the Ones Who Won&#x27;t Make it by Jacques Vartabedian" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">April 19, 2018 - May 10, 2018</div>
+          <h3 class="exh-card-title">In the Memory of the Ones Who Won&#x27;t Make it by Jacques Vartabedian</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">For the last few months, it has become a part of our daily routine to watch or hear of things related to political campaigns, constantly seeing billboards filled with faces we have come to know, some...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/anthony-mirial-paradis-perdu.jpg" alt="Anthony MIRIAL - PARADIS PERDU" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Exposition du 11 au 25 Avril, 2018</div>
+          <h3 class="exh-card-title">Anthony MIRIAL - PARADIS PERDU</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">L’exposition se divise en deux séries articulées autour d’un sujet commun : le voyage. Un voyage en métro qui fait écho à un autre voyage, la mort...
+
+La première série présentée, « Blessures de...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/writings-by-george-merheb.jpg" alt="WRITINGS BY GEORGE MERHEB" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">March 15 - March 31, 2018</div>
+          <h3 class="exh-card-title">WRITINGS BY GEORGE MERHEB</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery - Beirut is delighted to present “Writings”, a solo exhibition by Lebanese artist George Merheb, featuring a new body of works.
+Haunted by letters, and their dimension in time and...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2018" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/transformation-by-chaouki-chamoun.jpg" alt="Transformation by Chaouki Chamoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">February 1, 2018 - February 22, 2018</div>
+          <h3 class="exh-card-title">Transformation by Chaouki Chamoun</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mark Hachem Gallery - Beirut is delighted to present “Transformation”, a solo exhibition by artist Chaouki Chamoun, featuring a selection of his most recent works.
+
+Upon a visit to Chamoun’s studio,...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/decompositions-du-mouvement-by-son-seock.jpg" alt="DECOMPOSITIONS DU MOUVEMENT BY SON SEOCK" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: December 14th, 2017 | | December 15th, 2017 - January 5th, 2018</div>
+          <h3 class="exh-card-title">DECOMPOSITIONS DU MOUVEMENT BY SON SEOCK</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La Galerie Mark Hachem présente « Décompositions du mouvement » une exposition personnelle de l’artiste coréen Son Seock.
+Son Seock est né en Corée du Sud en 1955, et il vit et travaille en France...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/chromesthesia-by-ghazi-baker.jpg" alt="CHROMESTHESIA by Ghazi Baker" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: November 23rd, 2017  | |  November 24th - December 5th, 2017</div>
+          <h3 class="exh-card-title">CHROMESTHESIA by Ghazi Baker</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">Galerie Mark Hachem presents the second major exhibition of Beirut based architect and artist, Ghazi Baker. Chromesthesia presents sixteen new large and medium scale paintings from the artist&#x27;s most...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/impermanence-by-wolfgang-stiller.jpg" alt="IMPERMANENCE by Wolfgang Stiller" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: November 14th, 2017 | | November 15th - November 30th, 2017</div>
+          <h3 class="exh-card-title">IMPERMANENCE by Wolfgang Stiller</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">Mark Hachem Gallery-Beirut is delighted to present “Impermanence”, a solo exhibition by German artist Wolfgang Stiller, featuring a rich body of works expressed through sculptures, drawings and vast...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/provocative-moods-by-robert-farber.png" alt="PROVOCATIVE MOODS by Robert Farber" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Vernissage: Vendredi 10 Novembre 2017
+|| Exposition du 11 au 21 Novembre, 2017</div>
+          <h3 class="exh-card-title">PROVOCATIVE MOODS by Robert Farber</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La Galerie Mark Hachem présente « Provocative Moods » une exposition personnelle de Robert Farber sous le commissariat de Géraldine Beigbeder.
+
+L’exposition présente « THE DETERIORATION SERIES  - une...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/why-do-arabs-have-to-speak.jpg" alt="Why do Arabs Have to Speak ? !" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Vernissage Mardi 24 Octobre à partir de 18h30</div>
+          <h3 class="exh-card-title">Why do Arabs Have to Speak ? !</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La Galerie Mark Hachem - Paris présente «Why Do Arabs Have to Speak?», Une exposition de groupe présentant les œuvres des artistes Sabhan Adam, Nasser Soumi, Alfred Basbous, Nadine Khoury, Hamed...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/stephen-peirce-nascent-states.jpg" alt="Stephen Peirce, Nascent States" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">10.10.17- 16.12.17</div>
+          <h3 class="exh-card-title">Stephen Peirce, Nascent States</h3>
+          <div class="exh-card-location">Paris</div>
+          <p class="exh-card-desc">La galerie Mark Hachem présente les peintures à l’huile de l’artiste anglais Stephen Peirce.
+Quand l’inanimé s&#x27;agrège en un tout vivant, organique, qui nous semble familier mais que nous ne pouvons...</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/of-things-to-come-by-nazar-yahya.jpg" alt="&quot;OF THINGS TO COME&quot; by NAZAR YAHYA" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: September 22nd, 2017  | |  September 23rd - October 15th, 2017</div>
+          <h3 class="exh-card-title">&quot;OF THINGS TO COME&quot; by NAZAR YAHYA</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/beyond-walls-by-chaouki-chamoun.jpg" alt="&quot;BEYOND WALLS&quot; BY CHAOUKI CHAMOUN" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: May 11th, 2017 || Exhibition Dates: May 12th, 2017 - June 3rd , 2017</div>
+          <h3 class="exh-card-title">&quot;BEYOND WALLS&quot; BY CHAOUKI CHAMOUN</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Chaouki Chamoun, &quot;Falling in Love&quot; 2017, Acrylic on canvas, 185 x 235 cm</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/the-chaos-by-bassam-kyrillos.jpg" alt="&quot;THE CHAOS&quot; BY BASSAM KYRILLOS" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: April 20th, 2017 || April 21st - May 6th , 2017</div>
+          <h3 class="exh-card-title">&quot;THE CHAOS&quot; BY BASSAM KYRILLOS</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Bassam Kyrillos, The Blue Planet, 2017, Aluminum and synthetic colors, 50 x 50 x 50 cm</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/art-paris-2017.jpg" alt="ART PARIS 2017" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">MARCH 29 - APRIL2, Preview March 29th</div>
+          <h3 class="exh-card-title">ART PARIS 2017</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Booth B2</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2017" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/a-shadows-dream-on-a-wall-by-shadi-abousada.jpg" alt="&quot;A Shadow&#x27;s Dream on a Wall&quot; by Shadi AbouSada" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception: March 13th, 2017 ||  March 14th - April 4th, 2017</div>
+          <h3 class="exh-card-title">&quot;A Shadow&#x27;s Dream on a Wall&quot; by Shadi AbouSada</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Shadi AbouSada, Dancing, 2016, Mixed media on canvas, 200 x 300 cm.JPG</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2016" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/wolfgang-stiller-transition.jpeg" alt="Wolfgang STILLER - TRANSITION" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">solo exhibitionNovember 24th - December 14th, 2016</div>
+          <h3 class="exh-card-title">Wolfgang STILLER - TRANSITION</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2016" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/sale-temps-yves-hayat.jpg" alt="SALE TEMPS - Yves HAYAT" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">09/06/2016</div>
+          <h3 class="exh-card-title">SALE TEMPS - Yves HAYAT</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2016" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/charbel-samuel-aoun.png" alt="Charbel Samuel Aoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception Thursday, April 28th, 2016April 28th till May 14th</div>
+          <h3 class="exh-card-title">Charbel Samuel Aoun</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">&quot;Necropolis&quot;</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2016" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/raouf-rifai.png" alt="Raouf Rifai" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Opening Reception Wednesday, April 6th, 2016</div>
+          <h3 class="exh-card-title">Raouf Rifai</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">&quot;Saving the Beauty of the World&quot;</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2016" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/nizar-sabour.jpg" alt="NIZAR SABOUR" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Al QalamounJanuary 7-22, 2016</div>
+          <h3 class="exh-card-title">NIZAR SABOUR</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">OPENING RECEPTION : Thursday January 7th, 6-9 pm</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/chaouki-chamoun.jpg" alt="CHAOUKI CHAMOUN" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Artworks on Paper Cut to Order December 11-24, 2015</div>
+          <h3 class="exh-card-title">CHAOUKI CHAMOUN</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          <p class="exh-card-desc">PREVIEW, Thursday December 10, 6-9 pm</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="new york">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/alfred-basbous.jpg" alt="ALFRED BASBOUS" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Collevctive Lebanese ExhibitionOPENING RECEPTION - November 20, 2015, 6 pm - 8:30 pm</div>
+          <h3 class="exh-card-title">ALFRED BASBOUS</h3>
+          <div class="exh-card-location">NEW YORK</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="istanbul">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/yves-hayat.jpg" alt="YVES HAYAT" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">PASSION(S)OPENING RECEPTION - November 12, 2015,  6 - 9 pm</div>
+          <h3 class="exh-card-title">YVES HAYAT</h3>
+          <div class="exh-card-location">ISTANBUL</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/shawn-smith.jpg" alt="SHAWN SMITH" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">6th-20th November 
+
+Preview 5th November</div>
+          <h3 class="exh-card-title">SHAWN SMITH</h3>
+          <div class="exh-card-location">PARIS</div>
+          <p class="exh-card-desc">Pixels de vie sauvage</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="Unknown" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/mauro-corda.jpg" alt="Mauro CORDA" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">September 30th – October 14th</div>
+          <h3 class="exh-card-title">Mauro CORDA</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">Mouvement et Matière</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/raouf-rifai.png" alt="Raouf RIFAI" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">DARWICH                                                                  25th September - 9th October 2015</div>
+          <h3 class="exh-card-title">Raouf RIFAI</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/bridge-to-palestine.jpg" alt="BRIDGE TO PALESTINE" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Contemporary Palestinian ArtistsSept 18th - 28th 2015</div>
+          <h3 class="exh-card-title">BRIDGE TO PALESTINE</h3>
+          <div class="exh-card-location">Beirut</div>
+          <p class="exh-card-desc">BRIDGE TO PALESTINE 2015</p>
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/arman.jpg" alt="ARMAN" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Un artiste hors du temps, la sublimation de l&#x27;objetJUNE 11 - JUNE 30 2015</div>
+          <h3 class="exh-card-title">ARMAN</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/alfred-basbous.jpg" alt="Alfred Basbous" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Bronze CollectionMAY 29 - JUNE 19, 2015</div>
+          <h3 class="exh-card-title">Alfred Basbous</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/chaouki-chamoun.jpg" alt="Chaouki Chamoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Peace in waitingMAY 6 - MAY 20, 2015</div>
+          <h3 class="exh-card-title">Chaouki Chamoun</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/leila-nseir.jpg" alt="Leila Nseir" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">CreaturesMARCH 20 - APRIL 2, 2015</div>
+          <h3 class="exh-card-title">Leila Nseir</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2015" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/alfred-basbous.jpg" alt="Alfred Basbous" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Bronze CollectionFEBRUARY 25 - MARCH 10, 2015</div>
+          <h3 class="exh-card-title">Alfred Basbous</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2014" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ahmad-moualla.jpg" alt="AHMAD MOUALLA" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Solemn, I Stand The Test Of TimeNOVEMBER 25 - DECEMBER 20, 2014</div>
+          <h3 class="exh-card-title">AHMAD MOUALLA</h3>
+          <div class="exh-card-location">BEIRUT</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2014" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/chaouki-chamoun.jpg" alt="Chaouki Chamoun" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Peace in waitingOCTOBER 31 - NOVEMBER 15, 2014</div>
+          <h3 class="exh-card-title">Chaouki Chamoun</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2014" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/bridge-to-palestine.jpg" alt="Bridge to Palestine" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">JUNE 26 - AUGUST 3, 2014</div>
+          <h3 class="exh-card-title">Bridge to Palestine</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2014" data-city="paris">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/yves-hayat.jpg" alt="Yves Hayat" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Mysthifications MARCH 18 - MARCH 30, 2014</div>
+          <h3 class="exh-card-title">Yves Hayat</h3>
+          <div class="exh-card-location">Paris</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2013" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/nizar-sabour.jpg" alt="NIZAR SABOUR" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">ICONS OF PALMYRANOVEMBER 5 - NOVEMBER 13, 2013</div>
+          <h3 class="exh-card-title">NIZAR SABOUR</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2012" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Fine Pixels MAY 15 - MAY 29, 2012</div>
+          <h3 class="exh-card-title">Ricardo Mbarkho</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2011" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Duplet NOVEMBER 15 - NOVEMBER 29, 2011</div>
+          <h3 class="exh-card-title">George Merheb &amp; Daisy Abi Jaber</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2011" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Retro-ActiveJUNE 28 - JULY 19, 2011</div>
+          <h3 class="exh-card-title">An Op&#x27;Art Collective Exhibition</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2011" data-city="paris">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Retrospective Op ArtMAY 16 - MAY 24, 2011</div>
+          <h3 class="exh-card-title">Vasarely/Soto/Cruz-Diez</h3>
+          <div class="exh-card-location">PARIS</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2011" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/ahmad-moualla.jpg" alt="Ahmad Moualla" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Poetic Text 	MARCH 15 - APRIL 5, 2011</div>
+          <h3 class="exh-card-title">Ahmad Moualla</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2010" data-city="beirut">
+        <div class="exh-card-image"><div class="no-image-placeholder"></div></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Dual Exhibition in painting and sculpture 	NOVEMBER 19 - DECEMBER 9, 2010</div>
+          <h3 class="exh-card-title">De Keyzer &amp; Youri</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+      <div class="exh-card" data-year="2010" data-city="beirut">
+        <div class="exh-card-image"><img src="assets/images/exhibitions/mauro-corda.jpg" alt="Mauro Corda" loading="lazy"></div>
+        <div class="exh-card-info">
+          <div class="exh-card-meta">Solo Exhibtion 	JUNE 8 - JULY 8, 2010</div>
+          <h3 class="exh-card-title">Mauro Corda</h3>
+          <div class="exh-card-location">Beirut</div>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+
+    <div class="back-to-top">
+      <a href="#">&uarr; Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><img src="assets/images/mark-hachem-logo-white.png" alt="Mark Hachem Gallery"></div>
+      <p class="footer-tagline">A platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Gallery</h4>
+      <ul>
+        <li><a href="index.html#artists">Artists</a></li>
+        <li><a href="exhibitions.html">Exhibitions</a></li>
+        <li><a href="index.html#collection">Collection</a></li>
+        <li><a href="index.html#fairs">Art Fairs</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="mailto:paris@markhachem.com">Press Inquiries</a></li>
+        <li><a href="mentions-legales.html">Mentions L&eacute;gales</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Mark Hachem Gallery. All rights reserved.</span>
+      <span>Paris &middot; New York &middot; Beirut</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ITEMS_PER_PAGE = 12;
+let currentPage = 1;
+let currentFilter = 'all';
+let searchQuery = '';
+
+const allCards = Array.from(document.querySelectorAll('.exh-card'));
+const grid = document.getElementById('exhGrid');
+const pagination = document.getElementById('pagination');
+const resultsCount = document.getElementById('resultsCount');
+
+function getFilteredCards() {
+  return allCards.filter(card => {
+    const year = card.dataset.year;
+    const title = card.querySelector('.exh-card-title').textContent.toLowerCase();
+    const location = card.querySelector('.exh-card-location').textContent.toLowerCase();
+    const desc = card.querySelector('.exh-card-desc')?.textContent.toLowerCase() || '';
+    const matchesFilter = currentFilter === 'all' || year === currentFilter;
+    const matchesSearch = !searchQuery ||
+      title.includes(searchQuery) ||
+      location.includes(searchQuery) ||
+      desc.includes(searchQuery);
+    return matchesFilter && matchesSearch;
+  });
+}
+
+function render() {
+  const filtered = getFilteredCards();
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  if (currentPage > totalPages) currentPage = totalPages || 1;
+
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+
+  allCards.forEach(c => c.classList.add('hidden'));
+  filtered.slice(start, end).forEach(c => c.classList.remove('hidden'));
+
+  // Update count
+  if (currentFilter === 'all' && !searchQuery) {
+    resultsCount.textContent = `Showing all ${filtered.length} exhibitions`;
+  } else {
+    resultsCount.textContent = `Showing ${filtered.length} exhibition${filtered.length !== 1 ? 's' : ''}`;
+  }
+
+  // Render pagination
+  pagination.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'page-btn arrow';
+  prevBtn.textContent = '← Prev';
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.onclick = () => { currentPage--; render(); scrollToGrid(); };
+  pagination.appendChild(prevBtn);
+
+  for (let i = 1; i <= totalPages; i++) {
+    if (totalPages > 7 && i > 3 && i < totalPages - 1 && Math.abs(i - currentPage) > 1) {
+      if (i === 4 || i === totalPages - 2) {
+        const dots = document.createElement('span');
+        dots.textContent = '...';
+        dots.style.cssText = 'padding: 0 0.5rem; color: var(--text-secondary);';
+        pagination.appendChild(dots);
+      }
+      continue;
+    }
+    const btn = document.createElement('button');
+    btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+    btn.textContent = i;
+    btn.onclick = () => { currentPage = i; render(); scrollToGrid(); };
+    pagination.appendChild(btn);
+  }
+
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'page-btn arrow';
+  nextBtn.textContent = 'Next →';
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.onclick = () => { currentPage++; render(); scrollToGrid(); };
+  pagination.appendChild(nextBtn);
+}
+
+function scrollToGrid() {
+  document.querySelector('.filters').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    currentPage = 1;
+    render();
+  });
+});
+
+// Search
+const searchInput = document.getElementById('searchInput');
+let searchTimeout;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    currentPage = 1;
+    render();
+  }, 250);
+});
+
+// Mobile nav
+document.getElementById('navToggle').addEventListener('click', function() {
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.style.display === 'flex';
+  links.style.display = isOpen ? 'none' : 'flex';
+  links.style.flexDirection = isOpen ? '' : 'column';
+  links.style.position = isOpen ? '' : 'absolute';
+  links.style.top = isOpen ? '' : '100%';
+  links.style.left = isOpen ? '' : '0';
+  links.style.right = isOpen ? '' : '0';
+  links.style.background = isOpen ? '' : 'rgba(250,250,248,0.98)';
+  links.style.padding = isOpen ? '' : '2rem';
+  links.style.gap = isOpen ? '' : '1.5rem';
+  links.style.borderBottom = isOpen ? '' : '1px solid #E0DDD8';
+});
+
+// Init
+render();
+</script>
+</body>
+</html>

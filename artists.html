@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artists — Mark Hachem Gallery</title>
+<meta name="description" content="Represented artists at Mark Hachem Gallery. Modern masters and contemporary artists in kinetic art, Arab modernism, and contemporary art.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --white: #FAFAF8; --black: #0A0A0A; --text: #1A1A1A; --text-secondary: #6B6B6B;
+  --gold: #B89D4F; --gold-light: #D4BA6A; --gold-dark: #9A8340;
+  --grey-light: #F0EEEB; --grey-mid: #E0DDD8; --border: #E0DDD8;
+  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-sans: 'Outfit', 'Helvetica Neue', sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-sans); font-weight: 300; color: var(--text); background: var(--white); line-height: 1.7; }
+::selection { background: var(--gold); color: var(--white); }
+img { max-width: 100%; display: block; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.05s; }
+.reveal-delay-2 { transition-delay: 0.1s; }
+.reveal-delay-3 { transition-delay: 0.15s; }
+.reveal-delay-4 { transition-delay: 0.2s; }
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1rem 3rem; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(250,250,248,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo img { height: 28px; width: auto; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s var(--ease-out); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold-dark); }
+.nav-links a.active::after { width: 100%; }
+.nav-cta { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--text); color: var(--text); padding: 0.6rem 1.5rem; transition: all 0.4s var(--ease-out); }
+.nav-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.nav-toggle span { width: 24px; height: 1.5px; background: var(--text); }
+
+/* PAGE HEADER */
+.page-header { padding: 10rem 3rem 4rem; background: var(--black); color: #fff; text-align: center; }
+.page-header-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.page-header-label::before, .page-header-label::after { content: ''; width: 2rem; height: 1px; background: var(--gold); }
+.page-header h1 { font-family: var(--font-serif); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.page-header h1 em { font-style: italic; color: var(--gold-light); }
+.page-header-count { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+/* FILTERS */
+.filters {
+  padding: 2rem 3rem; border-bottom: 1px solid var(--border);
+  position: sticky; top: 60px; background: var(--white); z-index: 100;
+}
+.filters-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.filters-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); margin-right: 0.5rem; }
+.filter-btn { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; padding: 0.4rem 1rem; border: 1px solid var(--border); background: none; color: var(--text-secondary); cursor: pointer; transition: all 0.3s var(--ease-out); }
+.filter-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+.filter-btn.active { background: var(--text); color: var(--white); border-color: var(--text); }
+.search-box { margin-left: auto; position: relative; }
+.search-box input { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 300; padding: 0.5rem 1rem 0.5rem 2.2rem; border: 1px solid var(--border); background: none; color: var(--text); width: 220px; transition: border-color 0.3s; }
+.search-box input:focus { outline: none; border-color: var(--gold); }
+.search-box input::placeholder { color: var(--text-secondary); }
+.search-box svg { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; stroke: var(--text-secondary); fill: none; stroke-width: 2; }
+
+/* ARTISTS SECTIONS */
+.artists-section { padding: 4rem 3rem; }
+.artists-section:nth-child(even) { background: var(--grey-light); }
+.artists-inner { max-width: 1400px; margin: 0 auto; }
+.section-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 400; margin-bottom: 0.5rem; }
+.section-title em { font-style: italic; color: var(--gold-dark); }
+.section-count { font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 0.1em; margin-bottom: 3rem; }
+
+/* ARTIST GRID */
+.artist-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+.artist-card { transition: opacity 0.4s, transform 0.4s var(--ease-out); }
+.artist-card.hidden { display: none; }
+.artist-card-image {
+  aspect-ratio: 3/4; position: relative; overflow: hidden;
+  margin-bottom: 1rem; background: linear-gradient(135deg, var(--grey-mid), #C5BDAF);
+}
+.artist-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-out); }
+.artist-card:hover .artist-card-image img { transform: scale(1.04); }
+.artist-card-name {
+  font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500;
+  line-height: 1.3; transition: color 0.3s;
+}
+.artist-card:hover .artist-card-name { color: var(--gold-dark); }
+.artist-card-sub { font-size: 0.72rem; color: var(--text-secondary); letter-spacing: 0.05em; margin-top: 0.2rem; }
+.artist-card-bio {
+  font-size: 0.78rem; line-height: 1.6; color: var(--text-secondary);
+  margin-top: 0.5rem; display: -webkit-box; -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* FOOTER */
+.footer { background: var(--black); color: rgba(255,255,255,0.5); padding: 4rem 3rem; }
+.footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto; gap: 4rem; align-items: start; }
+.footer-brand img { height: 22px; width: auto; margin-bottom: 1rem; }
+.footer-tagline { font-size: 0.75rem; line-height: 1.6; max-width: 300px; }
+.footer-links h4 { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-links a { font-size: 0.8rem; transition: color 0.3s; }
+.footer-links a:hover { color: #fff; }
+.footer-bottom { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 2rem; padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.7rem; }
+
+.back-to-top { text-align: center; padding: 3rem; }
+.back-to-top a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); transition: color 0.3s; }
+.back-to-top a:hover { color: var(--gold-dark); }
+
+@media (max-width: 1024px) {
+  .artist-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .page-header { padding: 8rem 1.5rem 3rem; }
+  .filters { padding: 1.5rem; top: 52px; }
+  .search-box { margin-left: 0; width: 100%; margin-top: 0.5rem; }
+  .search-box input { width: 100%; }
+  .artists-section { padding: 3rem 1.5rem; }
+  .artist-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; }
+}
+@media (max-width: 480px) {
+  .artist-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/images/mark-hachem-logo.png" alt="Mark Hachem Gallery"></a>
+  <ul class="nav-links">
+    <li><a href="artists.html" class="active">Artists</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="exhibitions.html">Exhibitions</a></li>
+    <li><a href="index.html#collection">Collection</a></li>
+    <li><a href="index.html#fairs">Fairs</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Inquire</a>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-label">Represented Artists</div>
+  <h1>A Dialogue Across<br><em>Continents &amp; Generations</em></h1>
+  <p class="page-header-count">53 artists &middot; Modern &amp; Contemporary</p>
+</header>
+
+<div class="filters">
+  <div class="filters-inner">
+    <span class="filters-label">Category</span>
+    <button class="filter-btn active" data-filter="all">All (53)</button>
+    <button class="filter-btn" data-filter="modern">Modern (20)</button>
+    <button class="filter-btn" data-filter="contemporary">Contemporary (33)</button>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search artists...">
+    </div>
+  </div>
+</div>
+
+<section class="artists-section" id="modern">
+  <div class="artists-inner">
+    <h2 class="section-title reveal"><em>Modern</em> Masters</h2>
+    <p class="section-count reveal">20 artists</p>
+    <div class="artist-grid">
+      <div class="artist-card reveal reveal-delay-1" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/agenore-fabbri.jpg" alt="Agenore Fabbri" loading="lazy"></div>
+        <h3 class="artist-card-name">Agenore Fabbri</h3>
+        <p class="artist-card-sub">1911–1998</p>
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/alfred-basbous.jpg" alt="Alfred Basbous" loading="lazy"></div>
+        <h3 class="artist-card-name">Alfred Basbous</h3>
+        <p class="artist-card-sub">Born in 1924, Rachana, LEBANON.</p>
+        <p class="artist-card-bio">Alfred Basbous was born in Rachana in 1924. His first exhibition in Beirut, at the Alecco Saab gallery in 1958, marked the beginning of his success and introduced him into the...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/antonio-asis.jpg" alt="Antonio Asis" loading="lazy"></div>
+        <h3 class="artist-card-name">Antonio Asis</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/arman.jpg" alt="Arman" loading="lazy"></div>
+        <h3 class="artist-card-name">Arman</h3>
+        
+        <p class="artist-card-bio">Arman is most recognized for his contribution to the Nouveau Realisme movement, which represented France’s response to American Pop Art in the 1960’s. After studying archeology...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/carlos-cruz-diez.jpg" alt="Carlos Cruz Diez" loading="lazy"></div>
+        <h3 class="artist-card-name">Carlos Cruz Diez</h3>
+        
+        <p class="artist-card-bio">The Franco-Venezuelan artist Carlos Cruz-Diez (Caracas, 1923) has lived and worked in Paris since 1960. He is a major protagonist in the field of Kinetic and Optical art, a...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/césar-andrade.jpg" alt="César Andrade" loading="lazy"></div>
+        <h3 class="artist-card-name">César Andrade</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/claude-gilli.jpg" alt="CLAUDE GILLI" loading="lazy"></div>
+        <h3 class="artist-card-name">Claude Gilli</h3>
+        <p class="artist-card-sub">Born in 1938, Nice, France</p>
+        <p class="artist-card-bio">Claude Gilli is born in Nice in 1938. He enters the School of Decorative Arts in Nice in 1955. In 1957, he meets Albert Chubac and his first exhibition is organized with him and...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/dario-perez-flores.jpg" alt="Dario Perez-Flores" loading="lazy"></div>
+        <h3 class="artist-card-name">Dario Perez-Flores</h3>
+        <p class="artist-card-sub">Born in 1936, Valera, Venezuela</p>
+        <p class="artist-card-bio">v\:* {behavior:url(#default#VML);} o\:* {behavior:url(#default#VML);} w\:* {behavior:url(#default#VML);} .shape {behavior:url(#default#VML);} Born in 1936 in Valera, Venezuela. He...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/dia-azzawi.jpg" alt="Dia Azzawi" loading="lazy"></div>
+        <h3 class="artist-card-name">Dia Azzawi</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/franco-adami.jpg" alt="Franco Adami" loading="lazy"></div>
+        <h3 class="artist-card-name">Franco Adami</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/hamed-abdalla.jpg" alt="Hamed ABDALLA" loading="lazy"></div>
+        <h3 class="artist-card-name">Hamed ABDALLA</h3>
+        <p class="artist-card-sub">1917-1985</p>
+        <p class="artist-card-bio">Hamed Abdalla (1917-1985), was a pioneer of Egyptian and Arab modernism. A self taught artist from a modest peasant family pf upper Egypt, he rose to prominence early in his...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/helen-khal.jpg" alt="Helen Khal" loading="lazy"></div>
+        <h3 class="artist-card-name">Helen Khal</h3>
+        <p class="artist-card-sub">Born in 1923, Pennsylvania, USA.</p>
+        <p class="artist-card-bio">Helen Khal grew up in a Lebanese family in Pennsylvania. In 1946, she went to live in Lebanon for two years, studying painting at the Lebanese Academy of Fine Arts in Beirut, and...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/hussein-madi.jpg" alt="Hussein Madi" loading="lazy"></div>
+        <h3 class="artist-card-name">Hussein Madi</h3>
+        <p class="artist-card-sub">Lebanese, 1938-2024</p>
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/jesus-rafael-soto.jpg" alt="Jesus-Rafael Soto" loading="lazy"></div>
+        <h3 class="artist-card-name">Jesus-Rafael Soto</h3>
+        <p class="artist-card-sub">Born in 1923, Ciudad Bolivar,</p>
+        <p class="artist-card-bio">Painter and sculptor, Soto is one of the leading exponents of the Kinetic and Optical Art movements. He was born in Ciudad Bolivar (Venezuela) in 1923 and received his artistic...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/leila-nseir.jpg" alt="Leila Nseir" loading="lazy"></div>
+        <h3 class="artist-card-name">Leila Nseir</h3>
+        <p class="artist-card-sub">Born in 1941, Syria</p>
+        <p class="artist-card-bio">Born in Lattakia, Syria in 1941, Leila Nseir graduated from the Faculty of Fine Arts in Cairo in 1963. She began her career during the hype of Syrian modernism, developing a focus...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/marino-di-teana.jpg" alt="Marino Di Teana" loading="lazy"></div>
+        <h3 class="artist-card-name">Marino Di Teana</h3>
+        
+        <p class="artist-card-bio">Born on 8th August 1920, in Teana, in Basilicat Province, near Potenza in South Italy.At age 16, emigrated to Argentina as a mason. At age 22, became a construction site manager....</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/philippe-hiquily.jpg" alt="Philippe Hiquily" loading="lazy"></div>
+        <h3 class="artist-card-name">Philippe Hiquily</h3>
+        <p class="artist-card-sub">Born in 1925.</p>
+        <p class="artist-card-bio">Philippe HIQUILY (1925-2013) is a singular French artist. A sculptor but also a furniture designer, HIQUILY has kept away from the art market and artistic movements. Free,...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/rafael-barrios.jpg" alt="Rafael Barrios" loading="lazy"></div>
+        <h3 class="artist-card-name">Rafael Barrios</h3>
+        <p class="artist-card-sub">Born in 1947, Baton Rouge, Louisiana (USA)</p>
+        <p class="artist-card-bio">Rafael Barrios is a Venezuelan sculptor and one of the most renowned figures in the kinetic art movement. Born in 1947 in Baton Rouge, Louisiana, he spent his early years in...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/roberto-matta.jpg" alt="Roberto Matta" loading="lazy"></div>
+        <h3 class="artist-card-name">Roberto Matta</h3>
+        <p class="artist-card-sub">Chilean, 1911–2002</p>
+        <p class="artist-card-bio">Roberto Matta (Chilean, 1911–2002) was a sketch artist and painter known for his work in the Abstract Expressionist and Surrealist movements during the 20th century. He was born...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="modern">
+        <div class="artist-card-image"><img src="assets/images/artists/victor-vasarely.jpg" alt="Victor Vasarely" loading="lazy"></div>
+        <h3 class="artist-card-name">Victor Vasarely</h3>
+        
+        <p class="artist-card-bio">Victor Vasarely was a Hungarian-born French Op Art painter. He was best known as the &quot;grandfather&quot; of the Op Art movement of the 1960s. Vasarely was born in 1908 in Pecs, Hungary....</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="artists-section" id="contemporary">
+  <div class="artists-inner">
+    <h2 class="section-title reveal"><em>Contemporary</em> Artists</h2>
+    <p class="section-count reveal">33 artists</p>
+    <div class="artist-grid">
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/ahmad-moualla.jpg" alt="Ahmad Moualla" loading="lazy"></div>
+        <h3 class="artist-card-name">Ahmad Moualla</h3>
+        
+        <p class="artist-card-bio">Born in Syria in 1958, Moualla is considered as one of the leading post-modern artists of Syrian expressionism. He was the first to introduce performance in his work and was first...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/alois-kronschlaeger.jpg" alt="Alois Kronschlaeger" loading="lazy"></div>
+        <h3 class="artist-card-name">Alois Kronschlaeger</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/anibal-vallejo.jpg" alt="Anibal Vallejo" loading="lazy"></div>
+        <h3 class="artist-card-name">Anibal Vallejo</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/athier-mousawi.jpg" alt="Athier Mousawi" loading="lazy"></div>
+        <h3 class="artist-card-name">Athier Mousawi</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/ben-abou-nassif.jpg" alt="Ben Abou Nassif" loading="lazy"></div>
+        <h3 class="artist-card-name">Ben Abou Nassif</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/chaouki-chamoun.jpg" alt="Chaouki Chamoun" loading="lazy"></div>
+        <h3 class="artist-card-name">Chaouki Chamoun</h3>
+        
+        <p class="artist-card-bio">Chaouki Chamoun graduated from the Fine Art Institute at the Lebanese University in 1972. First in his class, he was awarded a six-year fellowship to pursue his graduate studies...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/fatima-el-hajj.jpg" alt="Fatima El Hajj" loading="lazy"></div>
+        <h3 class="artist-card-name">Fatima El Hajj</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/ghazi-baker.jpg" alt="Ghazi Baker" loading="lazy"></div>
+        <h3 class="artist-card-name">Ghazi Baker</h3>
+        
+        <p class="artist-card-bio">Ghazi Baker (1967) is a self-taught artist in addition to being a practising architect and manager of his own firm, CC&amp;A. Since his early teens, he has been in a constant state of...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/giselle-borras.jpg" alt="Giselle Borras" loading="lazy"></div>
+        <h3 class="artist-card-name">Giselle Borras</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/james-chedburn.jpg" alt="JAMES CHEDBURN" loading="lazy"></div>
+        <h3 class="artist-card-name">James Chedburn</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/jose-margulis.jpg" alt="Jose Margulis" loading="lazy"></div>
+        <h3 class="artist-card-name">Jose Margulis</h3>
+        <p class="artist-card-sub">Born in 1970 in Caracas, Venezuela, he studied photography in</p>
+        <p class="artist-card-bio">in Caracas, Venezuela, he studied photography in college before working for his family’s digital printing business. Combining these two skills with his interest in sculpture,...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/julio-le-parc.jpg" alt="Julio Le Parc" loading="lazy"></div>
+        <h3 class="artist-card-name">Julio Le Parc</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/laila-shawa.jpg" alt="Laila Shawa" loading="lazy"></div>
+        <h3 class="artist-card-name">Laila Shawa</h3>
+        <p class="artist-card-sub">Born in 1940, Palestine.</p>
+        <p class="artist-card-bio">Born in Gaza in 1940, Laila Shawa graduated summa cum laude in Fine Arts from the Italian Accademia delle Belle Arti in 1964, and received a diploma in plastic arts from the...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/léo-caillard.jpg" alt="Léo Caillard" loading="lazy"></div>
+        <h3 class="artist-card-name">Léo Caillard</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/marck.jpg" alt="Marck" loading="lazy"></div>
+        <h3 class="artist-card-name">Marck</h3>
+        
+        <p class="artist-card-bio">in Zurich, Switzerland, Marck is a contemporary artist best known for his work in video sculptures. His early journey in the arts was unconventional—after enrolling in a...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/mathias-schmied.jpg" alt="Mathias Schmied" loading="lazy"></div>
+        <h3 class="artist-card-name">Mathias Schmied</h3>
+        
+        <p class="artist-card-bio">Mathias Schmied est diplômé des beaux-arts de Lyon. Les comics, les posters vintage de pin up, le papier préalablement peint à la bombe, le métal. Il enlève et découvre, invente...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/mauro-corda.jpg" alt="Mauro Corda" loading="lazy"></div>
+        <h3 class="artist-card-name">Mauro Corda</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/maysaloun-faraj.jpg" alt="Maysaloun Faraj" loading="lazy"></div>
+        <h3 class="artist-card-name">Maysaloun Faraj</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/michelangelo-bastiani.jpg" alt="Michelangelo Bastiani" loading="lazy"></div>
+        <h3 class="artist-card-name">Michelangelo Bastiani</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/missak-terzian.jpg" alt="Missak Terzian" loading="lazy"></div>
+        <h3 class="artist-card-name">Missak Terzian</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/nadim-karam.jpg" alt="Nadim Karam" loading="lazy"></div>
+        <h3 class="artist-card-name">Nadim Karam</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/nedim-kufi.jpg" alt="Nedim Kufi" loading="lazy"></div>
+        <h3 class="artist-card-name">Nedim Kufi</h3>
+        
+        <p class="artist-card-bio">Nedim Kufi was born in Baghdad, Iraq in 1962. He moved to the Netherlands in 1994 where he has been living and working as a multidisciplinary visual artist since. Kufi completed a...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/polles.jpg" alt="Polles" loading="lazy"></div>
+        <h3 class="artist-card-name">Polles</h3>
+        <p class="artist-card-sub">Born in 1945, France</p>
+        <p class="artist-card-bio">/* Style Definitions */ table.MsoNormalTable {mso-style-name:&quot;Tableau Normal&quot;; mso-tstyle-rowband-size:0; mso-tstyle-colband-size:0; mso-style-noshow:yes; mso-style-priority:99;...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/raffi-yedalian.jpg" alt="Raffi Yedalian" loading="lazy"></div>
+        <h3 class="artist-card-name">Raffi Yedalian</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/sara-shamma.jpg" alt="Sara Shamma" loading="lazy"></div>
+        <h3 class="artist-card-name">Sara Shamma</h3>
+        <p class="artist-card-sub">Born in 1975, Damascus (Syria)</p>
+        <p class="artist-card-bio">Sara Shamma is a renowned painter whose works can be found in both public and private collections around the globe. Shamma was born in Damascus, Syria (1975) to a Syrian father...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/shawn-smith.jpg" alt="Shawn Smith" loading="lazy"></div>
+        <h3 class="artist-card-name">Shawn Smith</h3>
+        
+        <p class="artist-card-bio">Shawn Smith was born in 1972 in Dallas, TX where he attended Arts Magnet High School and Brookhaven College before graduating from Washington University in St. Louis, MO with a...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/stephen-peirce.jpg" alt="Stephen Peirce" loading="lazy"></div>
+        <h3 class="artist-card-name">Stephen Peirce</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/victor-ekpuk.jpg" alt="Victor Ekpuk" loading="lazy"></div>
+        <h3 class="artist-card-name">Victor Ekpuk</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/wolfgang-stiller.jpg" alt="WOLFGANG STILLER" loading="lazy"></div>
+        <h3 class="artist-card-name">Wolfgang Stiller</h3>
+        <p class="artist-card-sub">Born in 1961, Wiesbaden, Germany</p>
+        <p class="artist-card-bio">Internationally known for his ‘’Matchstickmen’’ series, Wolfgang Stiller is a German artist, born in 1961, in Wiesbaden. His artworks encompass sculpture, drawing, and...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/yasmina-nysten.jpg" alt="Yasmina Nysten" loading="lazy"></div>
+        <h3 class="artist-card-name">Yasmina Nysten</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-3" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/yoshiyuki-miura.jpg" alt="YOSHIYUKI MIURA" loading="lazy"></div>
+        <h3 class="artist-card-name">Yoshiyuki Miura</h3>
+        
+        
+      </div>
+      <div class="artist-card reveal reveal-delay-4" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/yves-hayat.jpg" alt="Yves Hayat" loading="lazy"></div>
+        <h3 class="artist-card-name">Yves Hayat</h3>
+        
+        <p class="artist-card-bio">Originally from Egypt, Yves Hayat first developed his aesthetic sensibilities living in a country enriched with history and cultural diversity. Art was his first love. In 1956,...</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-1" data-category="contemporary">
+        <div class="artist-card-image"><img src="assets/images/artists/yves-ullens.jpg" alt="Yves ULLENS" loading="lazy"></div>
+        <h3 class="artist-card-name">Yves ULLENS</h3>
+        <p class="artist-card-sub">Born in 1960 in Brussels (Belgium)</p>
+        <p class="artist-card-bio">Yves Ullens de Schooten’s photographic approach is aimed at tracking down forms of light. These lights radiate from day to day objects and experience. By instinct, the artist...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="back-to-top"><a href="#">&uarr; Back to top</a></div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><img src="assets/images/mark-hachem-logo-white.png" alt="Mark Hachem Gallery"></div>
+      <p class="footer-tagline">A platform for kinetic art, Arab modernism, and contemporary art. Founded in Paris, 1996.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Gallery</h4>
+      <ul>
+        <li><a href="artists.html">Artists</a></li>
+        <li><a href="exhibitions.html">Exhibitions</a></li>
+        <li><a href="index.html#collection">Collection</a></li>
+        <li><a href="index.html#fairs">Art Fairs</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="mailto:paris@markhachem.com">Press Inquiries</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Mark Hachem Gallery. All rights reserved.</span>
+      <span>Paris &middot; Beirut</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// Filters
+const allCards = Array.from(document.querySelectorAll('.artist-card'));
+let currentFilter = 'all';
+let searchQuery = '';
+
+function render() {
+  allCards.forEach(card => {
+    const cat = card.dataset.category;
+    const name = card.querySelector('.artist-card-name').textContent.toLowerCase();
+    const bio = card.querySelector('.artist-card-bio')?.textContent.toLowerCase() || '';
+    const matchFilter = currentFilter === 'all' || cat === currentFilter;
+    const matchSearch = !searchQuery || name.includes(searchQuery) || bio.includes(searchQuery);
+    card.classList.toggle('hidden', !(matchFilter && matchSearch));
+  });
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+let searchTimeout;
+document.getElementById('searchInput').addEventListener('input', function() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchQuery = this.value.toLowerCase().trim();
+    render();
+  }, 200);
+});
+
+// Mobile nav
+document.getElementById('navToggle').addEventListener('click', function() {
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.style.display === 'flex';
+  links.style.display = isOpen ? 'none' : 'flex';
+  links.style.flexDirection = isOpen ? '' : 'column';
+  links.style.position = isOpen ? '' : 'absolute';
+  links.style.top = isOpen ? '' : '100%';
+  links.style.left = isOpen ? '' : '0'; links.style.right = isOpen ? '' : '0';
+  links.style.background = isOpen ? '' : 'rgba(250,250,248,0.98)';
+  links.style.padding = isOpen ? '' : '2rem';
+  links.style.gap = isOpen ? '' : '1.5rem';
+  links.style.borderBottom = isOpen ? '' : '1px solid #E0DDD8';
+});
+</script>
+</body>
+</html>
