@@ -3,5 +3,5 @@ node_modules/
 *.py
 output.txt
 artsy_images.txt
-DNS.png
 public/
+localOnly/

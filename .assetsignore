@@ -1,6 +1,29 @@
+# Files excluded from Cloudflare Workers static-assets upload.
+# Syntax matches .gitignore.
+
+# Private / non-runtime sources
 .git
-*.py
-output.txt
-artsy_images.txt
-DNS.png
+.github/
+.vscode/
+.idea/
+.DS_Store
+
+# Build-time data + scripts
 data
+scripts/
+*.py
+
+# Docs + dev notes
+*.md
+
+# Dev-only folders + assets
+localOnly
+DNS.png
+
+# Scraper output + reference files not served by the site
+artsy_images.txt
+output.txt
+redirects.csv
+
+# Cloudflare config (not a web asset)
+wrangler.toml
