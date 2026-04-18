@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gallery Concierge — AI Viewing Room Prototype</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:      #fbfaf7;
+    --paper-2:    #f4f1ea;
+    --ink:        #141311;
+    --ink-soft:   #3a3834;
+    --ink-muted:  #7a766f;
+    --rule:       #e3ddd2;
+    --rule-soft:  #ede8dd;
+    --accent:     #7a1f1a;   /* oxblood — an art-world accent */
+    --serif:      "Cormorant Garamond", "Didot", "Times New Roman", serif;
+    --sans:       "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; margin:0; }
+  body{
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.005em;
+    overflow: hidden;
+  }
+
+  /* subtle paper grain */
+  body::before{
+    content:"";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.07  0 0 0 0 0.05  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    opacity: .55;
+    z-index: 1;
+  }
+
+  .app{
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 18px 36px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .topbar .left{ display: flex; align-items: center; gap: 16px; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-muted); }
+  .topbar .left .dot{ width: 6px; height: 6px; border-radius: 50%; background: #1f7a3a; box-shadow: 0 0 0 3px rgba(31,122,58,0.15); animation: pulse 2.4s infinite ease-in-out; }
+  @keyframes pulse{ 0%,100%{ box-shadow: 0 0 0 3px rgba(31,122,58,0.15);} 50%{ box-shadow: 0 0 0 6px rgba(31,122,58,0);} }
+
+  .brand{
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .brand em{ font-style: italic; font-weight: 500; }
+  .brand .divider{ color: var(--ink-muted); margin: 0 10px; }
+
+  .topbar .right{ display: flex; align-items: center; justify-content: flex-end; gap: 22px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-muted); }
+  .topbar .right a{ color: var(--ink-muted); text-decoration: none; transition: color .2s; }
+  .topbar .right a:hover{ color: var(--ink); }
+  .topbar .right .inquire{
+    border: 1px solid var(--ink); padding: 9px 16px; color: var(--ink);
+    transition: background .25s, color .25s;
+  }
+  .topbar .right .inquire:hover{ background: var(--ink); color: var(--paper); }
+
+  /* ---------- MAIN GRID ---------- */
+  .main{
+    display: grid;
+    grid-template-columns: minmax(420px, 38%) 1fr;
+    min-height: 0;
+  }
+
+  /* ---------- CHAT COLUMN ---------- */
+  .chat-col{
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+    min-height: 0;
+  }
+  .chat-head{
+    padding: 22px 30px 18px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .chat-head .eyebrow{
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .chat-head h2{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: 0.005em;
+    margin: 6px 0 0;
+  }
+  .chat-head h2 em{ font-style: italic; color: var(--accent); }
+  .chat-head .meta{
+    margin-top: 6px;
+    font-size: 11px; color: var(--ink-muted); letter-spacing: 0.02em;
+  }
+
+  .chat-stream{
+    overflow-y: auto;
+    padding: 26px 30px 12px;
+    scroll-behavior: smooth;
+  }
+  .chat-stream::-webkit-scrollbar{ width: 8px; }
+  .chat-stream::-webkit-scrollbar-thumb{ background: var(--rule); border-radius: 4px; }
+  .chat-stream::-webkit-scrollbar-track{ background: transparent; }
+
+  .msg{
+    margin-bottom: 22px;
+    animation: rise .5s ease both;
+  }
+  @keyframes rise{ from{ opacity: 0; transform: translateY(6px);} to{ opacity: 1; transform: none;} }
+
+  .msg .who{
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .msg.ai .who::before{
+    content: "";
+    display: inline-block;
+    width: 14px; height: 1px; background: var(--accent);
+    vertical-align: middle; margin-right: 8px;
+    transform: translateY(-1px);
+  }
+  .msg.user .who{ text-align: right; }
+  .msg.user .who::after{
+    content: "";
+    display: inline-block;
+    width: 14px; height: 1px; background: var(--ink);
+    vertical-align: middle; margin-left: 8px;
+    transform: translateY(-1px);
+  }
+
+  .msg .bubble{
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .msg.ai .bubble{
+    max-width: 95%;
+  }
+  .msg.user .bubble{
+    max-width: 90%;
+    margin-left: auto;
+    text-align: right;
+    color: var(--ink);
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.45;
+  }
+  .msg em.title{ font-style: italic; color: var(--ink); }
+
+  /* artwork card in chat */
+  .art-card{
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 82px 1fr;
+    gap: 14px;
+    padding: 12px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    cursor: pointer;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .art-card:hover{
+    border-color: var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px -18px rgba(0,0,0,0.25);
+  }
+  .art-card.active{
+    border-color: var(--accent);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .art-card img{
+    width: 82px; height: 82px; object-fit: cover; display: block;
+    background: var(--paper-2);
+  }
+  .art-card .info .line1{
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .art-card .info .line2{
+    font-family: var(--serif);
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 2px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .art-card .info .line3{
+    margin-top: 4px;
+    font-size: 12px; color: var(--ink-muted);
+  }
+  .art-card .info .viewcta{
+    margin-top: 8px;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+  }
+
+  /* typing indicator */
+  .typing{
+    display: inline-flex; gap: 4px; padding: 4px 0;
+  }
+  .typing span{
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink-muted);
+    animation: typ 1.2s infinite ease-in-out;
+  }
+  .typing span:nth-child(2){ animation-delay: .15s; }
+  .typing span:nth-child(3){ animation-delay: .3s; }
+  @keyframes typ{ 0%,80%,100%{ transform: scale(.6); opacity: .3; } 40%{ transform: scale(1); opacity: 1; } }
+
+  /* input area */
+  .composer{
+    border-top: 1px solid var(--rule);
+    padding: 16px 24px 20px;
+    background: var(--paper);
+  }
+  .composer .suggested{
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  .chip{
+    font-size: 11px; letter-spacing: 0.04em;
+    padding: 6px 11px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s;
+    font-family: var(--sans);
+  }
+  .chip:hover{ background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+  .input-row{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid var(--ink);
+    background: #fff;
+    padding: 6px 6px 6px 16px;
+  }
+  .input-row input{
+    border: none; outline: none; background: transparent;
+    font-family: var(--sans); font-size: 14px;
+    color: var(--ink); padding: 10px 0;
+    width: 100%;
+  }
+  .input-row input::placeholder{ color: var(--ink-muted); font-style: italic; }
+  .send-btn{
+    border: none; background: var(--ink); color: var(--paper);
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 11px 18px; cursor: pointer;
+    transition: background .2s;
+  }
+  .send-btn:hover{ background: var(--accent); }
+
+  /* ---------- VIEWING ROOM COLUMN ---------- */
+  .view-col{
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    min-height: 0;
+    background: var(--paper-2);
+  }
+
+  .stage{
+    position: relative;
+    background: linear-gradient(180deg, #f2ede3 0%, #e9e3d5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 44px;
+    border-right: 1px solid var(--rule);
+  }
+  /* museum spotlight feel */
+  .stage::before{
+    content:"";
+    position: absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.55), transparent 65%);
+    pointer-events: none;
+  }
+  .stage::after{
+    content:"";
+    position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);
+  }
+  .artwork-frame{
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    box-shadow:
+      0 36px 60px -30px rgba(20,14,6,0.5),
+      0 16px 28px -20px rgba(20,14,6,0.35);
+    background: #fff;
+    padding: 14px;
+    transition: opacity .45s ease;
+  }
+  .artwork-frame img{
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 220px);
+    width: auto;
+    height: auto;
+  }
+  .artwork-frame .plaque{
+    position: absolute;
+    left: 50%; bottom: -38px;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6px 14px;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .caption{
+    position: absolute; top: 22px; left: 24px;
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .zoom-hint{
+    position: absolute; top: 22px; right: 24px;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .zoom-hint svg{ width: 12px; height: 12px; }
+
+  /* detail panel */
+  .detail{
+    padding: 32px 34px;
+    overflow-y: auto;
+    background: var(--paper);
+  }
+  .detail::-webkit-scrollbar{ width: 8px; }
+  .detail::-webkit-scrollbar-thumb{ background: var(--rule); border-radius: 4px; }
+
+  .detail .eyebrow{
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .detail h1{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.05;
+    letter-spacing: 0;
+    margin: 6px 0 4px;
+  }
+  .detail h1 em{ font-style: italic; }
+  .detail .artist-line{
+    font-size: 12px; letter-spacing: 0.02em; color: var(--ink-muted);
+  }
+
+  .tabs{
+    display: flex; gap: 22px;
+    border-bottom: 1px solid var(--rule);
+    margin: 22px 0 20px;
+  }
+  .tab{
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-muted); padding: 10px 0;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .tab.active{ color: var(--ink); border-bottom-color: var(--ink); }
+
+  .tab-panel{ display: none; }
+  .tab-panel.active{ display: block; animation: fade .3s ease; }
+  @keyframes fade{ from{ opacity:0;} to{ opacity:1;} }
+
+  /* OVERVIEW tab */
+  .meta-grid{
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    row-gap: 10px; column-gap: 16px;
+    margin-bottom: 20px;
+  }
+  .meta-grid dt{
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-muted);
+    padding-top: 2px;
+  }
+  .meta-grid dd{
+    margin: 0;
+    font-size: 13px; color: var(--ink);
+  }
+  .meta-grid dd em{ font-family: var(--serif); font-style: italic; font-size: 15px; }
+
+  .divider-rule{
+    height: 1px; background: var(--rule); margin: 18px 0;
+  }
+
+  .prose p{
+    font-size: 14px; line-height: 1.7; color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .pullquote{
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.35;
+    color: var(--ink);
+    padding: 6px 0 6px 16px;
+    border-left: 2px solid var(--accent);
+    margin: 14px 0;
+  }
+
+  .price-on-request{
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    border: 1px solid var(--ink); padding: 9px 14px; margin-top: 10px;
+    color: var(--ink); cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .price-on-request:hover{ background: var(--ink); color: var(--paper); }
+
+  /* ARTIST tab */
+  .cv-list{ list-style: none; padding: 0; margin: 12px 0 0; }
+  .cv-list li{
+    display: grid; grid-template-columns: 64px 1fr;
+    padding: 9px 0; border-bottom: 1px solid var(--rule-soft);
+    font-size: 13px;
+  }
+  .cv-list li span{ color: var(--ink-muted); font-size: 11px; letter-spacing: 0.08em; }
+
+  /* PRICING tab */
+  .price-summary{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 6px 0 18px;
+  }
+  .stat{
+    border: 1px solid var(--rule);
+    padding: 14px 14px 12px;
+    background: #fff;
+  }
+  .stat .label{
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .stat .num{
+    font-family: var(--serif); font-size: 26px; margin-top: 4px; line-height: 1.1;
+  }
+  .stat .sub{
+    font-size: 11px; color: var(--ink-muted); margin-top: 2px;
+  }
+  .stat .trend-up{ color: #1f7a3a; font-weight: 500; }
+  .stat .trend-down{ color: #a14223; font-weight: 500; }
+
+  .chart-wrap{
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 16px 14px 10px;
+    margin-bottom: 18px;
+  }
+  .chart-wrap .chart-head{
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .chart-wrap .chart-title{
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .chart-wrap .chart-sub{ font-size: 11px; color: var(--ink-muted); font-style: italic; }
+
+  .artnet-badge{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .artnet-badge::before{
+    content:""; width: 8px; height: 8px; background: #111; transform: rotate(45deg);
+  }
+
+  .lots-table{
+    width: 100%; border-collapse: collapse; margin-top: 4px;
+    font-size: 12px;
+  }
+  .lots-table thead th{
+    text-align: left;
+    font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-muted);
+    padding: 10px 8px; border-bottom: 1px solid var(--rule);
+    font-weight: 500;
+  }
+  .lots-table tbody td{
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  .lots-table tbody tr:hover{ background: var(--paper-2); }
+  .lots-table .work{
+    font-family: var(--serif); font-style: italic; font-size: 14px;
+  }
+  .lots-table .house{ font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em; }
+  .lots-table .price{ white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .lots-table .over-estimate{ color: #1f7a3a; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lots-table .under-estimate{ color: #a14223; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .fine-print{
+    font-size: 10px; color: var(--ink-muted); font-style: italic; margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* responsive fallback */
+  @media (max-width: 1100px){
+    .main{ grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    .view-col{ grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    .stage{ border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="topbar">
+    <div class="left">
+      <span class="dot"></span>
+      <span>Concierge AI · Live</span>
+    </div>
+    <div class="brand">
+      Mark <em>Hachem</em>
+      <span class="divider">·</span>
+      <span style="font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:var(--ink-muted);">Private Viewing Room</span>
+    </div>
+    <div class="right">
+      <a href="#">Artists</a>
+      <a href="#">Exhibitions</a>
+      <a href="#">Collection</a>
+      <a href="#" class="inquire">Inquire</a>
+    </div>
+  </header>
+
+  <!-- ===== MAIN GRID ===== -->
+  <section class="main">
+
+    <!-- ======= CHAT COLUMN ======= -->
+    <div class="chat-col">
+
+      <div class="chat-head">
+        <div class="eyebrow">Conversation · Paris Gallery</div>
+        <h2>Good evening. <em>Shall we look at something beautiful?</em></h2>
+        <div class="meta">Your concierge draws from the gallery's holdings and Artnet's Price Database.</div>
+      </div>
+
+      <div class="chat-stream" id="chatStream">
+        <!-- messages injected by JS -->
+      </div>
+
+      <div class="composer">
+        <div class="suggested" id="chipRow">
+          <button class="chip" data-q="Tell me more about Cruz-Diez's market.">Tell me more about Cruz-Diez's market</button>
+          <button class="chip" data-q="Show me another kinetic piece.">Show me another kinetic piece</button>
+          <button class="chip" data-q="What about Wifredo Lam?">What about Wifredo Lam?</button>
+          <button class="chip" data-q="How do I arrange a private viewing?">Arrange a private viewing</button>
+        </div>
+        <div class="input-row">
+          <input id="userInput" type="text" placeholder="Ask about a work, artist, provenance, or price history…" autocomplete="off" />
+          <button class="send-btn" id="sendBtn">Send →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= VIEWING ROOM COLUMN ======= -->
+    <div class="view-col">
+
+      <!-- LEFT: the artwork on the wall -->
+      <div class="stage">
+        <div class="caption" id="stageCaption">Now viewing · 01 / 03</div>
+        <div class="zoom-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M8 11h6M11 8v6"/></svg>
+          Click to enlarge
+        </div>
+        <div class="artwork-frame" id="artworkFrame">
+          <img id="artworkImg" src="./assets/cruz-diez-chromointerference.jpg" alt="Artwork on view" />
+          <div class="plaque" id="artworkPlaque">Cruz-Diez · Chromointerférence</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: details -->
+      <div class="detail" id="detailPane">
+        <div class="eyebrow" id="d_eyebrow">Kinetic Art · 1965</div>
+        <h1 id="d_title"><em>Chromointerférence mécanique</em></h1>
+        <div class="artist-line" id="d_artist">Carlos Cruz-Diez · Franco-Venezuelan, 1923–2019</div>
+
+        <div class="tabs">
+          <div class="tab active" data-tab="overview">Overview</div>
+          <div class="tab" data-tab="artist">Artist</div>
+          <div class="tab" data-tab="pricing">Price History</div>
+        </div>
+
+        <!-- OVERVIEW -->
+        <div class="tab-panel active" data-panel="overview">
+          <dl class="meta-grid" id="d_meta">
+            <dt>Medium</dt><dd>Chromography on aluminum</dd>
+            <dt>Dimensions</dt><dd>80 × 80 cm (31½ × 31½ in)</dd>
+            <dt>Year</dt><dd>1965, conceived / signed by the artist</dd>
+            <dt>Edition</dt><dd>Unique</dd>
+            <dt>Provenance</dt><dd>Atelier Cruz-Diez, Paris — Private collection, Geneva — Mark Hachem Gallery</dd>
+            <dt>Exhibited</dt><dd><em>Chromatic Territories</em>, Mark Hachem, Paris, 2026</dd>
+            <dt>Literature</dt><dd>Cat. Raisonné, Atelier Cruz-Diez, ref. CD-CI-065</dd>
+            <dt>Condition</dt><dd>Excellent. Examined 03.2026.</dd>
+          </dl>
+
+          <div class="divider-rule"></div>
+
+          <div class="prose" id="d_prose">
+            <p><em class="title">Chromointerférence mécanique</em> belongs to the series in which Cruz-Diez most fully realised his thesis that colour is an autonomous event, unfolding in time as the viewer moves. Parallel coloured strips, printed on aluminium, activate against one another as you pass — the work never looks the same twice.</p>
+            <div class="pullquote">"I don't get inspired. I reflect." — Carlos Cruz-Diez</div>
+            <p>The present piece is a refined example from the foundational decade of the series, with the cool ultramarine and chromium-green register that is particularly sought after at auction.</p>
+          </div>
+
+          <button class="price-on-request">Inquire · Price on request</button>
+        </div>
+
+        <!-- ARTIST -->
+        <div class="tab-panel" data-panel="artist">
+          <div class="prose">
+            <p>Carlos Cruz-Diez (1923–2019) is among the principal figures of twentieth-century art, a founder of the Kinetic and Op movements whose life-long investigation redefined our understanding of colour as a phenomenon rather than a property.</p>
+            <p>Working between Caracas and Paris, Cruz-Diez developed eight distinct lines of chromatic research — Couleur Additive, Physichromie, Induction Chromatique, Chromointerférence, Transchromie, Chromosaturation, Chromoscope, and Couleur à l'Espace — each responding to a different behaviour of colour in perception.</p>
+          </div>
+          <div class="divider-rule"></div>
+          <div class="eyebrow">Selected Collections</div>
+          <ul class="cv-list">
+            <li><span>MoMA</span>Museum of Modern Art, New York</li>
+            <li><span>Tate</span>Tate Modern, London</li>
+            <li><span>Pompidou</span>Centre Pompidou, Paris</li>
+            <li><span>MAM</span>Musée d'Art Moderne de la Ville de Paris</li>
+            <li><span>MOCA</span>Museum of Contemporary Art, Los Angeles</li>
+            <li><span>MFAH</span>Museum of Fine Arts, Houston</li>
+            <li><span>Hirshhorn</span>Hirshhorn Museum, Washington, D.C.</li>
+          </ul>
+        </div>
+
+        <!-- PRICING -->
+        <div class="tab-panel" data-panel="pricing">
+          <div class="artnet-badge">Sourced from Artnet Price Database</div>
+
+          <div class="price-summary" style="margin-top:14px;">
+            <div class="stat">
+              <div class="label">Auction Average</div>
+              <div class="num">$182K</div>
+              <div class="sub">Last 5 yrs · 47 lots · <span class="trend-up">↑ 34% vs. prior 5 yrs</span></div>
+            </div>
+            <div class="stat">
+              <div class="label">Record</div>
+              <div class="num">$495K</div>
+              <div class="sub">Sotheby's NY · Nov 2022</div>
+            </div>
+            <div class="stat">
+              <div class="label">Sell-Through</div>
+              <div class="num">89%</div>
+              <div class="sub">47 of 53 lots offered</div>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <div class="chart-head">
+              <div class="chart-title">Hammer Price · 2015 – 2026</div>
+              <div class="chart-sub">USD · inflation-adjusted</div>
+            </div>
+            <!-- Line chart SVG -->
+            <svg viewBox="0 0 640 220" width="100%" height="220" preserveAspectRatio="none" style="display:block;">
+              <!-- y gridlines -->
+              <g stroke="#ede8dd" stroke-width="1">
+                <line x1="40" x2="630" y1="30" y2="30"/>
+                <line x1="40" x2="630" y1="70" y2="70"/>
+                <line x1="40" x2="630" y1="110" y2="110"/>
+                <line x1="40" x2="630" y1="150" y2="150"/>
+                <line x1="40" x2="630" y1="190" y2="190"/>
+              </g>
+              <!-- y labels -->
+              <g font-family="Instrument Sans, sans-serif" font-size="9" fill="#7a766f" letter-spacing="1.5">
+                <text x="34" y="33" text-anchor="end">500K</text>
+                <text x="34" y="73" text-anchor="end">400K</text>
+                <text x="34" y="113" text-anchor="end">300K</text>
+                <text x="34" y="153" text-anchor="end">200K</text>
+                <text x="34" y="193" text-anchor="end">100K</text>
+              </g>
+              <!-- x labels -->
+              <g font-family="Instrument Sans, sans-serif" font-size="9" fill="#7a766f" letter-spacing="1.5">
+                <text x="50" y="210">'15</text>
+                <text x="110" y="210">'16</text>
+                <text x="170" y="210">'17</text>
+                <text x="230" y="210">'18</text>
+                <text x="290" y="210">'19</text>
+                <text x="350" y="210">'20</text>
+                <text x="410" y="210">'21</text>
+                <text x="470" y="210">'22</text>
+                <text x="530" y="210">'23</text>
+                <text x="590" y="210">'24</text>
+              </g>
+
+              <!-- average line (soft) -->
+              <polyline
+                fill="none"
+                stroke="#bfb7a4"
+                stroke-width="1"
+                stroke-dasharray="3,4"
+                points="50,168 110,160 170,150 230,143 290,138 350,130 410,118 470,100 530,96 590,88"
+              />
+
+              <!-- hammer price line -->
+              <polyline
+                fill="none"
+                stroke="#7a1f1a"
+                stroke-width="1.6"
+                points="50,178 110,170 170,155 230,160 290,132 350,120 410,95 470,45 530,80 590,68"
+              />
+              <!-- fill under -->
+              <polygon
+                fill="rgba(122,31,26,0.08)"
+                points="50,178 110,170 170,155 230,160 290,132 350,120 410,95 470,45 530,80 590,68 590,200 50,200"
+              />
+              <!-- dots -->
+              <g fill="#7a1f1a">
+                <circle cx="50" cy="178" r="2.5"/>
+                <circle cx="110" cy="170" r="2.5"/>
+                <circle cx="170" cy="155" r="2.5"/>
+                <circle cx="230" cy="160" r="2.5"/>
+                <circle cx="290" cy="132" r="2.5"/>
+                <circle cx="350" cy="120" r="2.5"/>
+                <circle cx="410" cy="95" r="2.5"/>
+                <circle cx="470" cy="45" r="3.5" stroke="#fff" stroke-width="1.5"/>
+                <circle cx="530" cy="80" r="2.5"/>
+                <circle cx="590" cy="68" r="2.5"/>
+              </g>
+              <!-- record annotation -->
+              <g font-family="Cormorant Garamond, serif" font-style="italic" font-size="11" fill="#141311">
+                <line x1="470" y1="45" x2="470" y2="20" stroke="#141311" stroke-width="0.6"/>
+                <text x="475" y="23">Record — Sotheby's NY, Nov '22 · $495K</text>
+              </g>
+              <g font-family="Instrument Sans, sans-serif" font-size="9" fill="#7a766f" letter-spacing="1.5" text-transform="uppercase">
+                <rect x="48" y="6" width="10" height="2" fill="#7a1f1a"/>
+                <text x="62" y="10">Hammer</text>
+                <rect x="120" y="6" width="10" height="2" fill="#bfb7a4"/>
+                <text x="134" y="10">5-yr rolling avg.</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="eyebrow" style="margin-bottom:8px;">Recent Comparable Lots · Artnet</div>
+          <table class="lots-table">
+            <thead>
+              <tr>
+                <th>Work</th>
+                <th>Auction</th>
+                <th style="text-align:right;">Hammer</th>
+              </tr>
+            </thead>
+            <tbody id="lotsBody">
+              <tr>
+                <td>
+                  <div class="work">Chromointerférence Manipulable</div>
+                  <div class="house">1968 · Chromo­graphy on aluminum · 80 × 80 cm</div>
+                </td>
+                <td>
+                  Sotheby's New York · Nov 2022
+                  <div class="house">Lot 38 · Latin American Art</div>
+                </td>
+                <td style="text-align:right;">
+                  <div class="price"><strong>$495,000</strong></div>
+                  <div class="over-estimate">↑ 65% over high est.</div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="work">Physichromie 500</div>
+                  <div class="house">1970 · Chromo­graphy on PVC · 100 × 100 cm</div>
+                </td>
+                <td>
+                  Christie's London · Jun 2024
+                  <div class="house">Lot 14 · Post-War &amp; Contemporary</div>
+                </td>
+                <td style="text-align:right;">
+                  <div class="price"><strong>$312,500</strong></div>
+                  <div class="over-estimate">↑ 12% over high est.</div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="work">Couleur Additive Panam 10</div>
+                  <div class="house">1996 · Screenprint on aluminum · 60 × 60 cm</div>
+                </td>
+                <td>
+                  Phillips New York · Mar 2024
+                  <div class="house">Lot 61 · Latin America</div>
+                </td>
+                <td style="text-align:right;">
+                  <div class="price"><strong>$189,000</strong></div>
+                  <div class="house">Within estimate</div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="work">Induction Chromatique 220</div>
+                  <div class="house">1979 · Chromo­graphy on aluminum · 80 × 80 cm</div>
+                </td>
+                <td>
+                  Sotheby's Paris · Oct 2023
+                  <div class="house">Lot 22 · Art Contemporain</div>
+                </td>
+                <td style="text-align:right;">
+                  <div class="price"><strong>$164,800</strong></div>
+                  <div class="over-estimate">↑ 8% over high est.</div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="work">Chromointerférence Spatiale</div>
+                  <div class="house">1964 · Work on paper · 48 × 48 cm</div>
+                </td>
+                <td>
+                  Christie's Paris · Dec 2023
+                  <div class="house">Lot 9 · Œuvres sur papier</div>
+                </td>
+                <td style="text-align:right;">
+                  <div class="price"><strong>$96,200</strong></div>
+                  <div class="under-estimate">↓ under low est.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="fine-print">Prices include buyer's premium where disclosed. Data aggregated from Artnet Price Database, accessed 16 April 2026. Gallery pricing for the present work is available on request and may differ from secondary-market results. This prototype uses illustrative data.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+/* ------------------------------------------------------------------
+   MOCK CATALOGUE — three works, each with full "Artnet-style" data.
+   In a real build these would come from your gallery CMS + Artnet API.
+------------------------------------------------------------------- */
+const catalogue = {
+  "cruz-diez": {
+    eyebrow: "Kinetic Art · 1965",
+    title: "Chromointerférence mécanique",
+    artistLine: "Carlos Cruz-Diez · Franco-Venezuelan, 1923–2019",
+    plaque: "Cruz-Diez · Chromointerférence",
+    img: "/sandbox/assets/cruz-diez-chromointerference.jpg",
+    cardLine1: "Kinetic · Paris, 1965",
+    cardLine2: "Chromointerférence mécanique",
+    cardLine3: "Carlos Cruz-Diez — Chromography on aluminum, 80 × 80 cm"
+  },
+  "soto": {
+    eyebrow: "Kinetic Art · Vibrations",
+    title: "Vibración",
+    artistLine: "Jesús Rafael Soto · Venezuelan, 1923–2005",
+    plaque: "Soto · Vibración",
+    img: "https://www.markhachem.com/assets/images/soto-vibration.jpg",
+    cardLine1: "Kinetic · Caracas–Paris",
+    cardLine2: "Vibración",
+    cardLine3: "Jesús Rafael Soto — Mixed media on wood",
+    // different meta for demo
+    meta: [
+      ["Medium","Mixed media, painted wood, metal rods"],
+      ["Dimensions","105 × 105 × 18 cm"],
+      ["Year","1969"],
+      ["Edition","Unique"],
+      ["Provenance","Estate of the artist — Galerie Denise René, Paris — Mark Hachem"],
+      ["Exhibited","Chromatic Territories, Paris, 2026"],
+      ["Condition","Excellent — recent conservation 2023"]
+    ],
+    proseHTML: `
+      <p>Soto's <em class="title">Vibración</em> works are the canonical statement of the Venezuelan master's inquiry into dematerialised form. Thin metal rods suspended before a striated ground set the retina into flicker — the painting, physically, is no longer where the eye sees it.</p>
+      <div class="pullquote">"The work exists only in the relationship — between the rods, the stripes, and the moving viewer." — J. R. Soto</div>
+      <p>Works from the late 1960s represent the height of Soto's market, with institutional appetite led by MoMA's 2019 retrospective loan programme.</p>`,
+    price: {
+      avg: "$267K", avgSub: "Last 5 yrs · 62 lots · <span class='trend-up'>↑ 19%</span>",
+      record: "$1.02M", recordSub: "Sotheby's NY · May 2023",
+      sell: "92%", sellSub: "62 of 67 lots offered"
+    },
+    lots: [
+      ["Escritura curva","1972 · Mixed media · 102 × 205 cm","Sotheby's New York · May 2023","Lot 24 · Latin American Art","$1,020,000","↑ 48% over high est.","over"],
+      ["Vibración amarilla y negra","1969 · Paint, wood, metal rods · 100 × 100 cm","Christie's New York · Nov 2023","Lot 41 · 20th Century","$684,000","↑ 22% over high est.","over"],
+      ["Gran pared vibrante","1967 · Mixed media · 150 × 150 cm","Phillips London · Oct 2024","Lot 17 · Modern &amp; Contemporary","$512,000","Within estimate","neutral"],
+      ["Petite vibration","1968 · Mixed media · 45 × 45 cm","Sotheby's Paris · Jun 2024","Lot 8 · Art Contemporain","$188,000","↓ under low est.","under"]
+    ]
+  },
+  "lam": {
+    eyebrow: "Cuban Modernism · Works on Paper",
+    title: "Sans Titre, 1973",
+    artistLine: "Wifredo Lam · Cuban, 1902–1982",
+    plaque: "Lam · Sans Titre, 1973",
+    img: "https://www.markhachem.com/assets/images/lam-sans-titre-1973.png",
+    cardLine1: "Cuban Modernism · 1973",
+    cardLine2: "Sans Titre",
+    cardLine3: "Wifredo Lam — Pastel et fusain sur papier, 63 × 48 cm",
+    meta: [
+      ["Medium","Pastel and charcoal on paper"],
+      ["Dimensions","63 × 48 cm (24¾ × 18⅞ in)"],
+      ["Year","1973"],
+      ["Signed","Signed and dated lower right"],
+      ["Provenance","Studio of the artist — Albina du Boisrouvray collection, Paris — Mark Hachem"],
+      ["Authentication","SDO Wifredo Lam, Paris"],
+      ["Condition","Very good"]
+    ],
+    proseHTML: `
+      <p>Executed in the final decade of Lam's life, this <em class="title">Sans Titre</em> distills the Afro-Cuban pictorial vocabulary that made him the decisive Caribbean modernist. Totemic femme-cheval figures emerge from a luminous grey ground in pastel — spirits, rather than bodies.</p>
+      <div class="pullquote">"My painting is an act of decolonisation." — Wifredo Lam</div>
+      <p>Lam's works on paper have outperformed his canvases at auction since 2021, with institutional interest from MoMA, Tate, and Reina Sofía following the 2015 travelling retrospective.</p>`,
+    price: {
+      avg: "$94K", avgSub: "Last 5 yrs · 131 works on paper · <span class='trend-up'>↑ 41%</span>",
+      record: "$384K", recordSub: "Christie's Paris · Apr 2024",
+      sell: "86%", sellSub: "131 of 152 lots offered"
+    },
+    lots: [
+      ["Figure totémique","1972 · Pastel on paper · 65 × 50 cm","Christie's Paris · Apr 2024","Lot 12 · Post-War &amp; Contemporary","$384,000","↑ 54% over high est.","over"],
+      ["Sans Titre","1974 · Mixed media on paper · 62 × 48 cm","Sotheby's London · Oct 2023","Lot 29 · Modern &amp; Contemporary","$212,000","↑ 18% over high est.","over"],
+      ["Composition","1970 · Charcoal on paper · 60 × 45 cm","Phillips New York · May 2024","Lot 48 · Latin America","$128,000","Within estimate","neutral"],
+      ["Étude pour La Jungle","1973 · Pastel on paper · 48 × 31 cm","Bonhams Paris · Nov 2023","Lot 6","$74,500","↓ under low est.","under"]
+    ]
+  }
+};
+
+/* default overview meta/prose come from the markup; only swap when needed */
+const defaultOverview = {
+  meta: [
+    ["Medium","Chromography on aluminum"],
+    ["Dimensions","80 × 80 cm (31½ × 31½ in)"],
+    ["Year","1965, conceived / signed by the artist"],
+    ["Edition","Unique"],
+    ["Provenance","Atelier Cruz-Diez, Paris — Private collection, Geneva — Mark Hachem Gallery"],
+    ["Exhibited","Chromatic Territories, Mark Hachem, Paris, 2026"],
+    ["Literature","Cat. Raisonné, Atelier Cruz-Diez, ref. CD-CI-065"],
+    ["Condition","Excellent. Examined 03.2026."]
+  ],
+  proseHTML: `
+    <p><em class="title">Chromointerférence mécanique</em> belongs to the series in which Cruz-Diez most fully realised his thesis that colour is an autonomous event, unfolding in time as the viewer moves. Parallel coloured strips, printed on aluminium, activate against one another as you pass — the work never looks the same twice.</p>
+    <div class="pullquote">"I don't get inspired. I reflect." — Carlos Cruz-Diez</div>
+    <p>The present piece is a refined example from the foundational decade of the series, with the cool ultramarine and chromium-green register that is particularly sought after at auction.</p>`,
+  price: {
+    avg: "$182K", avgSub: "Last 5 yrs · 47 lots · <span class='trend-up'>↑ 34% vs. prior 5 yrs</span>",
+    record: "$495K", recordSub: "Sotheby's NY · Nov 2022",
+    sell: "89%", sellSub: "47 of 53 lots offered"
+  },
+  lots: [
+    ["Chromointerférence Manipulable","1968 · Chromography on aluminum · 80 × 80 cm","Sotheby's New York · Nov 2022","Lot 38 · Latin American Art","$495,000","↑ 65% over high est.","over"],
+    ["Physichromie 500","1970 · Chromography on PVC · 100 × 100 cm","Christie's London · Jun 2024","Lot 14 · Post-War &amp; Contemporary","$312,500","↑ 12% over high est.","over"],
+    ["Couleur Additive Panam 10","1996 · Screenprint on aluminum · 60 × 60 cm","Phillips New York · Mar 2024","Lot 61 · Latin America","$189,000","Within estimate","neutral"],
+    ["Induction Chromatique 220","1979 · Chromography on aluminum · 80 × 80 cm","Sotheby's Paris · Oct 2023","Lot 22 · Art Contemporain","$164,800","↑ 8% over high est.","over"],
+    ["Chromointerférence Spatiale","1964 · Work on paper · 48 × 48 cm","Christie's Paris · Dec 2023","Lot 9 · Œuvres sur papier","$96,200","↓ under low est.","under"]
+  ]
+};
+
+/* ------------------------------------------------------------------
+   OPENING CONVERSATION — pre-populated, feels mid-exchange.
+------------------------------------------------------------------- */
+const script = [
+  { who: "ai", text: "Good evening — welcome to Mark Hachem's private viewing room. What brings you in today?" },
+  { who: "user", text: "I've been drawn to kinetic art lately. Something that shifts as you walk past it. What do you have?" },
+  { who: "ai",
+    text: "A wonderful lineage to explore. May I start with the founding voice — Carlos Cruz-Diez, a Franco-Venezuelan painter who spent seventy years treating colour as an <em class='title'>event</em> rather than a property. The gallery currently has a Chromointerférence from 1965, the foundational decade of the series.",
+    card: "cruz-diez"
+  },
+  { who: "user", text: "Tell me more about this piece. What makes this one significant?" },
+  { who: "ai", text: "This is <em class='title'>Chromointerférence mécanique</em>, chromography on aluminium, 80 × 80 cm. The parallel coloured strips activate against one another as the viewer moves — the painting is never the same twice. It comes directly from Atelier Cruz-Diez with unbroken provenance, and will be exhibited in <em class='title'>Chromatic Territories</em> this season. I've opened the full dossier on your right." },
+  { who: "user", text: "Beautiful. How does it compare to his market at auction?" },
+  { who: "ai", text: "Cruz-Diez has had a decisive decade at auction. The five-year average for comparable Chromointerférence works is ~$182K, up 34% against the prior five years. The current record was set in November 2022 at Sotheby's New York — $495K, 65% above high estimate. The <em>Price History</em> tab on the right shows the hammer trajectory from 2015 through last season, with the recent lots I'd weigh as the closest comparables to this piece." }
+];
+
+/* ------------------------------------------------------------------
+   RENDER
+------------------------------------------------------------------- */
+const $stream = $("#chatStream");
+
+function escapeHtml(s){
+  return (s||"").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+/* allow our own <em class='title'> tags through but nothing else */
+function safeInline(s){
+  // escape everything
+  let e = escapeHtml(s);
+  // re-enable specific whitelisted tags
+  e = e.replace(/&lt;em class=&#039;title&#039;&gt;/g, "<em class='title'>")
+       .replace(/&lt;em class='title'&gt;/g, "<em class='title'>")
+       .replace(/&lt;em class=&quot;title&quot;&gt;/g, "<em class='title'>")
+       .replace(/&lt;em&gt;/g, "<em>")
+       .replace(/&lt;\/em&gt;/g, "</em>");
+  return e;
+}
+
+function buildArtCard(key){
+  const c = catalogue[key];
+  if(!c) return "";
+  return `
+    <div class="art-card" data-work="${key}">
+      <img src="${c.img}" alt="${escapeHtml(c.title)}" />
+      <div class="info">
+        <div class="line1">${escapeHtml(c.cardLine1)}</div>
+        <div class="line2">${escapeHtml(c.cardLine2)}</div>
+        <div class="line3">${c.cardLine3}</div>
+        <div class="viewcta">View in Room →</div>
+      </div>
+    </div>`;
+}
+
+function pushMessage(m){
+  const who = m.who === "ai" ? "Concierge" : "You";
+  const html = `
+    <div class="msg ${m.who}">
+      <div class="who">${who}</div>
+      <div class="bubble">${safeInline(m.text)}</div>
+      ${m.card ? buildArtCard(m.card) : ""}
+    </div>`;
+  $stream.append(html);
+  $stream.scrollTop($stream[0].scrollHeight);
+}
+
+/* stagger the opening script so the prototype feels alive */
+let i = 0;
+function playOpening(){
+  if(i >= script.length) return;
+  pushMessage(script[i]);
+  i++;
+  setTimeout(playOpening, 220);
+}
+playOpening();
+
+/* ------------------------------------------------------------------
+   SWITCHING WORKS IN THE VIEWING ROOM
+------------------------------------------------------------------- */
+function loadWork(key){
+  const c = catalogue[key];
+  if(!c) return;
+
+  const $img = $("#artworkImg");
+  const $frame = $("#artworkFrame");
+
+  $frame.css("opacity", 0);
+  setTimeout(() => {
+    $img.attr("src", c.img).attr("alt", c.title);
+    $("#artworkPlaque").text(c.plaque);
+    $("#d_eyebrow").text(c.eyebrow);
+    $("#d_title").html(`<em>${c.title}</em>`);
+    $("#d_artist").text(c.artistLine);
+
+    /* meta */
+    const meta = (c.meta) ? c.meta : defaultOverview.meta;
+    let metaHTML = "";
+    meta.forEach(([k,v]) => { metaHTML += `<dt>${k}</dt><dd>${v}</dd>`; });
+    $("#d_meta").html(metaHTML);
+
+    /* prose */
+    $("#d_prose").html((c.proseHTML) ? c.proseHTML : defaultOverview.proseHTML);
+
+    /* pricing */
+    const p = (c.price) ? c.price : defaultOverview.price;
+    $(".price-summary").html(`
+      <div class="stat">
+        <div class="label">Auction Average</div>
+        <div class="num">${p.avg}</div>
+        <div class="sub">${p.avgSub}</div>
+      </div>
+      <div class="stat">
+        <div class="label">Record</div>
+        <div class="num">${p.record}</div>
+        <div class="sub">${p.recordSub}</div>
+      </div>
+      <div class="stat">
+        <div class="label">Sell-Through</div>
+        <div class="num">${p.sell}</div>
+        <div class="sub">${p.sellSub}</div>
+      </div>
+    `);
+
+    /* lots */
+    const lots = (c.lots) ? c.lots : defaultOverview.lots;
+    let lotsHTML = "";
+    lots.forEach(l => {
+      const [work, workSub, house, houseSub, price, tag, tagType] = l;
+      const tagClass = tagType === "over" ? "over-estimate" :
+                       tagType === "under" ? "under-estimate" : "house";
+      lotsHTML += `
+        <tr>
+          <td>
+            <div class="work">${work}</div>
+            <div class="house">${workSub}</div>
+          </td>
+          <td>
+            ${house}
+            <div class="house">${houseSub}</div>
+          </td>
+          <td style="text-align:right;">
+            <div class="price"><strong>${price}</strong></div>
+            <div class="${tagClass}">${tag}</div>
+          </td>
+        </tr>`;
+    });
+    $("#lotsBody").html(lotsHTML);
+
+    $frame.css("opacity", 1);
+  }, 220);
+
+  /* highlight the active card in the chat */
+  $(".art-card").removeClass("active");
+  $(`.art-card[data-work="${key}"]`).addClass("active");
+}
+
+/* clicking a card in chat swaps the viewing room */
+$stream.on("click", ".art-card", function(){
+  loadWork($(this).data("work"));
+});
+
+/* tabs */
+$(".tab").on("click", function(){
+  $(".tab").removeClass("active");
+  $(this).addClass("active");
+  const t = $(this).data("tab");
+  $(".tab-panel").removeClass("active");
+  $(`.tab-panel[data-panel="${t}"]`).addClass("active");
+});
+
+/* zoom on artwork */
+$("#artworkFrame").on("click", function(){
+  const cur = $(this).data("zoomed");
+  if(cur){
+    $(this).css({"transform":"scale(1)","zIndex":"1"});
+    $(this).data("zoomed", false);
+  } else {
+    $(this).css({"transform":"scale(1.35)","zIndex":"10","transition":"transform .5s cubic-bezier(.2,.8,.2,1)"});
+    $(this).data("zoomed", true);
+  }
+});
+
+/* ------------------------------------------------------------------
+   USER INPUT — mock "LLM" reply with keyword matching
+------------------------------------------------------------------- */
+function mockReply(q){
+  const s = q.toLowerCase();
+
+  if(s.includes("lam") || s.includes("cuban") || s.includes("wifredo")){
+    loadWork("lam");
+    return {
+      text: "A natural pivot. Wifredo Lam — Cuban, 1902–1982 — is the decisive Caribbean modernist. We have a signed <em class='title'>Sans Titre</em> from 1973 in pastel and charcoal, with provenance through the artist's studio and the Albina du Boisrouvray collection. His works on paper have outpaced his canvases since 2021. I've pulled the dossier for you.",
+      card: "lam"
+    };
+  }
+  if(s.includes("soto") || s.includes("vibra") || s.includes("another kinetic") || s.includes("other kinetic")){
+    loadWork("soto");
+    return {
+      text: "Then let's stay in the kinetic register — Jesús Rafael Soto, Cruz-Diez's closest peer. The Vibración series dematerialises the painting: thin rods suspended before a striated ground set the retina into flicker. Record at Sotheby's New York in May 2023 at $1.02M. Dossier is up on the right.",
+      card: "soto"
+    };
+  }
+  if(s.includes("market") || s.includes("price") || s.includes("cruz-diez market")){
+    return {
+      text: "Cruz-Diez's market has compounded steadily. Post-2019 estate clearance brought institutional-grade works to auction; 2022 marked the current record at $495K. The segment most in demand is the 1960s Chromointerférence — precisely the decade our present work belongs to. Switch to the <em>Price History</em> tab on the right for the full trajectory."
+    };
+  }
+  if(s.includes("private viewing") || s.includes("visit") || s.includes("appointment")){
+    return {
+      text: "Of course. The Paris gallery is open daily 10:30–19:30 at 28 Place des Vosges. For a private viewing of this work I can reserve a slot with the Director — may I ask your preferred day, and whether you'd like the piece on the Vosges wall or in the viewing room?"
+    };
+  }
+  if(s.includes("inquire") || s.includes("buy") || s.includes("purchase") || s.includes("price on request")){
+    return {
+      text: "I'll note your interest in <em class='title'>Chromointerférence mécanique</em>. A gallery director will follow up within the day with price, condition report, and shipping options. If you'd like to leave a reference range, I can match upcoming works to your thesis."
+    };
+  }
+
+  /* default */
+  return {
+    text: "I can walk you deeper into any direction — the artist's biography, the specific series this work belongs to, auction comparables, or provenance. Which would you like to pursue?"
+  };
+}
+
+function sendUser(text){
+  if(!text.trim()) return;
+  pushMessage({ who: "user", text });
+
+  // typing indicator
+  const $t = $(`
+    <div class="msg ai" id="typingMsg">
+      <div class="who">Concierge</div>
+      <div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>
+    </div>`);
+  $stream.append($t);
+  $stream.scrollTop($stream[0].scrollHeight);
+
+  setTimeout(() => {
+    $("#typingMsg").remove();
+    const reply = mockReply(text);
+    pushMessage({ who: "ai", text: reply.text, card: reply.card });
+  }, 900 + Math.random()*500);
+}
+
+$("#sendBtn").on("click", () => {
+  const t = $("#userInput").val();
+  $("#userInput").val("");
+  sendUser(t);
+});
+$("#userInput").on("keydown", e => {
+  if(e.key === "Enter"){ $("#sendBtn").click(); }
+});
+$("#chipRow").on("click", ".chip", function(){
+  sendUser($(this).data("q"));
+});
+</script>
+
+</body>
+</html>
