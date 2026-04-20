@@ -375,6 +375,83 @@ a { color: inherit; text-decoration: none; }
 .btn-white { border-color: rgba(255,255,255,0.3); color: #fff; }
 .btn-white:hover { background: #fff; color: var(--black); border-color: #fff; }
 
+/* ═══ NEWS ═══ */
+.news { padding: 8rem 3rem; background: var(--white); }
+.news-inner { max-width: 1400px; margin: 0 auto; }
+.news-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+.news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+
+.news-card {
+  display: flex; flex-direction: column;
+  background: var(--white); border-top: 1px solid var(--border);
+  transition: transform 0.5s var(--ease-out);
+}
+.news-card:hover { transform: translateY(-4px); }
+
+.news-card-image {
+  position: relative; aspect-ratio: 16/10; overflow: hidden;
+  background: var(--grey-light); margin-bottom: 1.8rem;
+}
+.news-card-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s var(--ease-out), filter 0.4s;
+}
+.news-card:hover .news-card-image img { transform: scale(1.04); filter: brightness(1.05); }
+
+.news-card-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  background: var(--black); color: var(--white);
+  font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 0.5rem 0.9rem;
+}
+.news-card-badge.gold { background: var(--gold); }
+
+.news-card-meta {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.news-card-meta span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.news-card-meta span + span::before {
+  content: ''; width: 4px; height: 4px; background: var(--grey-mid);
+  border-radius: 50%; margin-right: 1rem;
+}
+
+.news-card-title {
+  font-family: var(--font-serif); font-weight: 400;
+  font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.2;
+  letter-spacing: -0.01em; color: var(--text);
+  margin-bottom: 0.5rem; transition: color 0.3s;
+}
+.news-card:hover .news-card-title { color: var(--gold-dark); }
+
+.news-card-subtitle {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 1.2rem;
+}
+
+.news-card-venue {
+  font-size: 0.75rem; letter-spacing: 0.05em;
+  color: var(--text); margin-bottom: 1.4rem;
+  padding-bottom: 1.4rem; border-bottom: 1px solid var(--border);
+}
+.news-card-venue strong { font-weight: 500; }
+
+.news-card-excerpt {
+  font-size: 0.95rem; line-height: 1.75; color: var(--text-secondary);
+  margin-bottom: 1.8rem;
+}
+
+.news-card-link {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text);
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--text);
+  align-self: flex-start; transition: color 0.3s, border-color 0.3s, gap 0.3s;
+}
+.news-card-link:hover { color: var(--gold-dark); border-color: var(--gold-dark); gap: 0.9rem; }
+.news-card-link svg { width: 14px; height: 14px; }
+
 /* ═══ COLLECTION ═══ */
 .collection { padding: 8rem 3rem; }
 .collection-inner { max-width: 1400px; margin: 0 auto; }
@@ -505,8 +582,9 @@ a { color: inherit; text-decoration: none; }
   .hero { min-height: 600px; }
   .hero-content { padding: 0 1.5rem 4rem; }
   .hero-scroll { display: none; }
-  .exhibition-current, .artists, .about, .exhibitions, .collection, .fairs, .contact { padding: 5rem 1.5rem; }
+  .exhibition-current, .artists, .about, .exhibitions, .collection, .fairs, .contact, .news { padding: 5rem 1.5rem; }
   .exhibition-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .news-grid { grid-template-columns: 1fr; gap: 3.5rem; }
   .collection-grid { grid-template-columns: repeat(2, 1fr); }
   .artist-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .about-milestones { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -579,12 +657,11 @@ a { color: inherit; text-decoration: none; }
     <img src="assets/images/mark-hachem-logo.png" alt="Mark Hachem Gallery" class="nav-logo-dark">
   </a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
+    <li><a href="index.html#about">About</a></li>
     <li><a href="artists.html">Artists</a></li>
     <li><a href="exhibitions.html">Exhibitions</a></li>
-    <li><a href="#fairs">Art Fairs</a></li>
-    <li><a href="#collection">Collection</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="index.html#fairs">Art Fairs</a></li>
+    <li><a href="news.html">News</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Inquire</a>
   <div class="nav-toggle" id="navToggle" aria-label="Menu">
@@ -831,6 +908,60 @@ a { color: inherit; text-decoration: none; }
           <div class="milestone-text">Exhibitions<br>worldwide</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEWS ═══ -->
+<section class="news" id="news">
+  <div class="news-inner">
+    <div class="news-header">
+      <div>
+        <div class="section-label reveal">In the News</div>
+        <h2 class="section-heading reveal reveal-delay-1">Artists in<br><em>the Spotlight</em></h2>
+      </div>
+    </div>
+    <div class="news-grid">
+      <article class="news-card reveal reveal-delay-1">
+        <div class="news-card-image">
+          <img src="assets/images/news/hamed-abdalla-imarabe/poster-banner.jpg" alt="Hamed Abdalla — Signes d'Égypte, retrospective at Institut du monde arabe-Tourcoing" loading="lazy">
+          <span class="news-card-badge gold">Retrospective</span>
+        </div>
+        <div class="news-card-meta">
+          <span>7 March — 12 July 2026</span>
+          <span>Tourcoing</span>
+        </div>
+        <h3 class="news-card-title">Hamed Abdalla &mdash; Signes d&rsquo;&Eacute;gypte</h3>
+        <p class="news-card-subtitle">A major retrospective spanning five decades</p>
+        <p class="news-card-venue"><strong>Institut du monde arabe&ndash;Tourcoing</strong> &middot; Curated by Nada Majdoub</p>
+        <p class="news-card-excerpt">
+          The Institut du monde arabe&ndash;Tourcoing presents a major retrospective dedicated to Hamed Abdalla (1917&ndash;1985), one of the defining figures of modern Egyptian art. Bringing together paintings, drawings, lithographs, and archival materials preserved by the artist&rsquo;s family, the exhibition retraces the successive phases of his life and work &mdash; from the &ldquo;Signs of Egypt&rdquo; series to the anthropomorphic Arabic letterforms of his Paris years.
+        </p>
+        <a href="news/hamed-abdalla-imarabe.html" class="news-card-link">
+          Read more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+      <article class="news-card reveal reveal-delay-2">
+        <div class="news-card-image">
+          <img src="assets/images/news/sara-shamma-venice/poster-biennale.jpg" alt="Sara Shamma at the Venice Biennale 2026 with curator Yuko Hasegawa" loading="lazy">
+          <span class="news-card-badge">Biennale</span>
+        </div>
+        <div class="news-card-meta">
+          <span>9 May &mdash; 22 November 2026</span>
+          <span>Venice</span>
+        </div>
+        <h3 class="news-card-title">Sara Shamma at the Venice Biennale 2026</h3>
+        <p class="news-card-subtitle">The Tower Tomb of Palmyra &mdash; Syrian Pavilion</p>
+        <p class="news-card-venue"><strong>61st International Art Exhibition &mdash; La Biennale di Venezia</strong> &middot; Curated by Yuko Hasegawa</p>
+        <p class="news-card-excerpt">
+          Sara Shamma has been selected for the 61st Venice Biennale. Commissioned by the Syrian Ministry of Culture and curated by Yuko Hasegawa &mdash; director of the 21st Century Museum of Contemporary Art in Kanazawa &mdash; the multi-sensory pavilion &ldquo;The Tower Tomb of Palmyra&rdquo; will occupy the open-air courtyard of the Universit&agrave; IUAV di Venezia, focusing on the ancient city once ruled by the warrior queen Zenobia.
+        </p>
+        <a href="news/sara-shamma-venice.html" class="news-card-link">
+          Read more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </article>
     </div>
   </div>
 </section>
@@ -1199,6 +1330,7 @@ a { color: inherit; text-decoration: none; }
       <h4>Information</h4>
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="news.html">News</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="mailto:paris@markhachem.com">Press Inquiries</a></li>
         <li><a href="mentions-legales.html">Mentions L&eacute;gales</a></li>
