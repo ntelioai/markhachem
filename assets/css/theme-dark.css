@@ -1,0 +1,45 @@
+/* ═════════════════════════════════════════════════════════
+   Theme: DARK
+   Original treatment — hero image darkened with overlay,
+   nav text white over hero, swaps to dark when scrolled.
+   Pair with main.css.
+   ═════════════════════════════════════════════════════════ */
+
+/* ─── HERO ─── */
+.hero { background: var(--black); }
+
+.hero-bg img {
+  filter: brightness(0.35) contrast(1.1);
+}
+
+.hero-kinetic::before {
+  background: repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(184,157,79,0.06) 18px, rgba(184,157,79,0.06) 19px);
+}
+.hero-kinetic::after {
+  background: repeating-linear-gradient(60deg, transparent, transparent 22px, rgba(255,255,255,0.03) 22px, rgba(255,255,255,0.03) 23px);
+}
+
+.hero-gradient {
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(184,157,79,0.1) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.6) 100%);
+}
+
+.hero-title { color: #fff; }
+.hero-tagline { color: rgba(255,255,255,0.6); }
+.hero-scroll span { color: rgba(255,255,255,0.4); }
+
+/* ─── NAV (over hero — light defaults; swap to dark when scrolled) ─── */
+.nav-logo-white { opacity: 1; }
+.nav-logo-dark { opacity: 0; position: absolute; left: 0; }
+.nav.scrolled .nav-logo-white { opacity: 0; pointer-events: none; }
+.nav.scrolled .nav-logo-dark { opacity: 1; }
+
+.nav-links a { color: #fff; }
+.nav.scrolled .nav-links a { color: var(--text); }
+
+.nav-cta { color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+.nav.scrolled .nav-cta { border-color: var(--text); color: var(--text); }
+
+.nav-toggle span { background: #fff; }
+.nav.scrolled .nav-toggle span { background: var(--text); }
