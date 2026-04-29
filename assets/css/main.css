@@ -384,6 +384,78 @@ a { color: inherit; text-decoration: none; }
 .collection-item-title { font-size: 0.75rem; color: var(--text-secondary); font-style: italic; margin-top: 0.1rem; }
 .collection-item-medium { font-size: 0.65rem; color: var(--text-secondary); letter-spacing: 0.05em; margin-top: 0.2rem; opacity: 0.7; }
 
+/* ═══ LATEST — CURRENT & UPCOMING ═══ */
+.latest { padding: 8rem 3rem; background: var(--white); }
+.latest-inner { max-width: 1400px; margin: 0 auto; }
+.latest-header { margin-bottom: 4rem; }
+.latest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+
+.latest-card {
+  display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--border);
+  transition: transform 0.5s var(--ease-out), border-color 0.4s, box-shadow 0.4s;
+}
+.latest-card:hover {
+  transform: translateY(-4px); border-color: var(--gold);
+  box-shadow: 0 12px 50px rgba(184,157,79,0.10);
+}
+
+.latest-card-image {
+  position: relative; aspect-ratio: 16/10; overflow: hidden;
+  background: var(--grey-light);
+}
+.latest-card-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s var(--ease-out), filter 0.4s;
+}
+.latest-card:hover .latest-card-image img { transform: scale(1.04); filter: brightness(1.05); }
+
+.latest-card-status {
+  position: absolute; top: 1rem; left: 1rem;
+  background: var(--gold); color: var(--white);
+  font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 0.5rem 0.9rem;
+}
+
+.latest-card-body { padding: 2rem 2.2rem 2.4rem; display: flex; flex-direction: column; }
+
+.latest-card-meta {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.latest-card-meta span { display: inline-flex; align-items: center; }
+.latest-card-meta span + span::before {
+  content: ''; width: 4px; height: 4px; background: var(--grey-mid);
+  border-radius: 50%; margin-right: 1rem; align-self: center;
+}
+
+.latest-card-title {
+  font-family: var(--font-serif); font-weight: 400;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem); line-height: 1.15;
+  letter-spacing: -0.01em; color: var(--text);
+  margin-bottom: 0.6rem; transition: color 0.3s;
+}
+.latest-card:hover .latest-card-title { color: var(--gold-dark); }
+
+.latest-card-booth {
+  font-size: 0.85rem; color: var(--text); margin-bottom: 0.4rem;
+}
+.latest-card-booth strong { font-weight: 500; color: var(--gold-dark); }
+
+.latest-card-venue {
+  font-size: 0.8rem; line-height: 1.55; color: var(--text-secondary);
+  margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--border);
+}
+
+.latest-card-dates { display: flex; flex-direction: column; gap: 0.7rem; }
+.latest-card-dates > div { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: baseline; }
+.latest-card-dates dt {
+  font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-secondary);
+}
+.latest-card-dates dd { font-size: 0.85rem; color: var(--text); margin: 0; }
+
 /* ═══ ART FAIRS ═══ */
 .fairs { padding: 8rem 3rem; background: var(--grey-light); }
 .fairs-inner { max-width: 1400px; margin: 0 auto; }
@@ -503,6 +575,7 @@ a { color: inherit; text-decoration: none; }
   .exhibition-grid { grid-template-columns: repeat(2, 1fr); }
   .collection-grid { grid-template-columns: repeat(3, 1fr); }
   .fairs-grid { grid-template-columns: 1fr; }
+  .latest-grid { grid-template-columns: 1fr; }
   .contact-inner { grid-template-columns: 1fr 1fr; }
 }
 
@@ -514,9 +587,12 @@ a { color: inherit; text-decoration: none; }
   .hero { min-height: 600px; }
   .hero-content { padding: 0 1.5rem 4rem; }
   .hero-scroll { display: none; }
-  .exhibition-current, .artists, .about, .exhibitions, .collection, .fairs, .contact, .news { padding: 5rem 1.5rem; }
+  .exhibition-current, .artists, .about, .exhibitions, .collection, .latest, .fairs, .contact, .news { padding: 5rem 1.5rem; }
   .exhibition-grid { grid-template-columns: 1fr; gap: 3rem; }
   .news-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+  .latest-grid { gap: 2rem; }
+  .latest-card-body { padding: 1.6rem 1.6rem 1.8rem; }
+  .latest-card-dates > div { grid-template-columns: 1fr; gap: 0.2rem; }
   .collection-grid { grid-template-columns: repeat(2, 1fr); }
   .artist-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .about-milestones { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
