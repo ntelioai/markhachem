@@ -96,6 +96,7 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff !important; }
 
+.nav-mobile-cta { display: none; }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; position: relative; }
 .nav-toggle span { width: 24px; height: 1.5px; transition: all 0.3s; }
 
@@ -584,6 +585,8 @@ a { color: inherit; text-decoration: none; }
   .nav.scrolled { padding: 0.8rem 1.5rem; }
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
+  .nav-mobile-cta { display: list-item; margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .nav-mobile-cta a { color: var(--gold-dark) !important; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.7rem; }
   .hero { min-height: 600px; }
   .hero-content { padding: 0 1.5rem 4rem; }
   .hero-scroll { display: none; }
