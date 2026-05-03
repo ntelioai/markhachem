@@ -1,6 +1,10 @@
 # Legacy URL migration — preserves SEO equity after the 2026 site rebuild.
 # Format: <from> <to> <status>. Specific rules must appear BEFORE catch-alls.
 
+# News HTMLs migrated into the CMS in 2026; preserve inbound links.
+/news/hamed-abdalla-imarabe.html  /news/hamed-abdalla-imarabe  301
+/news/sara-shamma-venice.html     /news/sara-shamma-venice     301
+
 / /index.html 200
 /Hamed-ABDALLA.html /artists/hamed-abdalla.html 301
 /index.php/Hamed-ABDALLA.html /artists/hamed-abdalla.html 301

@@ -1,0 +1,19 @@
+ssh
+- passphrase: louaize 
+randmart image:
++--[ED25519 256]--+
+|oo.+             |
+|*++              |
+|@+ .             |
+|=*= o            |
+|=+ * +  S .      |
+|* + =.. .+       |
+|.+ o. E++.       |
+|.  ..oo@. .      |
+| ..  .o o.       |
++----[SHA256]-----+
+
+
+users:
+- rabih
+- traA4!4!!4pl00p
