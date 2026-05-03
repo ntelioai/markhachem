@@ -1,7 +1,7 @@
 .DS_Store
 node_modules/
-*.py
-output.txt
-artsy_images.txt
-public/
-localOnly/
+/*.py
+/output.txt
+/artsy_images.txt
+/public/
+/localOnly/

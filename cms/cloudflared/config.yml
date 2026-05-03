@@ -1,0 +1,10 @@
+tunnel: mark-hachem
+credentials-file: /Users/rabihnassar/.cloudflared/mark-hachem.json
+
+ingress:
+  - hostname: mh.ntelio.ai
+    service: http://localhost:3000
+    originRequest:
+      httpHostHeader: localhost:3000
+      noTLSVerify: true
+  - service: http_status:404

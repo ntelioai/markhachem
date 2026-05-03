@@ -1,0 +1,672 @@
+/* ═════════════════════════════════════════════════════════
+   Mark Hachem Gallery — Payload admin theme
+   Mirrors the public-site palette: off-white, deep ink,
+   gold accent, Cormorant Garamond / Outfit pairing.
+   ═════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root,
+[data-theme='light'] {
+  /* Brand */
+  --mh-gold: #b89d4f;
+  --mh-gold-light: #d4ba6a;
+  --mh-gold-dark: #9a8340;
+  --mh-ink: #1a1a1a;
+  --mh-ink-soft: #6b6b6b;
+  --mh-paper: #fafaf8;
+  --mh-paper-warm: #f4f1ec;
+  --mh-rule: #e0ddd8;
+  --mh-rule-soft: #f0eeeb;
+
+  /* Payload theme overrides — light */
+  --theme-bg: var(--mh-paper);
+  --theme-input-bg: #ffffff;
+  --theme-elevation-0: var(--mh-paper);
+  --theme-elevation-50: #ffffff;
+  --theme-elevation-100: var(--mh-paper-warm);
+  --theme-elevation-150: var(--mh-rule-soft);
+  --theme-elevation-200: var(--mh-rule);
+  --theme-elevation-250: #d8d3cc;
+  --theme-elevation-300: #c4bfb6;
+  --theme-elevation-400: #9a958c;
+  --theme-elevation-500: var(--mh-ink-soft);
+  --theme-elevation-600: #4a4a4a;
+  --theme-elevation-700: #2e2e2e;
+  --theme-elevation-800: var(--mh-ink);
+  --theme-elevation-850: #141414;
+  --theme-elevation-900: #0a0a0a;
+  --theme-elevation-1000: #000000;
+
+  --theme-text: var(--mh-ink);
+
+  --color-base-0: #ffffff;
+  --color-base-50: var(--mh-paper);
+  --color-base-100: var(--mh-paper-warm);
+  --color-base-150: var(--mh-rule-soft);
+  --color-base-200: var(--mh-rule);
+  --color-base-800: var(--mh-ink);
+
+  /* Accent — gold replaces Payload's blue success/CTA highlights */
+  --theme-success-500: var(--mh-gold);
+  --theme-success-600: var(--mh-gold-dark);
+
+  /* Typography */
+  --font-body: 'Outfit', 'Helvetica Neue', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+}
+
+[data-theme='dark'] {
+  --theme-bg: #141210;
+  --theme-input-bg: #1c1a17;
+  --theme-elevation-0: #141210;
+  --theme-elevation-50: #1c1a17;
+  --theme-elevation-100: #232019;
+  --theme-elevation-150: #2a261e;
+  --theme-elevation-200: #353027;
+  --theme-elevation-300: #4a4337;
+  --theme-elevation-500: #a39f95;
+  --theme-elevation-800: #f1ece0;
+  --theme-elevation-1000: #ffffff;
+  --theme-text: #f1ece0;
+}
+
+/* ─── Bump Payload's base type scale ─── */
+:root {
+  --base-px: 22;
+  --base-body-size: 15;
+}
+
+html {
+  font-size: 15px !important;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px !important;
+  }
+}
+
+/* ─── Global typography polish ─── */
+body,
+.payload-default-class {
+  font-family: var(--font-body);
+  letter-spacing: 0.005em;
+}
+
+h1, h2, h3, h4,
+.doc-header__title,
+.collection-list__sub-header,
+.dashboard h1,
+.list-header h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.doc-header__title,
+.list-header h1,
+.dashboard h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+/* ─── Top nav — subtle warm tint, gold underline on active ─── */
+.template-default__nav,
+.nav,
+.app-header {
+  background: linear-gradient(180deg, var(--mh-paper) 0%, var(--mh-paper-warm) 100%);
+  border-right: 1px solid var(--mh-rule);
+}
+
+[data-theme='dark'] .template-default__nav,
+[data-theme='dark'] .nav,
+[data-theme='dark'] .app-header {
+  background: linear-gradient(180deg, #1a1815 0%, #141210 100%);
+  border-right-color: #2a261e;
+}
+
+.nav__link,
+.nav-group__toggle {
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.nav__link.active,
+.nav__link[aria-current='page'] {
+  color: var(--mh-gold-dark);
+  background: transparent;
+  position: relative;
+}
+
+.nav__link.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 2px; height: 60%;
+  background: var(--mh-gold);
+}
+
+/* ─── Buttons — primary becomes gold ─── */
+.btn--style-primary,
+.btn--style-primary:link,
+.btn--style-primary:visited {
+  background: var(--mh-ink);
+  color: var(--mh-paper);
+  border: 1px solid var(--mh-ink);
+  border-radius: 2px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn--style-primary:hover {
+  background: var(--mh-gold-dark);
+  border-color: var(--mh-gold-dark);
+  color: var(--mh-paper);
+}
+
+.btn--style-secondary {
+  border-radius: 2px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+}
+
+/* ─── Form inputs — subtle, paper-feel ─── */
+.field-type input,
+.field-type textarea,
+.field-type select,
+.rs__control {
+  border-radius: 2px;
+  border-color: var(--mh-rule);
+  background: #ffffff;
+  font-family: var(--font-body);
+}
+
+[data-theme='dark'] .field-type input,
+[data-theme='dark'] .field-type textarea,
+[data-theme='dark'] .field-type select,
+[data-theme='dark'] .rs__control {
+  background: #1c1a17;
+  border-color: #2a261e;
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.rs__control--is-focused {
+  border-color: var(--mh-gold) !important;
+  box-shadow: 0 0 0 1px var(--mh-gold) !important;
+}
+
+.field-label,
+.field-type label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mh-ink-soft);
+}
+
+/* ─── Tables / list views — quieter rules, hover gold tint ─── */
+.collection-list__wrap,
+.list-controls,
+.table {
+  background: transparent;
+}
+
+.table table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mh-ink-soft);
+  border-bottom: 1px solid var(--mh-rule);
+  background: transparent;
+}
+
+.table tbody td,
+.table tbody td a {
+  font-size: 0.92rem;
+}
+
+.table tbody tr {
+  transition: background 200ms ease;
+}
+
+.table tbody tr:hover {
+  background: var(--mh-paper-warm);
+}
+
+[data-theme='dark'] .table tbody tr:hover {
+  background: #232019;
+}
+
+.table tbody td {
+  border-bottom: 1px solid var(--mh-rule-soft);
+}
+
+[data-theme='dark'] .table tbody td {
+  border-bottom-color: #232019;
+}
+
+/* ─── Login screen — paper-feel, centered serif headline ─── */
+.template-minimal--login,
+.template-minimal {
+  background: var(--mh-paper);
+}
+
+/* Hide Payload's default brand block — the BeforeLogin component
+   already shows the wordmark + Picasso quote, so the small one above is redundant. */
+.login__brand {
+  display: none;
+}
+
+[data-theme='dark'] .template-minimal--login,
+[data-theme='dark'] .template-minimal {
+  background: #141210;
+}
+
+.login__brand,
+.template-minimal__wrap {
+  background: transparent;
+}
+
+.template-minimal__wrap {
+  max-width: 420px;
+}
+
+.login__form,
+.template-minimal__wrap form {
+  background: #ffffff;
+  border: 1px solid var(--mh-rule);
+  border-radius: 2px;
+  padding: 2.5rem;
+  box-shadow: 0 30px 60px -30px rgba(26, 26, 26, 0.08);
+}
+
+[data-theme='dark'] .login__form,
+[data-theme='dark'] .template-minimal__wrap form {
+  background: #1c1a17;
+  border-color: #2a261e;
+}
+
+/* ─── Card widget (built-in CollectionCards / dashboard cards) ─── */
+.card,
+.collections__card-list .card {
+  border: 1px solid var(--mh-rule);
+  border-radius: 2px;
+  background: #ffffff;
+  transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+[data-theme='dark'] .card {
+  background: #1c1a17;
+  border-color: #2a261e;
+}
+
+.card:hover {
+  border-color: var(--mh-gold);
+  box-shadow: 0 14px 40px -20px rgba(184, 157, 79, 0.4);
+  transform: translateY(-1px);
+}
+
+.card__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: -0.005em;
+}
+
+/* ─── Dashboard nav-group labels ─── */
+.dashboard .collections__label,
+.dashboard__group-label,
+.collections__label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mh-ink-soft);
+  border-bottom: 1px solid var(--mh-rule);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Pill-style status / count chips ─── */
+.pill,
+.status-list__pill,
+.doc-controls__status {
+  background: var(--mh-paper-warm);
+  color: var(--mh-ink);
+  border-radius: 2px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+/* ─── Mark Hachem branded login + dashboard add-ons ─── */
+.mh-login {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 420px;
+}
+
+img.mh-login__mark,
+.mh-login .mh-login__mark {
+  width: 260px !important;
+  max-width: 80% !important;
+  height: auto !important;
+  margin: 0 auto 1.75rem !important;
+  display: block !important;
+  object-fit: contain;
+}
+
+.mh-login__quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--mh-ink-soft);
+  margin: 0;
+}
+
+.mh-login__quote::before {
+  content: '“';
+  font-size: 2.2rem;
+  line-height: 0;
+  vertical-align: -0.4em;
+  color: var(--mh-gold);
+  margin-right: 0.1em;
+}
+
+.mh-login__quote::after {
+  content: '”';
+  font-size: 2.2rem;
+  line-height: 0;
+  vertical-align: -0.4em;
+  color: var(--mh-gold);
+  margin-left: 0.1em;
+}
+
+.mh-login__cite {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--mh-ink-soft);
+}
+
+/* Dashboard hero */
+.mh-hero {
+  margin: 0 0 2.5rem;
+  padding: 2rem 2rem 2.25rem;
+  background: linear-gradient(135deg, var(--mh-paper-warm) 0%, var(--mh-paper) 100%);
+  border: 1px solid var(--mh-rule);
+  border-left: 3px solid var(--mh-gold);
+  border-radius: 2px;
+}
+
+[data-theme='dark'] .mh-hero {
+  background: linear-gradient(135deg, #1c1a17 0%, #141210 100%);
+  border-color: #2a261e;
+  border-left-color: var(--mh-gold);
+}
+
+.mh-hero__eyebrow {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mh-gold-dark);
+  margin: 0 0 0.6rem;
+}
+
+.mh-hero__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 2.6rem;
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
+  color: var(--theme-text);
+}
+
+.mh-hero__subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--mh-ink-soft);
+  margin: 0;
+  max-width: 60ch;
+}
+
+[data-theme='dark'] .mh-hero__subtitle {
+  color: #a39f95;
+}
+
+/* Section heading inside dashboard */
+.mh-section {
+  margin: 0 0 2rem;
+}
+
+.mh-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--mh-rule);
+}
+
+.mh-section__title {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--mh-ink-soft);
+  margin: 0;
+}
+
+.mh-section__link {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mh-gold-dark);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease;
+}
+
+.mh-section__link:hover {
+  border-bottom-color: var(--mh-gold);
+}
+
+/* Card grid for recent exhibitions / artists */
+.mh-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.mh-grid--artists {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+}
+
+.mh-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--mh-rule);
+  border-radius: 2px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme='dark'] .mh-card {
+  background: #1c1a17;
+  border-color: #2a261e;
+}
+
+.mh-card:hover {
+  border-color: var(--mh-gold);
+  box-shadow: 0 18px 40px -22px rgba(184, 157, 79, 0.45);
+  transform: translateY(-2px);
+}
+
+.mh-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--mh-paper-warm);
+}
+
+.mh-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mh-card:hover .mh-card__media img {
+  transform: scale(1.04);
+}
+
+.mh-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--mh-rule);
+}
+
+.mh-card__body {
+  padding: 0.85rem 0.95rem 1rem;
+}
+
+.mh-card__eyebrow {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--mh-gold-dark);
+  margin: 0 0 0.35rem;
+}
+
+.mh-card__title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  margin: 0 0 0.25rem;
+  color: var(--theme-text);
+}
+
+.mh-card__meta {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--mh-ink-soft);
+  margin: 0;
+}
+
+.mh-card--artist .mh-card__media {
+  aspect-ratio: 1 / 1;
+}
+
+/* Stat strip */
+.mh-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 0 0 2.5rem;
+}
+
+.mh-stat {
+  padding: 1.25rem;
+  background: #ffffff;
+  border: 1px solid var(--mh-rule);
+  border-radius: 2px;
+}
+
+[data-theme='dark'] .mh-stat {
+  background: #1c1a17;
+  border-color: #2a261e;
+}
+
+.mh-stat__value {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--theme-text);
+}
+
+.mh-stat__label {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--mh-ink-soft);
+}
+
+/* Nav logo — wordmark image, preserves 6:1 aspect ratio.
+   Higher specificity + !important to defeat Payload's
+   global `img { max-width: 100%; height: auto }`. */
+img.mh-logo__mark {
+  height: 32px !important;
+  width: auto !important;
+  max-width: none !important;
+  display: block !important;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+/* Enlarge the breadcrumb home box so the brand mark has presence */
+.step-nav__home,
+.step-nav .step-nav__home {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Fit the icon inside whatever box Payload provides — never overflow */
+img.mh-icon,
+.step-nav__home img.mh-icon,
+.nav img.mh-icon {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  object-fit: contain;
+}

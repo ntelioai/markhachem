@@ -1,0 +1,32 @@
+services:
+  cms:
+    build:
+      context: .
+      platforms:
+        - linux/amd64
+    image: mark-hachem-cms:latest
+    platform: linux/amd64
+    container_name: mark-hachem-cms
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # Override DATABASE_URI so SQLite + journal/WAL files live on the mounted volume
+      DATABASE_URI: file:/app/data/payload.db
+      NODE_ENV: production
+    volumes:
+      - ./data:/app/data
+      - ./media:/app/media
+    expose:
+      - "3000"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: mark-hachem-cloudflared
+    restart: unless-stopped
+    command: tunnel --config /etc/cloudflared/config.yml run mark-hachem
+    volumes:
+      - ./cloudflared/config.docker.yml:/etc/cloudflared/config.yml:ro
+      - ${HOME}/.cloudflared/mark-hachem.json:/etc/cloudflared/mark-hachem.json:ro
+    depends_on:
+      cms:
+        condition: service_healthy
