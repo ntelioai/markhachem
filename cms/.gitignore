@@ -39,8 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/media
-
 # SQLite
 payload.db
 payload.db-journal
@@ -57,3 +55,7 @@ node_modules/
 cms.log
 cloudflared/cloudflared.log
 cloudflared/cloudflared.pid
+
+# local docker overrides (per-developer) + docker volume mount
+docker-compose.override.yml
+/data/
