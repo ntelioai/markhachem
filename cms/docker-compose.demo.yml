@@ -1,0 +1,31 @@
+# Demo-prod overlay. Switches the cloudflared service to the markhachem-cms
+# tunnel (https://cms.artbound.art) without touching the canonical setup that
+# other developers use locally.
+#
+# Usage on the demo-prod host (and locally if you want the demo tunnel up):
+#   docker compose -f docker-compose.yml -f docker-compose.demo.yml up -d
+#
+# Required on the host:
+#   ~/.cloudflared/markhachem-cms.json   # tunnel credentials, mode 0444
+#   .env                                 # PAYLOAD_SECRET + NEXT_PUBLIC_SITE_URL
+#   ./data/payload.db                    # SQLite DB (chown 1001:1001)
+#   ./media/                             # uploaded media (chown 1001:1001)
+services:
+  cms:
+    # Healthcheck override: the Dockerfile baked-in version uses `localhost`,
+    # which BusyBox wget resolves to ::1 first; Next listens on IPv4 only.
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/admin"]
+      interval: 15s
+      timeout: 5s
+      start_period: 90s
+      retries: 3
+
+  cloudflared:
+    command: tunnel --config /etc/cloudflared/config.yml run 31cef4b4-cce3-4e56-90f3-b432f1a4c82b
+    # !override fully replaces the volume list from the base file. Without it,
+    # docker compose appends and the base file's mark-hachem.json mount would
+    # still be attempted — failing on hosts that don't have Rabih's creds.
+    volumes: !override
+      - ./cloudflared/config.docker.demo.yml:/etc/cloudflared/config.yml:ro
+      - ${HOME}/.cloudflared/markhachem-cms.json:/etc/cloudflared/markhachem-cms.json:ro
