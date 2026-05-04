@@ -7,9 +7,17 @@
 #
 # Required on the host:
 #   ~/.cloudflared/markhachem-cms.json   # tunnel credentials, mode 0444
-#   .env                                 # PAYLOAD_SECRET + NEXT_PUBLIC_SITE_URL
-#   ./data/payload.db                    # SQLite DB (chown 1001:1001)
-#   ./media/                             # uploaded media (chown 1001:1001)
+#   .env                                 # PAYLOAD_SECRET, NEXT_PUBLIC_SITE_URL,
+#                                        # optionally DATA_ROOT and MEDIA_ROOT
+#   ${DATA_ROOT:-./data}/payload.db      # SQLite DB (chown 1001:1001)
+#   ${MEDIA_ROOT:-./media}/              # uploaded media (chown 1001:1001)
+#
+# DATA_ROOT and MEDIA_ROOT are resolved relative to this compose file
+# (i.e. <repo>/cms/). They default to ./data and ./media for local dev.
+# On the demo host, set them to point at a sibling directory so state lives
+# outside the git repo, e.g. in cms/.env:
+#   DATA_ROOT=../../markhachem-data/data
+#   MEDIA_ROOT=../../markhachem-data/media
 services:
   cms:
     # Healthcheck override: the Dockerfile baked-in version uses `localhost`,
@@ -20,6 +28,9 @@ services:
       timeout: 5s
       start_period: 90s
       retries: 3
+    volumes: !override
+      - ${DATA_ROOT:-./data}:/app/data
+      - ${MEDIA_ROOT:-./media}:/app/media
 
   cloudflared:
     command: tunnel --config /etc/cloudflared/config.yml run 31cef4b4-cce3-4e56-90f3-b432f1a4c82b
