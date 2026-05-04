@@ -33,13 +33,16 @@ rsync --version
 
 ## 1. Clone the repo
 
+The CMS lives in the `cms/` subfolder of the main gallery repo. Clone the
+repo and `cd` into `cms/` — that's the project root for everything below.
+
 ```bash
-git clone <your-remote-url> mark-hachem-gallery-cms
-cd mark-hachem-gallery-cms
+git clone https://github.com/ntelioai/markhachem.git
+cd markhachem/cms
 chmod +x deploy.sh cms.sh cloudflared/tunnel.sh
 ```
 
-From here on, all commands run from the project root unless noted otherwise.
+From here on, all commands run from `markhachem/cms` unless noted otherwise.
 
 ---
 
@@ -116,7 +119,7 @@ it boots empty (no admin user, no artists, no exhibitions, no images).
 during the copy:
 
 ```bash
-cd /path/to/mark-hachem-gallery-cms
+cd /path/to/markhachem/cms
 docker compose stop cms
 ```
 
@@ -127,19 +130,19 @@ each other), copy both directories:
 
 ```bash
 # Pattern: rsync -avz --delete <src> <dst>
-rsync -avz --delete <user>@<old-host>:/path/to/mark-hachem-gallery-cms/data/  <user>@<new-host>:/path/to/mark-hachem-gallery-cms/data/
-rsync -avz --delete <user>@<old-host>:/path/to/mark-hachem-gallery-cms/media/ <user>@<new-host>:/path/to/mark-hachem-gallery-cms/media/
+rsync -avz --delete <user>@<old-host>:/path/to/markhachem/cms/data/  <user>@<new-host>:/path/to/markhachem/cms/data/
+rsync -avz --delete <user>@<old-host>:/path/to/markhachem/cms/media/ <user>@<new-host>:/path/to/markhachem/cms/media/
 ```
 
 If you can't ssh host-to-host, do it in two hops via your laptop:
 
 ```bash
 # Pull from old → laptop
-rsync -avz <user>@<old-host>:/path/to/mark-hachem-gallery-cms/data/  ./data/
-rsync -avz <user>@<old-host>:/path/to/mark-hachem-gallery-cms/media/ ./media/
+rsync -avz <user>@<old-host>:/path/to/markhachem/cms/data/  ./data/
+rsync -avz <user>@<old-host>:/path/to/markhachem/cms/media/ ./media/
 # Push laptop → new
-rsync -avz ./data/  <user>@<new-host>:/path/to/mark-hachem-gallery-cms/data/
-rsync -avz ./media/ <user>@<new-host>:/path/to/mark-hachem-gallery-cms/media/
+rsync -avz ./data/  <user>@<new-host>:/path/to/markhachem/cms/data/
+rsync -avz ./media/ <user>@<new-host>:/path/to/markhachem/cms/media/
 ```
 
 **On the new host**, verify:
@@ -199,7 +202,7 @@ browser and log into `/admin` to confirm content is intact.
 **Once verified, on the old host:**
 
 ```bash
-cd /path/to/mark-hachem-gallery-cms
+cd /path/to/markhachem/cms
 docker compose down    # stop both containers permanently
 ```
 
@@ -263,7 +266,7 @@ Simple nightly snapshot, e.g. via cron:
 
 ```bash
 # /etc/cron.d/mark-hachem-backup
-0 3 * * * root /path/to/mark-hachem-gallery-cms/scripts/backup.sh
+0 3 * * * root /path/to/markhachem/cms/scripts/backup.sh
 ```
 
 Suggested backup script (write yourself, not in the repo):
@@ -271,7 +274,7 @@ Suggested backup script (write yourself, not in the repo):
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-cd /path/to/mark-hachem-gallery-cms
+cd /path/to/markhachem/cms
 
 STAMP=$(date +%Y-%m-%d_%H%M)
 DEST=/var/backups/mark-hachem
