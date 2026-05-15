@@ -72,6 +72,7 @@ export interface Config {
     artists: Artist;
     exhibitions: Exhibition;
     news: News;
+    events: Event;
     fairs: Fair;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -85,6 +86,7 @@ export interface Config {
     artists: ArtistsSelect<false> | ArtistsSelect<true>;
     exhibitions: ExhibitionsSelect<false> | ExhibitionsSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     fairs: FairsSelect<false> | FairsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -260,6 +262,71 @@ export interface Artist {
     [k: string]: unknown;
   } | null;
   /**
+   * Curriculum Vitae — education, solo shows, group shows, collections, awards. Use headings + bullet lists. Shown as its own section on the artist page.
+   */
+  cv?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  additionalArtworks?:
+    | {
+        image: number | Media;
+        /**
+         * e.g. "Couleur additive, Série 14, 2018".
+         */
+        title?: string | null;
+        /**
+         * e.g. "Ceramic — 80 × 80 cm".
+         */
+        medium?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Items about the artist — interviews, reviews, video features, catalogues. Renders as a labelled list of external links.
+   */
+  publications?:
+    | {
+        /**
+         * e.g. "Interview — Le Monde, Mar 2024".
+         */
+        label: string;
+        type?: ('article' | 'video' | 'interview' | 'catalogue' | 'review' | 'other') | null;
+        /**
+         * Full URL including https://.
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Artist's own external presence — personal website, Instagram, Artnet profile, gallery profiles elsewhere.
+   */
+  links?:
+    | {
+        /**
+         * e.g. "Instagram", "Artnet profile".
+         */
+        label: string;
+        /**
+         * Full URL including https://.
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Square-ish artwork image used on the home card (often a "-sml" variant of the artist-page portrait).
    */
   featuredArtwork?: (number | null) | Media;
@@ -412,6 +479,86 @@ export interface News {
   createdAt: string;
 }
 /**
+ * Important events in galleries, museums, and artist studios — talks, openings, studio visits, fairs, screenings.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  /**
+   * URL slug. Auto-generated from title if left blank.
+   */
+  slug?: string | null;
+  /**
+   * Surface in the homepage Events block.
+   */
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  sortOrder?: number | null;
+  publishedDate?: string | null;
+  subtitle?: string | null;
+  /**
+   * Display string, e.g. "7 March — 12 July 2026".
+   */
+  dateRange?: string | null;
+  /**
+   * City, e.g. "Paris".
+   */
+  location?: string | null;
+  /**
+   * e.g. "Gallery", "Museum", "Studio Visit".
+   */
+  badgeLabel?: string | null;
+  badgeStyle?: ('default' | 'gold') | null;
+  coverImage?: (number | null) | Media;
+  /**
+   * Venue line including host or curator (rendered above the excerpt).
+   */
+  venue?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Short summary shown on the homepage card.
+   */
+  excerpt?: string | null;
+  /**
+   * Full event description for the detail page.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "fairs".
  */
@@ -525,6 +672,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null)
     | ({
         relationTo: 'fairs';
@@ -665,6 +816,30 @@ export interface ArtistsSelect<T extends boolean = true> {
   portraitTitle?: T;
   portraitMedium?: T;
   bio?: T;
+  cv?: T;
+  additionalArtworks?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        medium?: T;
+        id?: T;
+      };
+  publications?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        url?: T;
+        id?: T;
+      };
+  links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
   featuredArtwork?: T;
   featuredArtworkTitle?: T;
   featuredArtworkMedium?: T;
@@ -699,6 +874,28 @@ export interface ExhibitionsSelect<T extends boolean = true> {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  featured?: T;
+  sortOrder?: T;
+  publishedDate?: T;
+  subtitle?: T;
+  dateRange?: T;
+  location?: T;
+  badgeLabel?: T;
+  badgeStyle?: T;
+  coverImage?: T;
+  venue?: T;
+  excerpt?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   featured?: T;

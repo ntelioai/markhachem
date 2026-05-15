@@ -68,6 +68,10 @@ export default async function ArtistPage({ params }: { params: Promise<Params> }
   if (artist.birthYear) personSchema.birthDate = String(artist.birthYear)
   if (artist.deathYear) personSchema.deathDate = String(artist.deathYear)
   if (portraitUrl) personSchema.image = portraitUrl
+  const sameAs = Array.isArray(artist.links)
+    ? artist.links.map((l: any) => l?.url).filter((u: string | undefined): u is string => !!u)
+    : []
+  if (sameAs.length) personSchema.sameAs = sameAs
 
   const breadcrumbs = {
     '@context': 'https://schema.org',
@@ -138,6 +142,79 @@ export default async function ArtistPage({ params }: { params: Promise<Params> }
           </article>
         </div>
       </section>
+
+      {Array.isArray(artist.additionalArtworks) && artist.additionalArtworks.length > 0 && (
+        <section className="profile-section profile-artworks-section">
+          <div className="profile-section-inner">
+            <h2 className="profile-section-title">Selected Works</h2>
+            <div className="profile-artworks-grid">
+              {artist.additionalArtworks.map((a: any, i: number) => {
+                const url = mediaUrl(a.image, 'hero')
+                if (!url) return null
+                return (
+                  <figure key={a.id ?? i} className="profile-artwork reveal">
+                    <div className="profile-artwork-frame">
+                      <img src={url} alt={mediaAlt(a.image, a.title || artist.name)} loading="lazy" />
+                    </div>
+                    {(a.title || a.medium) && (
+                      <figcaption className="profile-artwork-caption">
+                        {a.title && <span className="portrait-title"><em>{a.title}</em></span>}
+                        {a.medium && <span className="portrait-medium">{a.medium}</span>}
+                      </figcaption>
+                    )}
+                  </figure>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {artist.cv && (
+        <section className="profile-section profile-cv-section">
+          <div className="profile-section-inner">
+            <h2 className="profile-section-title">Curriculum Vitae</h2>
+            <div className="profile-cv">
+              <RichText content={artist.cv} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {Array.isArray(artist.publications) && artist.publications.length > 0 && (
+        <section className="profile-section profile-publications-section">
+          <div className="profile-section-inner">
+            <h2 className="profile-section-title">Publications</h2>
+            <ul className="profile-link-list">
+              {artist.publications.map((p: any, i: number) => (
+                <li key={p.id ?? i} className="profile-link-item">
+                  <a href={p.url} target="_blank" rel="noopener noreferrer">
+                    <span className="profile-link-label">{p.label}</span>
+                    {p.type && <span className="profile-link-type">{p.type}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {Array.isArray(artist.links) && artist.links.length > 0 && (
+        <section className="profile-section profile-links-section">
+          <div className="profile-section-inner">
+            <h2 className="profile-section-title">Links</h2>
+            <ul className="profile-link-list">
+              {artist.links.map((l: any, i: number) => (
+                <li key={l.id ?? i} className="profile-link-item">
+                  <a href={l.url} target="_blank" rel="noopener noreferrer">
+                    <span className="profile-link-label">{l.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="profile-cta">
         <span className="profile-cta-label">Inquire</span>

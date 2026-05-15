@@ -9,6 +9,7 @@ const dirname = path.dirname(__filename)
 const nextConfig: NextConfig = {
   output: 'standalone',
   devIndicators: false,
+  allowedDevOrigins: ['127.0.0.1', '192.168.68.119'],
   images: {
     localPatterns: [
       {

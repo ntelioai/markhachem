@@ -1,98 +1,12 @@
-# Deployments
-
-Two deployments share this codebase. Pick the one you're targeting.
-
-| Target | Host | URL | Tunnel | Compose layering |
-|---|---|---|---|---|
-| **Demo-prod** | `ubuntu@34.239.52.194` (AWS EC2), reached via `admin@bastion.scriptr.io` | https://cms.artbound.art | `markhachem-cms` | `docker-compose.yml` + `docker-compose.demo.yml` |
-| Original | wherever Rabih runs it | https://mh.ntelio.ai | `mark-hachem` | `docker-compose.yml` only |
-
-The stack is the same in both: two containers managed by `docker compose`,
-`cms` (Next.js + Payload) on the docker network and `cloudflared` fronting
-it via a tunnel. State lives in `./data` (SQLite + WAL) and `./media`
-(uploaded files); everything else is rebuilt from the git repo.
-
----
-
-## Demo-prod (cms.artbound.art)
-
-Lives on AWS EC2. The bind mounts point at `~/markhachem-cms/markhachem-data/{data,media}`
-(sibling to the cloned repo at `~/markhachem-cms/markhachem/`) so gallery
-content lives outside the working tree and `git pull` never touches it.
-
-### Re-deploy after Rabih (or anyone) pushes to main
-
-```bash
-# from your laptop:
-ssh -i ~/Downloads/bastion.pem admin@bastion.scriptr.io
-# from the bastion:
-ssh -i langchain.pem ubuntu@34.239.52.194
-# on the EC2 host:
-cd ~/markhachem-cms/markhachem/cms && ./deploy-demo.sh main
-```
-
-`deploy-demo.sh` does the full cycle: `git fetch + checkout origin/main`,
-rebuilds the image (most layers cached, ~30–60s typical), tags it
-`mark-hachem-cms:<sha>`, force-recreates only the `cms` container so the
-cloudflared tunnel stays up across the deploy, polls `/admin` until
-healthy. Variants: `./deploy-demo.sh <branch|tag|sha>` for any ref;
-`./deploy-demo.sh` with no arg redeploys current HEAD.
-
-### Rollback
-
-```bash
-./deploy-demo.sh <previous-sha>          # full re-deploy from that commit
-# or, if the previous image is still tagged locally, no rebuild:
-docker tag mark-hachem-cms:<prev-sha> mark-hachem-cms:latest
-docker compose -f docker-compose.yml -f docker-compose.demo.yml \
-  up -d --no-deps --force-recreate cms
-```
-
-`docker images mark-hachem-cms` lists tagged images for rollback. Schema
-migrations are not auto-reversed — restore `~/markhachem-cms/markhachem-data/data/payload.db`
-from a backup if a Payload schema change went wrong.
-
-### Logs / debug
-
-All compose commands on the demo host need both compose files:
-
-```bash
-DC='docker compose -f docker-compose.yml -f docker-compose.demo.yml'
-$DC ps
-$DC logs -f cms
-$DC logs --tail=200 cloudflared
-```
-
-### `cms/.env` shape on the demo host
-
-```
-DATABASE_URI=file:./payload.db
-PAYLOAD_SECRET=<openssl rand -base64 48>
-NEXT_PUBLIC_SITE_URL=https://cms.artbound.art
-DATA_ROOT=../../markhachem-data/data
-MEDIA_ROOT=../../markhachem-data/media
-```
-
-The two `*_ROOT` paths are resolved relative to `cms/`, i.e. they point
-at `~/markhachem-cms/markhachem-data/{data,media}`.
-
-### One-time host setup
-
-If you ever need to bring up the demo on a fresh EC2 (or any other) host,
-follow the **"Deploying to a new host"** walkthrough below — it's the
-generic version. Demo-specific deltas:
-- Tunnel name is `markhachem-cms` (UUID `31cef4b4-cce3-4e56-90f3-b432f1a4c82b`); credentials file `~/.cloudflared/markhachem-cms.json`.
-- Hostname is `cms.artbound.art` (CNAME → `<tunnel-id>.cfargotunnel.com`).
-- `cms/.env` includes `DATA_ROOT` / `MEDIA_ROOT` as above.
-- Run `docker compose -f docker-compose.yml -f docker-compose.demo.yml up -d --build` instead of plain `docker compose up`.
-
----
-
 # Deploying to a new host
 
 End-to-end instructions for standing up the CMS on a fresh server. Assumes
 there's an existing host running the same stack from which to copy the SQLite
 database and uploaded media.
+
+The stack is two containers managed by `docker compose`:
+- `cms` — Next.js + Payload, exposed only on the docker network
+- `cloudflared` — Cloudflare tunnel, fronts the cms at `mh.ntelio.ai`
 
 State lives in two host-mounted volumes: `./data` (SQLite + journal/WAL) and
 `./media` (uploaded files). Everything else is rebuilt from the git repo.
@@ -119,16 +33,13 @@ rsync --version
 
 ## 1. Clone the repo
 
-The CMS lives in the `cms/` subfolder of the main gallery repo. Clone the
-repo and `cd` into `cms/` — that's the project root for everything below.
-
 ```bash
-git clone https://github.com/ntelioai/markhachem.git
-cd markhachem/cms
+git clone <your-remote-url> mark-hachem-gallery-cms
+cd mark-hachem-gallery-cms
 chmod +x deploy.sh cms.sh cloudflared/tunnel.sh
 ```
 
-From here on, all commands run from `markhachem/cms` unless noted otherwise.
+From here on, all commands run from the project root unless noted otherwise.
 
 ---
 
@@ -205,7 +116,7 @@ it boots empty (no admin user, no artists, no exhibitions, no images).
 during the copy:
 
 ```bash
-cd /path/to/markhachem/cms
+cd /path/to/mark-hachem-gallery-cms
 docker compose stop cms
 ```
 
@@ -216,19 +127,19 @@ each other), copy both directories:
 
 ```bash
 # Pattern: rsync -avz --delete <src> <dst>
-rsync -avz --delete <user>@<old-host>:/path/to/markhachem/cms/data/  <user>@<new-host>:/path/to/markhachem/cms/data/
-rsync -avz --delete <user>@<old-host>:/path/to/markhachem/cms/media/ <user>@<new-host>:/path/to/markhachem/cms/media/
+rsync -avz --delete <user>@<old-host>:/path/to/mark-hachem-gallery-cms/data/  <user>@<new-host>:/path/to/mark-hachem-gallery-cms/data/
+rsync -avz --delete <user>@<old-host>:/path/to/mark-hachem-gallery-cms/media/ <user>@<new-host>:/path/to/mark-hachem-gallery-cms/media/
 ```
 
 If you can't ssh host-to-host, do it in two hops via your laptop:
 
 ```bash
 # Pull from old → laptop
-rsync -avz <user>@<old-host>:/path/to/markhachem/cms/data/  ./data/
-rsync -avz <user>@<old-host>:/path/to/markhachem/cms/media/ ./media/
+rsync -avz <user>@<old-host>:/path/to/mark-hachem-gallery-cms/data/  ./data/
+rsync -avz <user>@<old-host>:/path/to/mark-hachem-gallery-cms/media/ ./media/
 # Push laptop → new
-rsync -avz ./data/  <user>@<new-host>:/path/to/markhachem/cms/data/
-rsync -avz ./media/ <user>@<new-host>:/path/to/markhachem/cms/media/
+rsync -avz ./data/  <user>@<new-host>:/path/to/mark-hachem-gallery-cms/data/
+rsync -avz ./media/ <user>@<new-host>:/path/to/mark-hachem-gallery-cms/media/
 ```
 
 **On the new host**, verify:
@@ -288,7 +199,7 @@ browser and log into `/admin` to confirm content is intact.
 **Once verified, on the old host:**
 
 ```bash
-cd /path/to/markhachem/cms
+cd /path/to/mark-hachem-gallery-cms
 docker compose down    # stop both containers permanently
 ```
 
@@ -352,7 +263,7 @@ Simple nightly snapshot, e.g. via cron:
 
 ```bash
 # /etc/cron.d/mark-hachem-backup
-0 3 * * * root /path/to/markhachem/cms/scripts/backup.sh
+0 3 * * * root /path/to/mark-hachem-gallery-cms/scripts/backup.sh
 ```
 
 Suggested backup script (write yourself, not in the repo):
@@ -360,7 +271,7 @@ Suggested backup script (write yourself, not in the repo):
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-cd /path/to/markhachem/cms
+cd /path/to/mark-hachem-gallery-cms
 
 STAMP=$(date +%Y-%m-%d_%H%M)
 DEST=/var/backups/mark-hachem

@@ -6,6 +6,7 @@ const FALLBACK_LINKS: NavLink[] = [
   { label: 'Artists', href: '/artists' },
   { label: 'Exhibitions', href: '/exhibitions' },
   { label: 'Art Fairs', href: '/#fairs' },
+  { label: 'Events', href: '/events' },
   { label: 'News', href: '/news' },
 ]
 

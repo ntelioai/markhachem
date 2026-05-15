@@ -29,7 +29,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
 .env*.local
 
 # vercel
@@ -38,6 +37,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.env
+
+/media
 
 # SQLite
 payload.db
@@ -50,12 +53,17 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# runtime
-.cms.pid
-cms.log
-cloudflared/cloudflared.log
-cloudflared/cloudflared.pid
+# logs & pids
+*.log
+*.pid
+/cloudflared/*.log
+/cloudflared/*.pid
 
-# local docker overrides (per-developer) + docker volume mount
-docker-compose.override.yml
-/data/
+# build / tooling caches
+.cache/
+.turbo/
+.swc/
+.eslintcache
+
+# Next.js custom dev output (distDir = "dev")
+/dev/

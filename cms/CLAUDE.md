@@ -86,27 +86,6 @@ npm run generate:importmap  # regenerate admin component import map (after addin
 
 **Re-seed cycle:** `./cms.sh stop && npm run seed && ./cms.sh start`.
 
-## Deployments
-
-Two live deployments share this codebase. Full operational details in [DEPLOY.md](DEPLOY.md).
-
-| Target | URL | Tunnel | Compose layering |
-|---|---|---|---|
-| **Demo-prod** (gallery review) | https://cms.artbound.art | `markhachem-cms` | `docker-compose.yml` + `docker-compose.demo.yml` |
-| Original (Rabih's dev) | https://mh.ntelio.ai | `mark-hachem` | `docker-compose.yml` only |
-
-The demo overlay (`docker-compose.demo.yml`) swaps the cloudflared service onto the demo tunnel, points bind mounts at `${DATA_ROOT}` / `${MEDIA_ROOT}` (default `./data` / `./media`), and overrides the cms healthcheck to use `127.0.0.1` instead of `localhost` (BusyBox wget in the alpine image resolves `localhost` to `::1` first; Next is IPv4-only). The base file is untouched so Rabih's local dev continues to work.
-
-**Re-deploy the demo** after any push to `main`:
-
-```bash
-ssh -i ~/Downloads/bastion.pem admin@bastion.scriptr.io
-ssh -i langchain.pem ubuntu@34.239.52.194        # from the bastion
-cd ~/markhachem-cms/markhachem/cms && ./deploy-demo.sh main
-```
-
-`deploy-demo.sh` rebuilds, tags `mark-hachem-cms:<sha>` for rollback, force-recreates only the cms container (cloudflared stays up — no tunnel flap), polls `/admin` until healthy.
-
 ## SEO infrastructure (already in place)
 
 - Per-page `<title>` + `description` via Next.js Metadata API; root layout sets `metadataBase` from `NEXT_PUBLIC_SITE_URL`, default canonical, OG, Twitter, robots

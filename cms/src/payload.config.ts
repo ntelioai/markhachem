@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Artists } from './collections/Artists'
 import { Exhibitions } from './collections/Exhibitions'
 import { News } from './collections/News'
+import { Events } from './collections/Events'
 import { Fairs } from './collections/Fairs'
 import { Settings } from './globals/Settings'
 import { Homepage } from './globals/Homepage'
@@ -39,7 +40,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Artists, Exhibitions, News, Fairs],
+  collections: [Users, Media, Artists, Exhibitions, News, Events, Fairs],
   globals: [Settings, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

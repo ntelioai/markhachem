@@ -6,9 +6,10 @@ export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
-  const [artistsRes, newsRes] = await Promise.all([
+  const [artistsRes, newsRes, eventsRes] = await Promise.all([
     payload.find({ collection: 'artists', limit: 500, depth: 0, select: { slug: true, updatedAt: true } as any }),
     payload.find({ collection: 'news', limit: 200, depth: 0, select: { slug: true, updatedAt: true } as any }),
+    payload.find({ collection: 'events', limit: 200, depth: 0, select: { slug: true, updatedAt: true } as any }),
   ])
 
   const now = new Date()
@@ -16,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/artists`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE_URL}/exhibitions`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${SITE_URL}/events`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/news`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/mentions-legales`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ]
@@ -38,5 +40,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-  return [...staticRoutes, ...artistRoutes, ...newsRoutes]
+  const eventRoutes: MetadataRoute.Sitemap = eventsRes.docs
+    .filter((d: any) => d.slug)
+    .map((d: any) => ({
+      url: `${SITE_URL}/events/${d.slug}`,
+      lastModified: d.updatedAt ? new Date(d.updatedAt) : now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }))
+
+  return [...staticRoutes, ...artistRoutes, ...eventRoutes, ...newsRoutes]
 }

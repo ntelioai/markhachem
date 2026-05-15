@@ -115,6 +115,130 @@ export const Artists: CollectionConfig = {
       type: 'richText',
     },
     {
+      name: 'cv',
+      type: 'richText',
+      label: 'CV / Curriculum Vitae',
+      admin: {
+        description:
+          'Curriculum Vitae — education, solo shows, group shows, collections, awards. Use headings + bullet lists. Shown as its own section on the artist page.',
+      },
+    },
+    {
+      type: 'collapsible',
+      label: 'Additional artworks (up to 2, shown below the bio)',
+      admin: {
+        description:
+          'Optional. Each artwork appears with its caption (title + medium) on the artist page if present.',
+      },
+      fields: [
+        {
+          name: 'additionalArtworks',
+          type: 'array',
+          label: 'Additional artworks',
+          maxRows: 2,
+          labels: { singular: 'Artwork', plural: 'Artworks' },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  admin: { width: '50%', description: 'e.g. "Couleur additive, Série 14, 2018".' },
+                },
+                {
+                  name: 'medium',
+                  type: 'text',
+                  admin: { width: '50%', description: 'e.g. "Ceramic — 80 × 80 cm".' },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'publications',
+      type: 'array',
+      label: 'Publications',
+      admin: {
+        description:
+          'Items about the artist — interviews, reviews, video features, catalogues. Renders as a labelled list of external links.',
+      },
+      labels: { singular: 'Publication', plural: 'Publications' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              required: true,
+              admin: {
+                width: '60%',
+                description: 'e.g. "Interview — Le Monde, Mar 2024".',
+              },
+            },
+            {
+              name: 'type',
+              type: 'select',
+              defaultValue: 'article',
+              options: [
+                { label: 'Article', value: 'article' },
+                { label: 'Video', value: 'video' },
+                { label: 'Interview', value: 'interview' },
+                { label: 'Catalogue', value: 'catalogue' },
+                { label: 'Review', value: 'review' },
+                { label: 'Other', value: 'other' },
+              ],
+              admin: { width: '40%' },
+            },
+          ],
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: { description: 'Full URL including https://.' },
+        },
+      ],
+    },
+    {
+      name: 'links',
+      type: 'array',
+      label: 'Links',
+      admin: {
+        description:
+          "Artist's own external presence — personal website, Instagram, Artnet profile, gallery profiles elsewhere.",
+      },
+      labels: { singular: 'Link', plural: 'Links' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              required: true,
+              admin: { width: '50%', description: 'e.g. "Instagram", "Artnet profile".' },
+            },
+            {
+              name: 'url',
+              type: 'text',
+              required: true,
+              admin: { width: '50%', description: 'Full URL including https://.' },
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: 'collapsible',
       label: 'Homepage card (artwork shown on /)',
       admin: { description: 'Used on the homepage Featured Artists grid. Falls back to the portrait above if blank.' },

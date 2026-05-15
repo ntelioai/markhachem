@@ -7,54 +7,55 @@ import { SITE_URL, SITE_NAME } from '@/lib/seo'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'News',
+  title: 'Events',
   description:
-    'News from Mark Hachem Gallery — major retrospectives, biennale appearances, and milestone exhibitions of represented artists.',
-  alternates: { canonical: '/news' },
+    'Events from Mark Hachem Gallery — exhibitions, openings, museum programmes, and artist studio visits.',
+  alternates: { canonical: '/events' },
   openGraph: {
-    title: `News — ${SITE_NAME}`,
-    description: 'News and announcements from Mark Hachem Gallery.',
-    url: `${SITE_URL}/news`,
+    title: `Events — ${SITE_NAME}`,
+    description: 'Events and gatherings from Mark Hachem Gallery.',
+    url: `${SITE_URL}/events`,
     type: 'website',
   },
 }
 
-export default async function NewsIndexPage() {
+export default async function EventsIndexPage() {
   const payload = await getPayloadClient()
   const res = await payload.find({
-    collection: 'news',
+    collection: 'events',
     limit: 100,
     sort: '-publishedDate',
     depth: 1,
   })
 
-  const articles = res.docs
+  const events = res.docs
 
   const breadcrumbs = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'News', item: `${SITE_URL}/news` },
+      { '@type': 'ListItem', position: 2, name: 'Events', item: `${SITE_URL}/events` },
     ],
   }
 
   const collection = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `News — ${SITE_NAME}`,
-    url: `${SITE_URL}/news`,
+    name: `Events — ${SITE_NAME}`,
+    url: `${SITE_URL}/events`,
     mainEntity: {
       '@type': 'ItemList',
-      numberOfItems: articles.length,
-      itemListElement: articles.map((a: any, i: number) => ({
+      numberOfItems: events.length,
+      itemListElement: events.map((a: any, i: number) => ({
         '@type': 'ListItem',
         position: i + 1,
         item: {
-          '@type': 'Article',
-          headline: a.title,
-          url: `${SITE_URL}/news/${a.slug}`,
-          datePublished: a.publishedDate,
+          '@type': 'Event',
+          name: a.title,
+          url: `${SITE_URL}/events/${a.slug}`,
+          ...(a.publishedDate ? { startDate: a.publishedDate } : {}),
+          ...(a.location ? { location: { '@type': 'Place', name: a.location } } : {}),
         },
       })),
     },
@@ -73,17 +74,13 @@ export default async function NewsIndexPage() {
       <section className="page-hero">
         <div className="page-hero-inner">
           <div className="page-hero-label"></div>
-          <h1>News</h1>
-          {/* <p>
-            Highlights from the gallery&apos;s programme — major retrospectives, biennale appearances,
-            and milestone exhibitions of represented artists.
-          </p> */}
+          <h1>Events</h1>
         </div>
       </section>
       <section className="news">
         <div className="news-inner">
           <div className="news-grid">
-            {articles.map((a: any) => {
+            {events.map((a: any) => {
               const cover = mediaUrl(a.coverImage, 'card')
               const badgeClass = a.badgeStyle === 'gold' ? 'news-card-badge gold' : 'news-card-badge'
               return (
@@ -103,7 +100,7 @@ export default async function NewsIndexPage() {
                   <h2 className="news-card-title">{a.title}</h2>
                   {a.subtitle && <p className="news-card-subtitle">{a.subtitle}</p>}
                   {a.excerpt && <p className="news-card-excerpt">{a.excerpt}</p>}
-                  <Link href={`/news/${a.slug}`} className="news-card-link">
+                  <Link href={`/events/${a.slug}`} className="news-card-link">
                     Read more
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12h14M12 5l7 7-7 7" />

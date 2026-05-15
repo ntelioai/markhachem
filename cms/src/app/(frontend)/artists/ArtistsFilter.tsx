@@ -15,43 +15,21 @@ export type ArtistCard = {
   portraitAlt?: string
 }
 
-const FILTERS = [
-  { label: 'All', value: 'all' },
-  { label: 'Modern', value: 'modern' },
-  { label: 'Contemporary', value: 'contemporary' },
-] as const
-
 export function ArtistsFilter({ artists }: { artists: ArtistCard[] }) {
-  const [filter, setFilter] = useState<'all' | 'modern' | 'contemporary'>('all')
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
+    if (!query) return artists
+    const q = query.toLowerCase()
     return artists.filter((a) => {
-      if (filter !== 'all' && a.category !== filter) return false
-      if (query) {
-        const q = query.toLowerCase()
-        const hay = `${a.name} ${a.displayMeta ?? ''} ${a.portraitTitle ?? ''}`.toLowerCase()
-        if (!hay.includes(q)) return false
-      }
-      return true
+      const hay = `${a.name} ${a.displayMeta ?? ''} ${a.portraitTitle ?? ''}`.toLowerCase()
+      return hay.includes(q)
     })
-  }, [artists, filter, query])
+  }, [artists, query])
 
   return (
     <>
       <div className="filters">
-        <div className="filter-group">
-          {FILTERS.map((f) => (
-            <button
-              key={f.value}
-              type="button"
-              className={`filter-btn${filter === f.value ? ' active' : ''}`}
-              onClick={() => setFilter(f.value)}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
         <div className="filter-search">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
