@@ -1,8 +1,13 @@
-tunnel: 31cef4b4-cce3-4e56-90f3-b432f1a4c82b
-credentials-file: /etc/cloudflared/markhachem-cms.json
+tunnel: 0464f391-dcc3-4073-b775-a9caa040edf1
+credentials-file: /etc/cloudflared/markhachem.json
 
 ingress:
-  - hostname: cms.artbound.art
+  - hostname: www.markhachem.com
+    service: http://cms:3000
+    originRequest:
+      httpHostHeader: cms:3000
+      noTLSVerify: true
+  - hostname: markhachem.com
     service: http://cms:3000
     originRequest:
       httpHostHeader: cms:3000
