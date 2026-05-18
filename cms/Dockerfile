@@ -39,6 +39,11 @@ ENV PAYLOAD_SECRET=build-time-placeholder-not-used-at-runtime
 ENV DATABASE_URI=file:/tmp/build-only.db
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# NEXT_PUBLIC_* is inlined by `next build` — must be set at build time, not
+# runtime. Passed through from docker-compose.yml (which reads cms/.env).
+ARG NEXT_PUBLIC_SITE_URL=https://www.markhachem.com
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \

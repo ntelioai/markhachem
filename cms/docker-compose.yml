@@ -4,6 +4,8 @@ services:
       context: .
       platforms:
         - linux/amd64
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.markhachem.com}
     image: mark-hachem-cms:latest
     platform: linux/amd64
     container_name: mark-hachem-cms
