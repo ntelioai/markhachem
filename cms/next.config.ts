@@ -3,12 +3,17 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { legacyRedirects } from './src/redirects'
+
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
   output: 'standalone',
   devIndicators: false,
+  async redirects() {
+    return legacyRedirects
+  },
   allowedDevOrigins: ['127.0.0.1', '192.168.68.119'],
   images: {
     localPatterns: [
